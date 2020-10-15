@@ -1,5 +1,4 @@
 const Discord = require('discord.js')
-
 const exec = require('./utils/exec')
 
 module.exports = class Dokdo {
@@ -16,7 +15,7 @@ module.exports = class Dokdo {
     }
 
     async run(message) {
-        if(!message.startsWith(this.options.prefix)) return
+        if(!message.content.startsWith(this.options.prefix)) return
         if(!this.options.owners.includes(message.author.id)) {
             if(this.options.noPerm) return this.options.noPerm(message)
             else return
@@ -29,10 +28,12 @@ module.exports = class Dokdo {
             args: parsed.slice(2).join(' ')
         }
 
+        console.log(message.data.cmd)
         if(this.options.aliases.includes(message.data.cmd)) {
-            switch(message.data.cmd) {
+            switch(message.data.type) {
                 case 'sh':
                     exec(message)
+                break;
                 default:
                     message.reply('Available Options: `sh`')
             }

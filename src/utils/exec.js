@@ -1,26 +1,29 @@
-const { exec } = require('child_process')
+const child = require('child_process')
 const Discord = require('discord.js')
-const Pagination = require('./Pagination')
+const ProcessManager = require('./ProcessManager')
 
 /**
  * 
  * @param {Discord.Message} message 
  */
-module.exports = async function exec(message) {
-    const msg = new Pagination(message.channel, `$ ${message.data.args}`, { lang: 'bash' })
+module.exports = async function Exec(message) {
+    const msg = new ProcessManager(message, `$ ${message.data.args}\n`, { lang: 'bash' })
     await msg.init()
 
-    const res = require('child_process').exec(message.data.args)
+    const res = child.exec(message.data.args)
 
+    await msg.addAction([{ emoji: "⏹️", action: ({ res }) => { console.log('GG'); res.kill('SIGINT') } }, { emoji: "◀️", action: ({ manager })  => manager.previousPage() }, { emoji: "▶️", action: ({ manager }) => manager.nextPage() } ], { res })
+    
     res.stdout.on('data', (data) => {
-        msg.add(data)
+        msg.add('\n' + data)
+        console.log(data)
     })
 
     res.stderr.on('data', ( data ) => {
-        res.add(`[stderr] ${data}`)
+        msg.add(`\n[stderr] ${data}`)
     })
 
     res.on('close', ( code ) => { 
-        res.add(`[status] process exited with code ${code}`)
+        msg.add(`\n[status] process exited with code ${code}`)
     })
 }
