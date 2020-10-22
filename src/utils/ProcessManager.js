@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const codeBlock = require('./codeBlock')
+
 module.exports = class ProcessManager {
     /**
      * 
@@ -9,21 +10,21 @@ module.exports = class ProcessManager {
      */
     constructor(message, content, options={}) {
         this.target = message.channel
-        this.content = content
+        this.content = content || ''
         this.messageContent = ''
         this.options = options
         this.limit = options.limit || 1900
-        this.splitted = content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
+        this.splitted = content.match(new RegExp(`.{1,${this.limit}}`, 'gms')) || [' ']
         this.page = 1
         this.author = message.author
         this.actions = [ ]
+        this.wait = 1
         this.message = null
     }
 
     async init() {
-        this.messageContent = `${codeBlock(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+        this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
         this.message = await this.target.send(this.messageContent)
-        
     }
 
     async addAction(actions, args) {
@@ -38,7 +39,6 @@ module.exports = class ProcessManager {
         
         this.args.manager = this
         this.reactCollector.on('collect', r => {
-            console.log(this.args)
             const e = this.actions.find(e=> e.emoji === r.emoji.name)
 
             console.log(e)
@@ -54,7 +54,7 @@ module.exports = class ProcessManager {
             e.action(this.args)
         })
 
-        this.reactCollector.on('end', (reason) => {
+        this.reactCollector.on('end', (_c, reason) => {
             console.log(reason)
             this.message.reactions.removeAll()
         })
@@ -69,8 +69,7 @@ module.exports = class ProcessManager {
         console.log(num)
         this.page = num
 
-        console.log(this.page)
-        this.update(`${codeBlock(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`)
+        this.update(`${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`)
     }
 
     nextPage() {
@@ -87,16 +86,39 @@ module.exports = class ProcessManager {
 
     update() {
         if(!this.message) return
-        this.splitted = this.content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
-        this.messageContent = `${codeBlock(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
-        this.message.edit(`${codeBlock(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`)
+        const splitted = this.content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
+        this.splitted = splitted
+        // if(this.messageContent === `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`) return
+        if(this.wait === 0) this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+        else if(this.wait % 5 === 0) {
+            this.wait = 0
+            setTimeout(() => {
+                this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+                this.edit()
+                this.wait++
+            }, 5000)
+        } else {
+            this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+            this.edit()
+            this.wait++
+        }
+        
     }
 
+    edit() {
+        this.message.edit(this.messageContent)
+        
+    }
     add(content) {
         if(!this.message) return
         this.content += content
-        this.splitted = this.content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
 
         this.update(this.content)
+    }
+
+    destroy() {
+        this.reactCollector.stop()
+        this.message.reactions.removeAll()
+        
     }
 }

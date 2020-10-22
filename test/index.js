@@ -1,5 +1,6 @@
-const Discord = require('discord.js');
+const Discord = require('../../w-djs/src');
 const client = new Discord.Client();
+const config = require('./config')
 
 const Dokdo = require('../src')
 
@@ -9,10 +10,8 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
-    // if(message.author.id !== "285185716240252929" || !message.content.startsWith('*')) return
-
     DokdoHandler.run(message)
     
 }); 
 
-client.login('');
+client.login(config.token);

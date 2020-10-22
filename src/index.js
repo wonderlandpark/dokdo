@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
-const exec = require('./utils/exec')
+const { exec, js } = require('./utils')
+const codeBlock = require('./utils/codeBlock')
 
 module.exports = class Dokdo {
     /**
@@ -16,26 +17,29 @@ module.exports = class Dokdo {
 
     async run(message) {
         if(!message.content.startsWith(this.options.prefix)) return
-        if(!this.options.owners.includes(message.author.id)) {
-            if(this.options.noPerm) return this.options.noPerm(message)
-            else return
-        }
+        
         const parsed = message.content.replace(this.options.prefix, '').split(' ')
+        let codeParsed = codeBlock.parse(parsed.slice(2).join(' '))
         message.data = {
             raw: message.content,
             cmd: parsed[0],
             type: parsed[1],
-            args: parsed.slice(2).join(' ')
+            args: codeParsed ? codeParsed[2] :  parsed.slice(2).join(' ')
         }
-
-        console.log(message.data.cmd)
         if(this.options.aliases.includes(message.data.cmd)) {
+            if(!this.options.owners.includes(message.author.id)) {
+                if(this.options.noPerm) return this.options.noPerm(message)
+                else return
+            }
             switch(message.data.type) {
                 case 'sh':
                     exec(message)
+                break
+                case 'js':
+                    js(message, this.client)
                 break;
                 default:
-                    message.reply('Available Options: `sh`')
+                    message.reply('Available Options: `sh`, `js`')
             }
         }
 

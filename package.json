@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/wonderlandpark/dokdo#readme",
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.3.1",
+    "lodash": "^4.17.20",
+    "shelljs": "^0.8.4",
+    "tree-kill": "^1.2.2"
   }
 }
