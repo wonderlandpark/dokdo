@@ -1,16 +1,19 @@
 const Discord = require('discord.js')
+const Dokdo = require('..')
 const codeBlock = require('./codeBlock')
 
 module.exports = class ProcessManager {
     /**
      * 
      * @param {Discord.Message} message
-     * @param {string} content 
-     * @param {Object} options 
+     * @param {string} content
+     * @param {Dokdo} dokdo
+     * @param {Object} options
      */
-    constructor(message, content, options={}) {
+    constructor(message, content, dokdo, options={}) {
         this.target = message.channel
-        this.content = content || ''
+        this.dokdo = dokdo
+        this.content = content ? content : ''
         this.messageContent = ''
         this.options = options
         this.limit = options.limit || 1900
@@ -20,11 +23,12 @@ module.exports = class ProcessManager {
         this.actions = [ ]
         this.wait = 1
         this.message = null
+        this.argument = [ ]
     }
 
     async init() {
-        this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
-        this.message = await this.target.send(this.messageContent)
+        this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
+        this.message = await this.target.send(this.filterSecret(this.messageContent))
     }
 
     async addAction(actions, args) {
@@ -40,14 +44,11 @@ module.exports = class ProcessManager {
         this.args.manager = this
         this.reactCollector.on('collect', r => {
             const e = this.actions.find(e=> e.emoji === r.emoji.name)
-
-            console.log(e)
             if(!e) return
             e.action(this.args)
         })
 
         this.reactCollector.on('remove', r => {
-            console.log('remove')
             const e = this.actions.find(e=> e.emoji === r.emoji.name)
 
             if(!e) return
@@ -55,7 +56,6 @@ module.exports = class ProcessManager {
         })
 
         this.reactCollector.on('end', (_c, reason) => {
-            console.log(reason)
             this.message.reactions.removeAll()
         })
 
@@ -63,13 +63,20 @@ module.exports = class ProcessManager {
 
     }
 
+    filterSecret(string) {
+        string = string.replace(new RegExp(this.dokdo.client.token, 'gi'), '(accesstoken was hidden)')
+        
+        this.dokdo.options.secrets.forEach(el=> string = string.replace(new RegExp(el, 'gi'), '(secret)'))
+
+        return string
+    }
+
     updatePage(num) {
-        if(!this.message) return console.log('GG')
+        if(!this.message) return
         if(this.splitted.length < num || num < 1) throw new Error('Invalid page.')
-        console.log(num)
         this.page = num
 
-        this.update(`${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`)
+        this.update(!this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`)
     }
 
     nextPage() {
@@ -89,16 +96,16 @@ module.exports = class ProcessManager {
         const splitted = this.content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
         this.splitted = splitted
         // if(this.messageContent === `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`) return
-        if(this.wait === 0) this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+        if(this.wait === 0) this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
         else if(this.wait % 5 === 0) {
             this.wait = 0
             setTimeout(() => {
-                this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+                this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
                 this.edit()
                 this.wait++
             }, 5000)
         } else {
-            this.messageContent = `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+            this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
             this.edit()
             this.wait++
         }
@@ -106,9 +113,10 @@ module.exports = class ProcessManager {
     }
 
     edit() {
-        this.message.edit(this.messageContent)
+        this.message.edit(this.filterSecret(this.messageContent))
         
     }
+
     add(content) {
         if(!this.message) return
         this.content += content
