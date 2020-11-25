@@ -8,7 +8,7 @@ const Discord = require('discord.js')
 module.exports = class codeBlock {
     static construct( content, lang ) {
         return `\`\`\`${content ? lang || '' : ''}
-${Discord.Util.escapeInlineCode(content)}
+${Discord.Util.escapeCodeBlock(content)}
 \`\`\``
     }
 

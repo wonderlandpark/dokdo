@@ -1,4 +1,10 @@
 const util = require('util')
-module.exports = function inspect (value, depth=0) {
-    return util.inspect(value, { depth })
+
+/**
+ * 
+ * @param {any} value 
+ * @param {NodeJS.InspectOptions} obj 
+ */
+module.exports = function inspect (value, obj) {
+    return util.inspect(value, obj)
 }

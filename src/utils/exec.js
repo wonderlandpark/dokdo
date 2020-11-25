@@ -1,13 +1,8 @@
 const child = require('child_process')
-const Discord = require('discord.js')
 const ProcessManager = require('./ProcessManager')
 const codeBlock = require('./codeBlock');
-const kill = require('tree-kill');
 
-/**
- * 
- * @param {Discord.Message} message 
- */
+
 module.exports = async function Exec(message, parent) {
     if(!message.data.args) return message.channel.send('Argument missing.')
     const shell = process.env.SHELL || (process.platform === 'win32' ? 'powershell' : null)
@@ -26,7 +21,7 @@ module.exports = async function Exec(message, parent) {
         const gg = res.kill('SIGINT')
         console.log(gg)
         manager.destroy()
-     } }, { emoji: "◀️", action: ({ manager })  => manager.previousPage() }, { emoji: "▶️", action: ({ manager }) => manager.nextPage() } ], { res })
+     } }, { emoji: "◀️", action: ({ manager })  => manager.previousPage(), requirePage: true }, { emoji: "▶️", action: ({ manager }) => manager.nextPage(), requirePage: true } ], { res })
     
     res.stdout.on('data', (data) => {
         console.log(data.toString())
@@ -43,7 +38,7 @@ module.exports = async function Exec(message, parent) {
         return message.channel.send(`Error occurred while spawning process\n${codeBlock.construct(err.toString(), 'sh')}`)
     })
     res.on('close', ( code ) => {
+        console.log(clearTimeout(timeout))
         msg.add(`\n[status] process exited with code ${code}`)
-        clearTimeout(timeout)
     })
 }

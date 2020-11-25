@@ -27,7 +27,7 @@ module.exports = class ProcessManager {
     }
 
     async init() {
-        this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
+        this.messageContent = this.genText()
         this.message = await this.target.send(this.filterSecret(this.messageContent))
     }
 
@@ -35,13 +35,14 @@ module.exports = class ProcessManager {
         if(!this.message) return
 
         this.actions = actions
-        this.args = args
+        this.args = args || { }
 
-        actions.forEach(el=> this.message.react(el.emoji))
-        
+        this.args.manager = this
+
+        this.reactMessage()
         this.reactCollector = this.message.createReactionCollector(( reaction, user ) => this.actions.find(e=> e.emoji === reaction.emoji.name) && user.id === this.author.id, { time: 300000, error: [ 'time' ], dispose: true })
         
-        this.args.manager = this
+        
         this.reactCollector.on('collect', r => {
             const e = this.actions.find(e=> e.emoji === r.emoji.name)
             if(!e) return
@@ -55,12 +56,18 @@ module.exports = class ProcessManager {
             e.action(this.args)
         })
 
-        this.reactCollector.on('end', (_c, reason) => {
+        this.reactCollector.on('end', () => {
             this.message.reactions.removeAll()
         })
 
+    }
 
-
+    async reactMessage() {
+        this.actions.filter(el=> !el.reacted).forEach(el=> {
+            if(el.requirePage && this.splitted.length <= 1) return
+            el.reacted = true
+            this.message.react(el.emoji) 
+        })
     }
 
     filterSecret(string) {
@@ -76,7 +83,7 @@ module.exports = class ProcessManager {
         if(this.splitted.length < num || num < 1) throw new Error('Invalid page.')
         this.page = num
 
-        this.update(!this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`)
+        this.update(this.genText())
     }
 
     nextPage() {
@@ -96,16 +103,16 @@ module.exports = class ProcessManager {
         const splitted = this.content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
         this.splitted = splitted
         // if(this.messageContent === `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`) return
-        if(this.wait === 0) this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
+        if(this.wait === 0) this.messageContent = this.genText()
         else if(this.wait % 5 === 0) {
             this.wait = 0
             setTimeout(() => {
-                this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
+                this.messageContent = this.genText()
                 this.edit()
                 this.wait++
             }, 5000)
         } else {
-            this.messageContent = !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
+            this.messageContent = this.genText()
             this.edit()
             this.wait++
         }
@@ -113,6 +120,7 @@ module.exports = class ProcessManager {
     }
 
     edit() {
+        if(this.splitted.length > 1) this.reactMessage()
         this.message.edit(this.filterSecret(this.messageContent))
         
     }
@@ -128,5 +136,9 @@ module.exports = class ProcessManager {
         this.reactCollector.stop()
         this.message.reactions.removeAll()
         
+    }
+
+    genText() {
+        return !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page-1]}\n\nPage ${this.page}/${this.splitted.length}`
     }
 }
