@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const { exec, js, shard } = require('./utils')
+const { exec, js, shard, reload, jsi } = require('./utils')
 const codeBlock = require('./utils/codeBlock')
 
 module.exports = class Dokdo {
@@ -66,6 +66,9 @@ module.exports = class Dokdo {
             break
             case 'shard':
                 shard(message, this)
+            break
+            case 'jsi':
+                jsi(message, this)
             break
             default:
                 message.channel.send('Available Options: `sh`, `js`, `shard`')
