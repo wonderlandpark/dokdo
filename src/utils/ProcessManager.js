@@ -70,10 +70,10 @@ module.exports = class ProcessManager {
   }
 
   filterSecret (string) {
-    string = string.replace(new RegExp(this.dokdo.client.token, 'gi'), '(accesstoken was hidden)')
+    string = string.replace(new RegExp(this.dokdo.client.token, 'gi'), '[accesstoken was hidden]')
 
     this.dokdo.options.secrets.forEach(el => {
-      string = string.replace(new RegExp(el, 'gi'), '(secret)')
+      string = string.replace(new RegExp(el, 'gi'), '[secret]')
     })
 
     return string

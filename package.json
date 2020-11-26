@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/wonderlandpark/dokdo#readme",
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "async-mutex": "^0.2.4",
+    "dayjs": "^1.9.6",
+    "discord.js": "^12.5.1"
   },
   "devDependencies": {
     "eslint": "^7.14.0",

@@ -1,7 +1,4 @@
-const inspect = require('./inspect')
-const ProcessManager = require('./ProcessManager')
-const table = require('./table')
-const type = require('./type')
+const { ProcessManager, inspect, table, type } = require('../utils')
 
 module.exports = async function jsi (message, parent) {
   // eslint-disable-next-line no-unused-vars

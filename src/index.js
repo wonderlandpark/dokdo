@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
-const { exec, js, shard, jsi } = require('./utils')
-const codeBlock = require('./utils/codeBlock')
+const { main, exec, js, shard, jsi } = require('./commands')
+const { codeBlock } = require('./utils')
 
 module.exports = class Dokdo {
   /**
@@ -58,6 +58,7 @@ module.exports = class Dokdo {
       if (this.options.noPerm) return this.options.noPerm(message)
       else return
     }
+    if (!message.data.type) return main(message, this)
     switch (message.data.type) {
       case 'sh':
         exec(message, this)

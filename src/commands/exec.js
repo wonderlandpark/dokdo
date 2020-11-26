@@ -1,6 +1,6 @@
 const child = require('child_process')
-const ProcessManager = require('./ProcessManager')
-const codeBlock = require('./codeBlock')
+
+const { ProcessManager, codeBlock } = require('../utils')
 
 module.exports = async function Exec (message, parent) {
   if (!message.data.args) return message.channel.send('Argument missing.')
@@ -11,17 +11,18 @@ module.exports = async function Exec (message, parent) {
   await msg.init()
   const res = child.spawn(shell, ['-c', (shell === 'win32' ? 'chcp 65001\n' : '') + message.data.args], { encoding: 'utf8' })
   const timeout = setTimeout(() => {
-    res.kill('SIGTERM')
+    kill(res, 'SIGTERM')
     message.reply('Shell timeout occured.')
   }, 180000)
   console.log(res.pid)
   await msg.addAction([{
     emoji: '⏹️',
-    action: ({ res, manager }) => {
+    action: async ({ res, manager }) => {
       res.stdin.pause()
-      const gg = res.kill('SIGINT')
+      const gg = await kill(res)
       console.log(gg)
       manager.destroy()
+      msg.add('^C')
     }
   }, { emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true }, { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }], { res })
 
@@ -42,4 +43,9 @@ module.exports = async function Exec (message, parent) {
     console.log(clearTimeout(timeout))
     msg.add(`\n[status] process exited with code ${code}`)
   })
+}
+
+function kill (res, signal) {
+  if (process.platform === 'win32') return child.exec(`powershell -File "..\\utils\\KillChildrenProcess.ps1" ${res.pid}`, { cwd: __dirname })
+  else return res.kill('SIGINT' || signal)
 }
