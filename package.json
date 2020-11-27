@@ -2,9 +2,13 @@
   "name": "dokdo",
   "version": "0.0.1",
   "description": "Dokdo. Easy Discord bot debuging tool.",
-  "main": "src/index.js",
+  "main": "./src/index.js",
+  "types": "./index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test",
+    "test:shard": "node test/shard",
+    "lint": "eslint --ext js,jsx,ts,tsx src",
+    "lint:fix": "eslint --ext js,jsx,ts,tsx sr --fixc"
   },
   "repository": {
     "type": "git",
@@ -27,7 +31,9 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsdoc": "^30.7.8",
     "eslint-plugin-markdown": "^1.0.2",
+    "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1"
+    "eslint-plugin-promise": "^4.2.1",
+    "mocha": "^8.2.1"
   }
 }
