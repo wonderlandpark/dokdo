@@ -2,78 +2,95 @@ const Discord = require('discord.js')
 const { main, exec, js, shard, jsi } = require('./commands')
 const { codeBlock } = require('./utils')
 
+/**
+ * @typedef {(message: Discord.Message)} noPerm
+ * @returns {any|Promise<any>}
+*/
+
+/**
+ * @typedef options
+ * @property {string[]} [aliases=['dokdo', 'dok']] Aliases of command
+ * @property {string[]} [owners] ID of owners
+ * @property {string} [prefix] Prefix of Bot
+ * @property {any[]} [secrets=[]] Secrets to hide
+ * @property {noPerm} [noPerm] Executed when command runned by not allowed user
+*/
+
+/**
+ * @typedef MessageData
+ * @property {string} raw Raw message content
+ * @property {string} cmd Command
+ * @property {'sh'|'js'|'shard'|'jsi'|void} type Command type
+ * @property {string[]} args Arguments given
+ */
+
 module.exports = class Dokdo {
   /**
-     * @typedef {Function} noPerm
-     * @param {Discord.Message} message
-     * @returns {any|Promise<any>}
-     */
-  /**
-     * @typedef {Object} options
-     * @property {?string[]} aliases Aliases of command
-     * @property {?string[]} owners ID of owners
-     * @property {?string} prefix Prefix of Bot
-     * @property {?any[]} secrets Secrets to hide
-     * @property {?noPerm} noPerm Executed when command runned by not allowed user
-     */
-
-  /**
-     * Main Client of Dokdo
-     * @param {Discord.Client} client
-     * @param {options} options
-     */
+   * Main Client of Dokdo
+   * @param {Discord.Client} client
+   * @param {options} options
+  */
   constructor (client, options) {
-    if (!client) throw new Error('`client` is required.')
-    if (!options) throw new Error('`options` is required.')
+    if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
+    if (!options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
+
     if (!options.owners) {
-      console.log('[dokdo] Owner not given. Fetching from Application.')
+      console.warn('[dokdo] Owners not given. Fetching from Application.')
+
       client.fetchApplication().then(data => {
         if (data.owner.members) options.owners = data.owner.members.map(el => el.id)
         else if (data.owner.id) options.owners = [data.owner.id]
         else options.owners = []
-        console.log(data.owner.members.map(el => el.id))
+
+        console.info(`[dokdo] Fetched owners: ${options.owners.join(', ')}`)
       })
+
+      if (!options.secrets) options.secrets = []
+      if (!options.aliases) options.aliases = ['dokdo', 'dok']
+
+      this.client = client
+      this.Discord = Discord
+      this.options = options
+      this.process = []
     }
-    if (!options.secrets) options.secrets = []
-    if (!options.aliases) options.aliases = ['dokdo', 'dok']
-    this.client = client
-    this.Discord = Discord
-    this.options = options
-    this.process = []
   }
 
+  /**
+   * @param {Discord.Message} message
+   */
   async run (message) {
     if (this.options.prefix && !message.content.startsWith(this.options.prefix)) return
 
     const parsed = message.content.replace(this.options.prefix, '').split(' ')
     const codeParsed = codeBlock.parse(parsed.slice(2).join(' '))
+
+    /**
+     * @type {MessageData}
+     */
     message.data = {
       raw: message.content,
       cmd: parsed[0],
       type: parsed[1],
       args: codeParsed ? codeParsed[2] : parsed.slice(2).join(' ')
     }
+
     if (this.options.aliases && !this.options.aliases.includes(message.data.cmd)) return
     if (!this.options.owners.includes(message.author.id)) {
       if (this.options.noPerm) return this.options.noPerm(message)
       else return
     }
+
     if (!message.data.type) return main(message, this)
-    switch (message.data.type) {
-      case 'sh':
-        exec(message, this)
-        break
-      case 'js':
-        js(message, this)
-        break
-      case 'shard':
-        shard(message, this)
-        break
-      case 'jsi':
-        jsi(message, this)
-        break
-      default:
-        message.channel.send('Available Options: `sh`, `js`, `shard`')
+
+    const types = {
+      sh: exec,
+      js,
+      shard,
+      jsi
     }
+
+    if (types[message.data.type]) return types[message.data.type]()
+
+    message.channel.send('Available Options: `sh`, `js`, `shard`')
   }
 }

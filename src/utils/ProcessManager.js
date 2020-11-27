@@ -1,15 +1,12 @@
-
-const Discord = require('discord.js') // eslint-disable-line no-unused-vars
-const Dokdo = require('..') // eslint-disable-line no-unused-vars
 const codeBlock = require('./codeBlock')
 
 module.exports = class ProcessManager {
   /**
      * Process Manager of every Process
-     * @param {Discord} message
+     * @param {import("discord.js").Message} message
      * @param {string} content
-     * @param {Dokdo} dokdo
-     * @param {Object} options
+     * @param {import("..")} dokdo
+     * @param {import("..").options} options
      */
   constructor (message, content, dokdo, options = {}) {
     this.target = message.channel
@@ -36,7 +33,7 @@ module.exports = class ProcessManager {
     if (!this.message) return
 
     this.actions = actions
-    this.args = args || { }
+    this.args = args || {}
 
     this.args.manager = this
 
@@ -73,9 +70,7 @@ module.exports = class ProcessManager {
   filterSecret (string) {
     string = string.replace(new RegExp(this.dokdo.client.token, 'gi'), '[accesstoken was hidden]')
 
-    this.dokdo.options.secrets.forEach(el => {
-      string = string.replace(new RegExp(el, 'gi'), '[secret]')
-    })
+    for (const el of this.dokdo.options.secrets) { string = string.replace(new RegExp(el, 'gi'), '[secret]') }
 
     return string
   }
@@ -124,6 +119,9 @@ module.exports = class ProcessManager {
     this.message.edit(this.filterSecret(this.messageContent))
   }
 
+  /**
+   * @param {string} content
+   */
   add (content) {
     if (!this.message) return
     this.content += content

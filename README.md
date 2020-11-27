@@ -1,5 +1,5 @@
 <div align="center">
-<img src="dokdo.png">
+<img src="assets/dokdo.png">
 <br/>
 <p>
     <a href="https://npmjs.com/package/dokdo"><img src="https://img.shields.io/npm/v/dokdo"></a>
@@ -26,7 +26,7 @@ npm i dokdo@latest
 ### Dev
 
 ```sh
-npm i git+https://github.com/wonderlandpark/dokdo.git
+npm i dokdd@wonderlandpark/dokdo
 ```
 
 ## Example usage

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Dokdo. Easy Discord bot debuging tool.",
   "main": "./src/index.js",
-  "types": "./index.d.ts",
+  "types": "./typings/index.d.ts",
   "scripts": {
     "test": "node test",
     "test:shard": "node test/shard",
@@ -14,7 +14,10 @@
     "type": "git",
     "url": "git+https://github.com/wonderlandpark/dokdo.git"
   },
-  "author": "wonderlandpark <wonderlandpark@callisto.team>",
+  "author": {
+    "name": "wonderlandpark",
+    "email": "wonderlandpark@callisto.team"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wonderlandpark/dokdo/issues"
