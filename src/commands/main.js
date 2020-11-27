@@ -17,5 +17,6 @@ module.exports = async function (message, parent) {
   } else summary += `Running on PID ${process.pid}\n\nThis bot is not sharded and can see ${cache}.`
 
   summary += `\nAverage websocket latency: ${parent.client.ws.ping}ms`
+
   return message.channel.send(summary)
 }

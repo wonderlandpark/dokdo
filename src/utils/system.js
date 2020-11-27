@@ -1,8 +1,9 @@
 module.exports = class System {
   /**
-    * Get memory info
-    * @returns {NodeJS.MemoryUsage}
-    */
+   * Get memory info
+   *
+   * @returns {NodeJS.MemoryUsage}
+   */
   static memory () {
     const memory = process.memoryUsage()
     const keys = Object.keys(memory)
