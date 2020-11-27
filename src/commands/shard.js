@@ -20,5 +20,5 @@ module.exports = async function shard (message, parent) {
   }
 
   await msg.init()
-  await msg.addAction([{ emoji: '⏹️', action: ({ manager }) => manager.destroy() }, { emoji: '◀️', action: ({ manager }) => manager.previousPage() }, { emoji: '▶️', action: ({ manager }) => manager.nextPage() }])
+  await msg.addAction([{ emoji: '⏹️', action: ({ manager }) => manager.destroy() }, { emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true }, { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }])
 }

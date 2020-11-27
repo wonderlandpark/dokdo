@@ -5,6 +5,7 @@ const system = require('./system')
 const inspect = require('./inspect')
 const table = require('./table')
 const type = require('./type')
+const isinstance = require('./isinstance')
 
 module.exports = {
   ProcessManager,
@@ -12,5 +13,6 @@ module.exports = {
   system,
   table,
   type,
-  inspect
+  inspect,
+  isinstance
 }

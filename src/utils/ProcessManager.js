@@ -62,6 +62,7 @@ module.exports = class ProcessManager {
   }
 
   async reactMessage () {
+    if (this.options.noCode && this.splitted.length < 2) return
     this.actions.filter(el => !el.reacted).forEach(el => {
       if (el.requirePage && this.splitted.length <= 1) return
       el.reacted = true
@@ -137,6 +138,6 @@ module.exports = class ProcessManager {
   }
 
   genText () {
-    return !this.options.noCode ? `${codeBlock.construct(this.splitted[this.page - 1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}` : `${this.splitted[this.page - 1]}\n\nPage ${this.page}/${this.splitted.length}`
+    return this.options.noCode && this.splitted.length < 2 ? `${this.splitted[this.page - 1]}` : `${codeBlock.construct(this.splitted[this.page - 1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
   }
 }
