@@ -19,7 +19,7 @@ module.exports = async function js (message, parent) {
     .catch(e => {
       console.log(e instanceof SyntaxError)
       message.react('❗')
-      return e.stack || e.toString()
+      return e.toString()
     })
 
   const msg = new ProcessManager(message, result || '', parent, { lang: 'js', noCode: typeOf !== 'object' })

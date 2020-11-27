@@ -14,9 +14,14 @@
 
 Dokdo. Easy Discord bot debuging tool.
 
+## Preview
+
+![sh](dokdo.gif)
+
 ## Installation
 
 For now I recommend using Dev version.
+
 ### Stable
 
 ```sh
