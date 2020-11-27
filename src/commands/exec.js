@@ -59,7 +59,7 @@ module.exports = async function Exec (message, parent) {
 }
 
 /**
- * @param {any} [res]
+ * @param {any} res
  * @param {NodeJS.Signals} [signal]
  */
 function kill (res, signal) {
