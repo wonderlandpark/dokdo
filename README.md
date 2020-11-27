@@ -16,19 +16,35 @@ Dokdo. Easy Discord bot debuging tool.
 
 ## Installation
 
-## Stable
+### Stable
 
 ```sh
 npm i dokdo@latest
 ```
 
-## Dev
+### Dev
 
 ```sh
 npm i git+https://github.com/wonderlandpark/dokdo.git
 ```
 
 ## Example usage
+
+```js
+const Discord = require('discord.js')
+const client = new Discord.Client()
+
+const Dokdo = require('dokdo')
+
+const DokdoHandler = new Dokdo(client, { aliases: ['dokdo', 'dok'], prefix: '!' }) // Using Bot Application ownerID as default for owner option.
+
+client.on('message', async message => {
+  if (message.content === 'ping') return message.channel.send('Pong') // handle commands first
+  DokdoHandler.run(message) // try !dokdo
+})
+
+client.login('super secret token')
+```
 
 ## Contributing
 
