@@ -1,7 +1,5 @@
-# dokdo
-
-
 <div align="center">
+<img src="dokdo.png">
 <br/>
 <p>
     <a href="https://npmjs.com/package/dokdo"><img src="https://img.shields.io/npm/v/dokdo"></a>
@@ -31,6 +29,7 @@ npm i git+https://github.com/wonderlandpark/dokdo.git
 ```
 
 ## Example usage
+
 ## Contributing
 
 Please check out it hasn't already been exists before you create issue, and check [the contribution guide](./.github/CONTRIBUTING.md) before you submit Pull Request.
