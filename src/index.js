@@ -20,7 +20,7 @@ const { codeBlock } = require('./utils')
  * @typedef MessageData
  * @property {string} raw Raw message content
  * @property {string} cmd Command
- * @property {'sh'|'js'|'shard'|'jsi'|void} type Command type
+ * @property {string} type Command type
  * @property {string} args Arguments given
  */
 
@@ -83,16 +83,21 @@ module.exports = class Dokdo {
     }
 
     if (!message.data.type) return main(message, this)
-
-    const types = {
-      sh: exec,
-      js,
-      shard,
-      jsi
+    switch (message.data.type) {
+      case 'sh':
+        exec(message, this)
+        break
+      case 'js':
+        js(message, this)
+        break
+      case 'shard':
+        shard(message, this)
+        break
+      case 'jsi':
+        jsi(message, this)
+        break
+      default:
+        message.channel.send('Available Options: `sh`, `js`, `shard`')
     }
-
-    if (types[message.data.type]) return types[message.data.type]()
-
-    message.channel.send('Available Options: `sh`, `js`, `shard`')
   }
 }

@@ -1,9 +1,10 @@
 const { ProcessManager, inspect, isinstance } = require('../utils')
 
-module.exports = async function js (message, parent) {
+module.exports = async function js(message, parent) {
   // eslint-disable-next-line no-unused-vars
   const { client, Discord } = parent // for eval
-  if (!message.data.args) return message.channel.send('Argument missing.')
+  if (!message.data.args) return message.channel.send('Missing Arguments.')
+
   // eslint-disable-next-line no-eval
   const res = new Promise(resolve => resolve(eval(message.data.args)))
   let typeOf

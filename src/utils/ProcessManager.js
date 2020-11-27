@@ -11,6 +11,8 @@ const codeBlock = require('./codeBlock')
 /**
  * @typedef ProcessManagerOptions
  * @property {number} [limit=1900]
+ * @property {boolean} [noCode=false]
+ * @property {string} [lang]
  */
 
 module.exports = class ProcessManager {

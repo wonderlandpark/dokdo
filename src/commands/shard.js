@@ -2,8 +2,8 @@ const { Collection } = require('discord.js')
 
 const { ProcessManager, inspect } = require('../utils')
 
-module.exports = async function shard (message, parent) {
-  if (!message.data.args) return message.channel.send('Argument missing.')
+module.exports = async function shard(message, parent) {
+  if (!message.data.args) return message.channel.send('Missing Arguments.')
   if (!parent.client.shard) return message.channel.send('Shard Manager not found.')
   const res = parent.client.shard.broadcastEval(message.data.args)
   const result = await res.then(r => r).catch(e => e)
