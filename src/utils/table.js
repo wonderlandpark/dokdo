@@ -8,7 +8,7 @@ module.exports = function table (obj) {
 }
 
 /**
- * @param obj
+ * @param {Record<string, any>} obj
  */
 function clean (obj) {
   for (const propName in obj) {
