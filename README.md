@@ -34,6 +34,8 @@ npm i git+https://github.com/wonderlandpark/dokdo.git
 
 Please check out it hasn't already been exists before you create issue, and check [the contribution guide](./.github/CONTRIBUTING.md) before you submit Pull Request.
 
+# 한글 번역
+
 <div align="center">
 <img src="dokdo.png">
 <br/>
@@ -48,23 +50,23 @@ Please check out it hasn't already been exists before you create issue, and chec
 
 ## 정보
 
-Dokdo. Easy Discord bot debuging tool.
+독도 정보를 디버깅하는 모듈입니다.
 
-## Installation
+## 설치하는 방법
 
-## Stable
+## 기본
 
 ```sh
 npm i dokdo@latest
 ```
 
-## Dev
+## 개발자
 
 ```sh
 npm i git+https://github.com/wonderlandpark/dokdo.git
 ```
 
-## Example usage
+## 사용법
 
 ## Contributing
 
