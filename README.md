@@ -70,4 +70,5 @@ npm i git+https://github.com/wonderlandpark/dokdo.git
 
 ## Contributing
 
-Please check out it hasn't already been exists before you create issue, and check [the contribution guide](./.github/CONTRIBUTING.md) before you submit Pull Request.
+이슈를 생성하기 전에 아직 존재하지 않았는지 확인하고 Pull Request를 제출하기 전에 [the contribution guide](./.github/CONTRIBUTING.md) 를 확인하세요
+
