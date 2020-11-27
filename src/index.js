@@ -21,7 +21,7 @@ const { codeBlock } = require('./utils')
  * @property {string} raw Raw message content
  * @property {string} cmd Command
  * @property {'sh'|'js'|'shard'|'jsi'|void} type Command type
- * @property {string[]} args Arguments given
+ * @property {string} args Arguments given
  */
 
 module.exports = class Dokdo {
@@ -42,17 +42,17 @@ module.exports = class Dokdo {
         else if (data.owner.id) options.owners = [data.owner.id]
         else options.owners = []
 
-        console.info(`[dokdo] Fetched owners: ${options.owners.join(', ')}`)
+        console.info(`[dokdo] Fetched owners(${options.owners.length}): ${options.owners.join(', ')}`)
       })
-
-      if (!options.secrets) options.secrets = []
-      if (!options.aliases) options.aliases = ['dokdo', 'dok']
-
-      this.client = client
-      this.Discord = Discord
-      this.options = options
-      this.process = []
     }
+
+    if (!options.secrets) options.secrets = []
+    if (!options.aliases) options.aliases = ['dokdo', 'dok']
+
+    this.client = client
+    this.Discord = Discord
+    this.options = options
+    this.process = []
   }
 
   /**

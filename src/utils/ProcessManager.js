@@ -1,12 +1,16 @@
 const codeBlock = require('./codeBlock')
+// eslint-disable-next-line no-unused-vars
+const Dokdo = require('..')
+// eslint-disable-next-line no-unused-vars
+const { Message } = require('discord.js')
 
 module.exports = class ProcessManager {
   /**
      * Process Manager of every Process
-     * @param {import("discord.js").Message} message
+     * @param {Message} message
      * @param {string} content
-     * @param {import("..")} dokdo
-     * @param {import("..").options} options
+     * @param {Dokdo} dokdo
+     * @param {Dokdo.options} options
      */
   constructor (message, content, dokdo, options = {}) {
     this.target = message.channel
@@ -70,7 +74,9 @@ module.exports = class ProcessManager {
   filterSecret (string) {
     string = string.replace(new RegExp(this.dokdo.client.token, 'gi'), '[accesstoken was hidden]')
 
-    for (const el of this.dokdo.options.secrets) { string = string.replace(new RegExp(el, 'gi'), '[secret]') }
+    for (const el of this.dokdo.options.secrets) {
+      string = string.replace(new RegExp(el, 'gi'), '[secret]')
+    }
 
     return string
   }
