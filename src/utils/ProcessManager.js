@@ -5,7 +5,7 @@ const codeBlock = require('./codeBlock')
  */
 
 /**
- * @typedef {import("discord.js").Message}
+ * @typedef {import("discord.js").Message} Message
  */
 
 /**
