@@ -1,3 +1,3 @@
-module.exports = function react(type, error) {
-    
+module.exports = function react (type, error) {
+
 }
