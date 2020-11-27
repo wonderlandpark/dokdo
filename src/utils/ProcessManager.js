@@ -1,8 +1,10 @@
 const codeBlock = require('./codeBlock')
 // eslint-disable-next-line no-unused-vars
-const Dokdo = require('..')
-// eslint-disable-next-line no-unused-vars
 const { Message } = require('discord.js')
+
+/**
+ * @typedef {import("../")} Dokdo
+ */
 
 module.exports = class ProcessManager {
   /**

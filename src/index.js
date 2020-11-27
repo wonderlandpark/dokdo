@@ -42,7 +42,7 @@ module.exports = class Dokdo {
         else if (data.owner.id) options.owners = [data.owner.id]
         else options.owners = []
 
-        console.info(`[dokdo] Fetched owners(${options.owners.length}): ${options.owners.join(', ')}`)
+        console.info(`[dokdo] Fetched owners(${options.owners.length}): ${options.owners.length > 3 ? options.owners.slice(0, 3).join(', ') + ` and ${options.owners.length - 3} more owners` : options.owners.join(', ')}`)
       })
     }
 
