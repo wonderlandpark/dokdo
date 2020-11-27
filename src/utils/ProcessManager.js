@@ -104,7 +104,6 @@ module.exports = class ProcessManager {
     if (!this.message) return
     const splitted = this.content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
     this.splitted = splitted
-    // if(this.messageContent === `${codeBlock.construct(this.splitted[this.page-1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`) return
     if (this.wait === 0) this.messageContent = this.genText()
     else if (this.wait % 5 === 0) {
       this.wait = 0
