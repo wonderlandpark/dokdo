@@ -1,4 +1,4 @@
-const { ProcessManager, inspect, isinstance, type } = require('../utils')
+const { ProcessManager, inspect, isinstance } = require('../utils')
 
 module.exports = async function js (message, parent) {
   // eslint-disable-next-line no-unused-vars
