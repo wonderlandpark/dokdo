@@ -4,7 +4,7 @@ module.exports = class codeBlock {
   /**
    * @param {string} [content]
    * @param {string} [lang]
-  */
+   */
   static construct (content, lang) {
     return `\`\`\`${content ? lang || '' : ''}
 ${Util.escapeCodeBlock(content)}

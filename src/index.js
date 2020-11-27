@@ -5,16 +5,16 @@ const { codeBlock } = require('./utils')
 /**
  * @typedef {(message: Discord.Message)} noPerm
  * @returns {any|Promise<any>}
-*/
+ */
 
 /**
- * @typedef options
+ * @typedef DokdoOptions
  * @property {string[]} [aliases=['dokdo', 'dok']] Aliases of command
  * @property {string[]} [owners] ID of owners
  * @property {string} [prefix] Prefix of Bot
  * @property {any[]} [secrets=[]] Secrets to hide
  * @property {noPerm} [noPerm] Executed when command runned by not allowed user
-*/
+ */
 
 /**
  * @typedef MessageData
@@ -27,9 +27,10 @@ const { codeBlock } = require('./utils')
 module.exports = class Dokdo {
   /**
    * Main Client of Dokdo
-   * @param {Discord.Client} client
-   * @param {options} options
-  */
+   *
+   * @param {Discord.Client} client Discord Client
+   * @param {DokdoOptions} options Dokdo Options
+   */
   constructor (client, options) {
     if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
     if (!options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
@@ -56,7 +57,8 @@ module.exports = class Dokdo {
   }
 
   /**
-   * @param {Discord.Message} message
+   * @param {Discord.Message} message Message
+   * @returns {Promise<any>|any}
    */
   async run (message) {
     if (this.options.prefix && !message.content.startsWith(this.options.prefix)) return

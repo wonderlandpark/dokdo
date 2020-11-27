@@ -7,6 +7,9 @@ module.exports = function table (obj) {
   ).join('\n')
 }
 
+/**
+ * @param obj
+ */
 function clean (obj) {
   for (const propName in obj) {
     if (!obj[propName]) {

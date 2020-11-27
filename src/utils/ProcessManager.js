@@ -1,19 +1,27 @@
 const codeBlock = require('./codeBlock')
-// eslint-disable-next-line no-unused-vars
-const { Message } = require('discord.js')
 
 /**
  * @typedef {import("../")} Dokdo
  */
 
+/**
+ * @typedef {import("discord.js").Message}
+ */
+
+/**
+ * @typedef ProcessManagerOptions
+ * @property {number} [limit=1900]
+ */
+
 module.exports = class ProcessManager {
   /**
-     * Process Manager of every Process
-     * @param {Message} message
-     * @param {string} content
-     * @param {Dokdo} dokdo
-     * @param {Dokdo.options} options
-     */
+   * Process Manager of every Process
+   *
+   * @param {Message} message
+   * @param {string} content
+   * @param {Dokdo} dokdo
+   * @param {ProcessManagerOptions} options
+   */
   constructor (message, content, dokdo, options = {}) {
     this.target = message.channel
     this.dokdo = dokdo
