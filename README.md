@@ -26,7 +26,7 @@ npm i dokdo@latest
 ### Dev
 
 ```sh
-npm i dokdd@wonderlandpark/dokdo
+npm i dokdo@wonderlandpark/dokdo
 ```
 
 ## Example usage
