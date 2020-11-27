@@ -18,10 +18,10 @@ const { codeBlock } = require('./utils')
 
 /**
  * @typedef MessageData
- * @property {string} raw Raw message content
- * @property {string} cmd Command
- * @property {string} type Command type
- * @property {string} args Arguments given
+ * @property {string} [raw] Raw message content
+ * @property {string} [cmd ]Command
+ * @property {string} [type] Command type
+ * @property {string} [args] Arguments given
  */
 
 module.exports = class Dokdo {
