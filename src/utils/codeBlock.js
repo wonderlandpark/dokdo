@@ -2,8 +2,8 @@ const { Util } = require('discord.js')
 
 module.exports = class codeBlock {
   /**
-   * @param {string} content
-   * @param {string} lang
+   * @param {string} [content]
+   * @param {string} [lang]
   */
   static construct (content, lang) {
     return `\`\`\`${content ? lang || '' : ''}
