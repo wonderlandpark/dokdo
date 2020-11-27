@@ -6,8 +6,7 @@ const { system } = require('../utils')
 const version = require('../../package.json').version
 
 module.exports = async function (message, parent) {
-  let summary = `Dokdo v${version}, discord.js \`${parent.Discord.version}\`, \`Node.js ${process.version}\` on \`${process.platform}\`\nProcess started at ${dayjs(system.processReadyAt()).fromNow()}, bot was ready at ${dayjs(parent.client.readyAt).fromNow()}.
-`
+  let summary = `Dokdo v${version}, discord.js \`${parent.Discord.version}\`, \`Node.js ${process.version}\` on \`${process.platform}\`\nProcess started at ${dayjs(system.processReadyAt()).fromNow()}, bot was ready at ${dayjs(parent.client.readyAt).fromNow()}.\n`
 
   summary += `\nAssigned ${system.memory().rss} at this process and using ${system.memory().heapUsed} (${((process.memoryUsage().heapUsed / process.memoryUsage().rss) * 100).toFixed(2)}%).\n`
   const cache = `${parent.client.guilds.cache.size} guild(s) and ${parent.client.users.cache.size} user(s)`
