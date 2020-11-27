@@ -59,8 +59,8 @@ module.exports = async function Exec (message, parent) {
 }
 
 /**
- * @param res
- * @param signal
+ * @param {any} [res]
+ * @param {NodeJS.Signals} [signal]
  */
 function kill (res, signal) {
   if (process.platform === 'win32') return child.exec(`powershell -File "..\\utils\\KillChildrenProcess.ps1" ${res.pid}`, { cwd: __dirname })
