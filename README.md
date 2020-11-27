@@ -6,7 +6,7 @@
     <a href="https://github.com/wonderlandpark/dokdo/actions"><img src="https://github.com/wonderlandpark/dokdo/workflows/Testing/badge.svg" alt="Build status" /></a>
 </p>
 <p>
-    <a href="https://nodei.co/npm/dokdo/"><img src="https://nodei.co/npm/dokdo.png?downloads=true&stars=true" alt="npm installnfo" /></a>
+    <a href="https://nodei.co/npm/dokdo/"><img src="https://nodei.co/npm/dokdo?downloads=true&stars=true" alt="npm installnfo" /></a>
 </p>
 </div>
 
