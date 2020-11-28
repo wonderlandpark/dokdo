@@ -18,7 +18,6 @@ module.exports = async function js (message, parent) {
       return inspect(output, { depth: 1 })
     })
     .catch(e => {
-      console.log(e instanceof SyntaxError)
       message.react('❗')
       return e.toString()
     })
