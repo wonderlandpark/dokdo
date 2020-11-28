@@ -25,6 +25,7 @@ module.exports = class ProcessManager {
    * @param {ProcessManagerOptions} options
    */
   constructor (message, content, dokdo, options = {}) {
+    if (!content || typeof content !== 'string') throw new Error('Please pass valid content')
     this.target = message.channel
     this.dokdo = dokdo
     this.content = content || ''

@@ -26,7 +26,8 @@
   "dependencies": {
     "async-mutex": "^0.2.4",
     "dayjs": "^1.9.6",
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "eslint": "^7.14.0",
