@@ -1,3 +1,6 @@
+/**
+ * @param {Record<string, any>} obj
+ */
 module.exports = function table (obj) {
   clean(obj)
   const max = Object.keys(obj).map(e => e.toString().length).sort((a, b) => b - a)[0] + 4
