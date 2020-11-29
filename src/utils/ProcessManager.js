@@ -1,11 +1,8 @@
+const Discord = require('discord.js')
 const codeBlock = require('./codeBlock')
 
 /**
  * @typedef {import("../")} Dokdo
- */
-
-/**
- * @typedef {import("discord.js").Message} Message
  */
 
 /**
@@ -15,11 +12,17 @@ const codeBlock = require('./codeBlock')
  * @property {string} [lang]
  */
 
+/**
+ * @typedef Action
+ * @property {string} emoji
+ * @property {( manager: ProcessManager, ...[key: string]: any )} action
+ * @property {boolean} [requirePage]
+ */
 module.exports = class ProcessManager {
   /**
    * Process Manager of every Process
    *
-   * @param {Message} message
+   * @param {Discord.Message} message
    * @param {string} content
    * @param {Dokdo} dokdo
    * @param {ProcessManagerOptions} options
@@ -32,7 +35,7 @@ module.exports = class ProcessManager {
     this.messageContent = ''
     this.options = options
     this.limit = options.limit || 1900
-    this.splitted = content.match(new RegExp(`.{1,${this.limit}}`, 'gms')) || [' ']
+    this.splitted = this.splitContent() || [' ']
     this.page = 1
     this.author = message.author
     this.actions = []
@@ -46,6 +49,11 @@ module.exports = class ProcessManager {
     this.message = await this.target.send(this.filterSecret(this.messageContent))
   }
 
+  /**
+   *
+   * @param {Action} actions
+   * @param {Record<string, any>} args
+   */
   async addAction (actions, args) {
     if (!this.message) return
 
@@ -116,16 +124,15 @@ module.exports = class ProcessManager {
 
   update () {
     if (!this.message) return
-    const splitted = this.content.match(new RegExp(`.{1,${this.limit}}`, 'gms'))
-    this.splitted = splitted
+    this.splitted = this.splitContent()
     if (this.wait === 0) this.messageContent = this.genText()
-    else if (this.wait % 5 === 0) {
+    else if (this.wait % 2 === 0) {
       this.wait = 0
       setTimeout(() => {
         this.messageContent = this.genText()
         this.edit()
         this.wait++
-      }, 5000)
+      }, 1000)
     } else {
       this.messageContent = this.genText()
       this.edit()
@@ -155,5 +162,10 @@ module.exports = class ProcessManager {
 
   genText () {
     return this.options.noCode && this.splitted.length < 2 ? `${this.splitted[this.page - 1]}` : `${codeBlock.construct(this.splitted[this.page - 1], this.options.lang)}\n\nPage ${this.page}/${this.splitted.length}`
+  }
+
+  splitContent () {
+    const strings = this.content.split('\n')
+    return Discord.Util.splitMessage(strings.map(str => str.length > this.limit ? str.match(new RegExp(`.{1,${this.limit}}`, 'g')) : str), { maxLength: this.limit })
   }
 }
