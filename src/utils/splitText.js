@@ -7,9 +7,10 @@ module.exports = function splitText (text, opt) {
   // const values = []
   const msg = ''
   for (const el of splitted) {
-    if((msg + char + el).length > maxLength) {
-        return
-    } // what r u doing
-    return // to pass eslint error
+    if ((msg + char + el).length > maxLength) {
+      continue
+    } else {
+      break
+    }
   }
 }
