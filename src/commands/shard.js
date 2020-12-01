@@ -1,4 +1,4 @@
-const { Collection } = require('discord.js')
+const Discord = require('discord.js')
 
 const { ProcessManager, inspect } = require('../utils')
 
@@ -12,7 +12,7 @@ module.exports = async function shard (message, parent) {
   else {
     let sum
     if (typeof result[0] === 'number') sum = result.reduce((prev, val) => prev + val, 0)
-    else if (result[0] instanceof Collection) sum = result.reduce((prev, val) => prev.concat(val))
+    else if (result[0] instanceof Discord.Collection) sum = result.reduce((prev, val) => prev.concat(val))
 
     msg = new ProcessManager(message, `// TOTAL\n${sum}\n\n${result.map((value, index) => `// #${index} SHARD\n${inspect(value)}`).join('\n')}`, parent, { lang: 'js' })
   }
