@@ -51,7 +51,6 @@ module.exports = class Dokdo {
     if (!options.aliases) options.aliases = ['dokdo', 'dok']
 
     this.client = client
-    this.Discord = Discord
     this.options = options
     this.process = []
   }

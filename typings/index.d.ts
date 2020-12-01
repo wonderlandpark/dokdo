@@ -1,13 +1,12 @@
 declare module 'dokdo' {
-  import Discord, { Message } from 'discord.js'
+  import * as Discord from 'discord.js'
   export default Dokdo
 
   class Dokdo {
     constructor(client: Discord.Client, options: DokdoOptions)
     public client: Discord.Client
-    public Discord: Discord
     public options: DokdoOptions
-    public run(message: Message): Promise<any>
+    public run(message: Discord.Message): Promise<any>
   }
 
   interface DokdoOptions {
@@ -15,7 +14,7 @@ declare module 'dokdo' {
     owners?: string[]
     prefix?: string
     secrets?: any[]
-    noPerm(message: Message): any|Promise<any>
+    noPerm(message: Discord.Message): any|Promise<any>
   }
 
   export class ProcessManager {
@@ -43,6 +42,6 @@ declare module 'dokdo' {
     emoji: string
     requirePage: boolean
 
-    action({ manager: Dokdo, ...args: any }): any|Promise<any> 
+    action({ manager: Dokdo, ...args }): any|Promise<any> 
   }
 }
