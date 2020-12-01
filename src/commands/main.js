@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
@@ -6,7 +7,7 @@ const { system } = require('../utils')
 const version = require('../../package.json').version
 
 module.exports = async function (message, parent) {
-  let summary = `Dokdo v${version}, discord.js \`${parent.Discord.version}\`, \`Node.js ${process.version}\` on \`${process.platform}\`\nProcess started at ${dayjs(system.processReadyAt()).fromNow()}, bot was ready at ${dayjs(parent.client.readyAt).fromNow()}.\n`
+  let summary = `Dokdo v${version}, discord.js \`${Discord.version}\`, \`Node.js ${process.version}\` on \`${process.platform}\`\nProcess started at ${dayjs(system.processReadyAt()).fromNow()}, bot was ready at ${dayjs(parent.client.readyAt).fromNow()}.\n`
 
   summary += `\nUsing ${system.memory().rss} at this process.\n`
   const cache = `${parent.client.guilds.cache.size} guild(s) and ${parent.client.users.cache.size} user(s)`
