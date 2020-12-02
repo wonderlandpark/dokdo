@@ -7,7 +7,6 @@ module.exports = async function shard (message, parent) {
   if (!parent.client.shard) return message.channel.send('Shard Manager not found.')
   const res = parent.client.shard.broadcastEval(message.data.args)
   const result = await res.catch(e => e.toString())
-
   let msg
   if (!Array.isArray(result)) msg = new ProcessManager(message, result, parent, { lang: 'js' })
   else {
