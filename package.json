@@ -24,12 +24,12 @@
   },
   "homepage": "https://github.com/wonderlandpark/dokdo#readme",
   "dependencies": {
-    "async-mutex": "^0.2.4",
     "dayjs": "^1.9.6",
     "discord.js": "^12.5.1",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.14.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
