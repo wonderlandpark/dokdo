@@ -8,6 +8,7 @@ on:
 jobs:
   reviewdog:
     name: Code Review
+    runs-on: ubuntu-latest
     steps:
     - uses: reviewdog/action-setup@v1
       with:
