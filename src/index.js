@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const { main, exec, js, shard, jsi, curl } = require('./commands')
-const { codeBlock } = require('./utils')
-const gg
+const { codeBlock } = require('./utils' )
+
 /**
  * @typedef {(message: Discord.Message)} noPerm
  * @returns {any|Promise<any>}
