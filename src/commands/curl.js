@@ -1,4 +1,4 @@
-const { ProcessManager } = require('../utils')
+const { ProcessManager, HLJS } = require('../utils')
 const fetch = require('node-fetch')
 
 module.exports = async function curl (message, parent) {
@@ -11,7 +11,7 @@ module.exports = async function curl (message, parent) {
       type = 'json'
       return JSON.stringify(JSON.parse(text), null, 2)
     } catch {
-      type = 'html'
+      type = HLJS.getLang(r.headers.get('Content-Type')) || 'html'
       return text
     }
   }).catch(e => {
