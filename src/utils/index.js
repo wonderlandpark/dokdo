@@ -1,5 +1,6 @@
 const ProcessManager = require('./ProcessManager')
 const codeBlock = require('./codeBlock')
+const HLJS = require('./hljs')
 const system = require('./system')
 
 const count = require('./count')
@@ -11,6 +12,7 @@ const isinstance = require('./isinstance')
 module.exports = {
   ProcessManager,
   codeBlock,
+  HLJS,
   system,
   count,
   table,
