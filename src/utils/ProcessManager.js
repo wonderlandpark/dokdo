@@ -13,9 +13,16 @@ const codeBlock = require('./codeBlock')
  */
 
 /**
+ * @typedef {Function} onAction
+ * @param {ProcessManager} manager
+ * @param {...[key: string]: any}
+ * @returns {any|Promise<any>}
+ */
+
+/**
  * @typedef Action
  * @property {string} emoji
- * @property {( manager: ProcessManager, ...[key: string]: any )} action
+ * @property {onAction} action
  * @property {boolean} [requirePage]
  */
 module.exports = class ProcessManager {

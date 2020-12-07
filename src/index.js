@@ -3,7 +3,8 @@ const { main, exec, js, shard, jsi, curl } = require('./commands')
 const { codeBlock } = require('./utils')
 
 /**
- * @typedef {(message: Discord.Message)} noPerm
+ * @typedef {Function} noPerm
+ * @param {Discord.Message} message
  * @returns {any|Promise<any>}
  */
 
