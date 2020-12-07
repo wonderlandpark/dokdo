@@ -1,0 +1,14 @@
+name: reviewdog
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  reviewdog:
+    name: Code Review
+    steps:
+    - uses: reviewdog/action-setup@v1
+      with:
+        reviewdog_version: latest
