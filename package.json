@@ -8,7 +8,7 @@
     "test": "node test/bot",
     "test:shard": "node test/shard",
     "lint": "eslint --ext js,jsx,ts,tsx src",
-    "lint:fix": "eslint --ext js,jsx,ts,tsx sr --fixc"
+    "lint:fix": "eslint --ext js,jsx,ts,tsx sr --fix"
   },
   "repository": {
     "type": "git",
