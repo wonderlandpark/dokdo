@@ -14,6 +14,6 @@ jobs:
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
-          reporter: Cool Code Reviewer
+          reporter: github-pr-review
           reviewdog_version: latest
           eslint_flags: --ext js,jsx,ts,tsx src
