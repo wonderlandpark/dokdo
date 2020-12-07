@@ -1,4 +1,14 @@
-node_modules/
-config.js
-package-lock.json # we are using yarn
-.vscode/
+pids
+logs
+node_modules
+npm-debug.log
+coverage/
+run
+dist
+.DS_Store
+.nyc_output
+.basement
+config.local.js
+basement_dist
+dokdo
+src/docs
