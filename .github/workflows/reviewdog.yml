@@ -1,4 +1,4 @@
-name: reviewdog
+name: Code Review
 on:
   push:
     branches:
@@ -7,9 +7,12 @@ on:
 
 jobs:
   reviewdog:
-    name: Code Review
+    name: eslint
     runs-on: ubuntu-latest
     steps:
-    - uses: reviewdog/action-setup@v1
-      with:
-        reviewdog_version: latest
+      - uses: actions/checkout@v1
+      - name: eslint
+        uses: reviewdog/action-setup@v1
+        with:
+          reporter: Cool Code Reviewer
+          reviewdog_version: latest
