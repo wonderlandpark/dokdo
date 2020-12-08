@@ -14,9 +14,11 @@ const codeBlock = require('./codeBlock')
  */
 
 /**
+ * @typedef {Record.<string, any>} ActionArgs
+ */
+/**
  * @typedef {Function} onAction
- * @param {ProcessManager} manager
- * @param {...[key: string]: any}
+ * @param {Record.<string, any>} arguments
  * @returns {any|Promise<any>}
  */
 
