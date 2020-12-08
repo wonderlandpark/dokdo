@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
-const { main, exec, js, shard, jsi, curl } = require('./commands')
-const { codeBlock } = require('./utils')
+const Commands = require('./commands')
+const Utils = require('./utils')
 
 /**
  * @typedef {Function} noPerm
@@ -64,7 +64,7 @@ module.exports = class Dokdo {
     if (this.options.prefix && !message.content.startsWith(this.options.prefix)) return
 
     const parsed = message.content.replace(this.options.prefix, '').split(' ')
-    const codeParsed = codeBlock.parse(parsed.slice(2).join(' '))
+    const codeParsed = Utils.codeBlock.parse(parsed.slice(2).join(' '))
 
     /**
      * @type {MessageData}
@@ -82,25 +82,28 @@ module.exports = class Dokdo {
       else return
     }
 
-    if (!message.data.type) return main(message, this)
+    if (!message.data.type) return Commands.main(message, this)
     switch (message.data.type) {
       case 'sh':
-        exec(message, this)
+        Commands.exec(message, this)
         break
       case 'js':
-        js(message, this)
+        Commands.js(message, this)
         break
       case 'shard':
-        shard(message, this)
+        Commands.shard(message, this)
         break
       case 'jsi':
-        jsi(message, this)
+        Commands.jsi(message, this)
         break
       case 'curl':
-        curl(message, this)
+        Commands.curl(message, this)
         break
       default:
         message.channel.send('Available Options: `sh`, `js`, `shard`')
     }
   }
 }
+
+module.exports.Utils = Utils
+module.exports.Commands = Commands
