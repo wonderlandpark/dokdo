@@ -1,8 +1,9 @@
 const Discord = require('discord.js')
-const codeBlock = require('./codeBlock')
 
+const Dokdo = require('../') // eslint-disable-line no-unused-vars
+const codeBlock = require('./codeBlock')
 /**
- * @typedef {import("../")} Dokdo
+ * @typedef {Dokdo} Dokdo
  */
 
 /**
