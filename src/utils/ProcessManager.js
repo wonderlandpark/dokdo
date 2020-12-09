@@ -1,8 +1,9 @@
 const Discord = require('discord.js')
-const codeBlock = require('./codeBlock')
 
+const Dokdo = require('../') // eslint-disable-line no-unused-vars
+const codeBlock = require('./codeBlock')
 /**
- * @typedef {import("../")} Dokdo
+ * @typedef {Dokdo} Dokdo
  */
 
 /**
@@ -13,9 +14,11 @@ const codeBlock = require('./codeBlock')
  */
 
 /**
+ * @typedef {Record.<string, any>} ActionArgs
+ */
+/**
  * @typedef {Function} onAction
- * @param {ProcessManager} manager
- * @param {...[key: string]: any}
+ * @param {Record.<string, any>} arguments
  * @returns {any|Promise<any>}
  */
 
@@ -25,8 +28,8 @@ const codeBlock = require('./codeBlock')
  * @property {onAction} action
  * @property {boolean} [requirePage]
  */
-module.exports = class ProcessManager {
-  /**
+
+/**
    * Process Manager of every Process
    *
    * @param {Discord.Message} message
@@ -34,6 +37,7 @@ module.exports = class ProcessManager {
    * @param {Dokdo} dokdo
    * @param {ProcessManagerOptions} options
    */
+module.exports = class ProcessManager {
   constructor (message, content, dokdo, options = {}) {
     if (!content || typeof content !== 'string') throw new Error('Please pass valid content')
     this.target = message.channel
