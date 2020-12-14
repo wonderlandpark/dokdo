@@ -90,7 +90,7 @@ module.exports = class ProcessManager {
     })
 
     this.reactCollector.on('end', () => {
-      this.message.reactions.removeAll()
+      this.message.reactions.removeAll().catch(e => e)
     })
   }
 
