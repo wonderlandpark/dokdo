@@ -38,4 +38,3 @@ jobs:
     
     - name: Run test scripts
       run: yarn test
-
