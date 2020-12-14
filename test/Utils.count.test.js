@@ -32,7 +32,7 @@ describe('count function', function () {
     let result = count(numbers)
     assert.strictEqual(result.length, 1)
     assert.strictEqual(result[0].name, 'Number')
-    assert.strictEqual(result[0].count, numbers.length)
+    assert.strictEqual(result[0].count, numbers.size)
     assert.strictEqual(result[0].ratio, '100.0')
     result = count(stringsAndNumbers)
     assert.strictEqual(result.length, 2)
