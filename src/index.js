@@ -1,4 +1,6 @@
 const Discord = require('discord.js')
+const fetch = require('node-fetch')
+
 const Commands = require('./commands')
 const Utils = require('./utils')
 
@@ -15,6 +17,7 @@ const Utils = require('./utils')
  * @property {string} [prefix] Prefix of Bot
  * @property {any[]} [secrets=[]] Secrets to hide
  * @property {noPerm} [noPerm] Executed when command runned by not allowed user
+ * @property {boolean} [disableAttachmentExecution=false] Disable attachment execution.
  */
 
 /**
@@ -75,7 +78,15 @@ module.exports = class Dokdo {
       type: parsed[1],
       args: codeParsed ? codeParsed[2] : parsed.slice(2).join(' ')
     }
-
+    if (!message.data.args && message.attachments.size > 0 && !this.options.disableAttachmentExecution) {
+      const file = message.attachments.first()
+      const buffer = await (await fetch(file.url)).buffer()
+      const type = { ext: file.name.split('.').pop(), fileName: file.name }
+      if (['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext)) {
+        message.data.args = buffer.toString()
+        if (!message.data.type && type.ext !== 'txt') message.data.type = type.ext
+      }
+    }
     if (this.options.aliases && !this.options.aliases.includes(message.data.cmd)) return
     if (!this.options.owners.includes(message.author.id)) {
       if (this.options.noPerm) return this.options.noPerm(message)
@@ -85,9 +96,15 @@ module.exports = class Dokdo {
     if (!message.data.type) return Commands.main(message, this)
     switch (message.data.type) {
       case 'sh':
+      case 'bash':
+      case 'ps':
+      case 'powershell':
+      case 'shell':
+      case 'zsh':
         Commands.exec(message, this)
         break
       case 'js':
+      case 'javascript':
         Commands.js(message, this)
         break
       case 'shard':
