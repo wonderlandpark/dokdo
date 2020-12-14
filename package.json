@@ -5,8 +5,9 @@
   "main": "./src/index.js",
   "types": "./typings/index.d.ts",
   "scripts": {
-    "test": "node test/bot",
-    "test:shard": "node test/shard",
+    "test": "mocha",
+    "test:bot": "node examples/bot",
+    "test:shard": "node examples/shard",
     "lint": "eslint --ext js,jsx,ts,tsx src",
     "lint:fix": "eslint --ext js,jsx,ts,tsx src --fix"
   },

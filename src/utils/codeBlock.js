@@ -15,6 +15,8 @@ ${Util.escapeCodeBlock(content)}
    * @param {string} content
    */
   static parse (content) {
-    return content.match(/^```(.*?)\n(.*?)```$/ms)
+    const result = content.match(/^```(.*?)\n(.*?)```$/ms)
+
+    return result.slice(0, 3).map(el => el.trim())
   }
 }
