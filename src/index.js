@@ -35,28 +35,27 @@ module.exports = class Dokdo {
    * @param {Discord.Client} client Discord Client
    * @param {DokdoOptions} options Dokdo Options
    */
-  constructor (client, options) {
+  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false } = {}) {
     if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
-    if (!options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
-
-    if (!options.owners) {
+    // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
+    this.owners = owners
+    if (!this.owners) {
       console.warn('[dokdo] Owners not given. Fetching from Application.')
 
       client.fetchApplication().then(data => {
-        if (data.owner.members) options.owners = data.owner.members.map(el => el.id)
-        else if (data.owner.id) options.owners = [data.owner.id]
-        else options.owners = []
+        if (data.owner.members) this.owners = data.owner.members.map(el => el.id)
+        else if (data.owner.id) this.owners = [data.owner.id]
+        else this.owners = []
 
-        console.info(`[dokdo] Fetched owners(${options.owners.length}): ${options.owners.length > 3 ? options.owners.slice(0, 3).join(', ') + ` and ${options.owners.length - 3} more owners` : options.owners.join(', ')}`)
+        console.info(`[dokdo] Fetched ${this.owners.length} owner(s): ${this.owners.length > 3 ? this.owners.slice(0, 3).join(', ') + ` and ${this.owners.length - 3} more owners` : this.owners.join(', ')}`)
       })
     }
 
-    if (!options.secrets) options.secrets = []
-    if (!options.aliases) options.aliases = ['dokdo', 'dok']
-
     this.client = client
-    this.options = options
     this.process = []
+    this.options = { prefix, secrets, noPerm, disableAttachmentExecution }
+    if (!this.options.secrets || !Array.isArray(this.options.secrets)) this.options.secrets = []
+    if (!this.options.aliases) this.options.aliases = ['dokdo', 'dok']
   }
 
   /**
@@ -88,7 +87,7 @@ module.exports = class Dokdo {
       }
     }
     if (this.options.aliases && !this.options.aliases.includes(message.data.cmd)) return
-    if (!this.options.owners.includes(message.author.id)) {
+    if (!this.owners.includes(message.author.id)) {
       if (this.options.noPerm) return this.options.noPerm(message)
       else return
     }
