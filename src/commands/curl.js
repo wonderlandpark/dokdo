@@ -1,5 +1,5 @@
-const { ProcessManager, HLJS } = require('../utils')
 const fetch = require('node-fetch')
+const { ProcessManager, HLJS } = require('../utils')
 
 module.exports = async function curl (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
