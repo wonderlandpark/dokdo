@@ -122,6 +122,18 @@ module.exports = class Dokdo {
         message.channel.send('Available Options: `sh`, `js`, `shard`')
     }
   }
+
+  _addOwner (id) {
+    if (this.owners.includes(id)) return
+    this.owners.push(id)
+    return this.owners
+  }
+
+  _removeOwner (id) {
+    if (!this.owners.includes(id)) return null
+    this.owners.splice(this.owners.indexOf(id), 1)
+    return this.owners
+  }
 }
 
 module.exports.Utils = Utils
