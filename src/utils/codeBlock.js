@@ -1,17 +1,21 @@
-const Discord = require('discord.js')
+const { Util } = require('discord.js')
 
-/**
- * @param {string} content
- * @param {string} lang
- */
 module.exports = class codeBlock {
+  /**
+   * @param {string} [content]
+   * @param {string} [lang]
+   */
   static construct (content, lang) {
     return `\`\`\`${content ? lang || '' : ''}
-${Discord.Util.escapeCodeBlock(content)}
+${Util.escapeCodeBlock(content)}
 \`\`\``
   }
 
+  /**
+   * @param {string} content
+   */
   static parse (content) {
-    return content.match(/^```(.*?)\n(.*?)```$/ms)
+    const result = content.match(/^```(.*?)\n(.*?)```$/ms)
+    return result ? result.slice(0, 3).map(el => el.trim()) : null
   }
 }
