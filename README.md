@@ -34,6 +34,12 @@ npm i dokdo@latest
 npm i wonderlandpark/dokdo#main
 ```
 
+## Features
+
+### Easy shard broadcastEval manager
+
+![shard](assets/shard.png)
+
 ## Example usage
 
 ```js
