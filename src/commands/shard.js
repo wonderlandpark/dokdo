@@ -3,8 +3,7 @@ const { ProcessManager, inspect } = require('../utils')
 module.exports = async function shard (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
   if (!parent.client.shard) return message.channel.send('Shard Manager not found.')
-  const res = parent.client.shard.broadcastEval(message.data.args)
-  const result = await res.catch(e => e.toString())
+  const result = await parent.client.shard.broadcastEval(message.data.args).then(el => el).catch(e => e.toString())
   let msg
   if (!Array.isArray(result)) msg = new ProcessManager(message, result, parent, { lang: 'js' })
   else {
