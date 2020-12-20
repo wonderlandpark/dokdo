@@ -18,6 +18,7 @@ const Utils = require('./utils')
  * @property {any[]} [secrets=[]] Secrets to hide
  * @property {noPerm} [noPerm] Executed when command runned by not allowed user
  * @property {boolean} [disableAttachmentExecution=false] Disable attachment execution.
+ * @property {boolean} [warnlog=true] Send warn log when command runned by allowed user
  */
 
 /**
@@ -35,7 +36,7 @@ module.exports = class Dokdo {
    * @param {Discord.Client} client Discord Client
    * @param {DokdoOptions} options Dokdo Options
    */
-  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false } = {}) {
+  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false, warnlog = false } = {}) {
     if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
     // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
     this.owners = owners
@@ -53,7 +54,7 @@ module.exports = class Dokdo {
 
     this.client = client
     this.process = []
-    this.options = { prefix, aliases, secrets, noPerm, disableAttachmentExecution }
+    this.options = { prefix, aliases, secrets, noPerm, disableAttachmentExecution, warnlog }
     if (!this.options.secrets || !Array.isArray(this.options.secrets)) this.options.secrets = []
     if (!this.options.aliases) this.options.aliases = ['dokdo', 'dok']
   }
@@ -91,6 +92,7 @@ module.exports = class Dokdo {
       if (this.options.noPerm) return this.options.noPerm(message)
       else return
     }
+    if (this.options.warnlog) console.warn(`[dokdo/${message.data.type}] ${message.author.tag}(${message.author.id}) tried emit Command: ${message.data.args}`)
 
     if (!message.data.type) return Commands.main(message, this)
     switch (message.data.type) {
