@@ -53,7 +53,7 @@ module.exports = class Dokdo {
 
     this.client = client
     this.process = []
-    this.options = { prefix, secrets, noPerm, disableAttachmentExecution }
+    this.options = { prefix, aliases, secrets, noPerm, disableAttachmentExecution }
     if (!this.options.secrets || !Array.isArray(this.options.secrets)) this.options.secrets = []
     if (!this.options.aliases) this.options.aliases = ['dokdo', 'dok']
   }
