@@ -14,6 +14,8 @@
 
 Dokdo. Easy Discord bot debuging tool.
 
+It's debugging tool for `discord.js` projects.
+
 ## Preview
 
 ![sh](assets/dokdo.gif)
