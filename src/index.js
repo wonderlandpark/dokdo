@@ -38,6 +38,7 @@ module.exports = class Dokdo {
   constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false } = {}) {
     if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
     // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
+    if (noPerm && typeof noPerm !== 'function') throw new Error('`noPerm` parameter is must be Function.')
     this.owners = owners
     if (!this.owners) {
       console.warn('[dokdo] Owners not given. Fetching from Application.')
@@ -53,7 +54,7 @@ module.exports = class Dokdo {
 
     this.client = client
     this.process = []
-    this.options = { prefix, secrets, noPerm, disableAttachmentExecution }
+    this.options = { prefix, aliases, secrets, noPerm, disableAttachmentExecution }
     if (!this.options.secrets || !Array.isArray(this.options.secrets)) this.options.secrets = []
     if (!this.options.aliases) this.options.aliases = ['dokdo', 'dok']
   }
