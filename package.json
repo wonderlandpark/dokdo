@@ -8,9 +8,8 @@
   },
   "repository": "https://github.com/wonderlandpark/dokdo/Dokdo",
   "scripts": {
-    "jsdoc": "rm -rf dokdo && git clone https://github.com/wonderlandpark/dokdo -b main dokdo && cd dokdo && npm i && cd .. && vuepress-jsdoc --source ./dokdo/src --dist ./src --folder docs",
-    "dev": "vuepress dev src",
-    "build": "vuepress build src",
+    "dev": "vuepress dev .",
+    "build": "vuepress build .",
     "deploy": "npm run jsdoc && npm run build"
   },
   "license": "MIT",
