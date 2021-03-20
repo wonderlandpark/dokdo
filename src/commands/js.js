@@ -1,4 +1,4 @@
-const { ProcessManager, inspect, isinstance } = require('../utils')
+const { ProcessManager, inspect, isinstance, isGenerator } = require('../utils')
 const Discord = require('discord.js')
 
 module.exports = async function js (message, parent) {
@@ -12,8 +12,28 @@ module.exports = async function js (message, parent) {
   const result = await res
     .then(async output => {
       typeOf = typeof output
-      if (output instanceof Discord.MessageEmbed) await message.channel.send(output)
-      else if (isinstance(output, Discord.MessageAttachment)) await message.channel.send({ files: output instanceof Discord.Collection ? output.array() : [output] })
+
+      async function prettify (target) {
+        if (target instanceof Discord.MessageEmbed) await message.channel.send(target)
+        else if (isinstance(target, Discord.MessageAttachment)) {
+          await message.channel.send({
+            files: target instanceof Discord.Collection ? target.array() : [target]
+          })
+        }
+      }
+
+      if (isGenerator(output)) {
+        for (const value of output) {
+          prettify(value)
+
+          if (typeof value === 'function') await message.channel.send(value.toString())
+          else if (typeof value === 'string') await message.channel.send(value)
+          else await message.channel.send(inspect(value, { depth: 1, maxArrayLength: 200 }))
+        }
+      }
+
+      prettify(output)
+
       if (typeof output === 'function') {
         typeOf = 'object'
         return output.toString()
@@ -31,5 +51,9 @@ module.exports = async function js (message, parent) {
 
   const msg = new ProcessManager(message, result || '', parent, { lang: 'js', noCode: typeOf !== 'object' })
   await msg.init()
-  await msg.addAction([{ emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true }, { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true }, { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }])
+  await msg.addAction([
+    { emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true },
+    { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }
+  ])
 }

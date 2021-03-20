@@ -8,6 +8,7 @@ const inspect = require('./inspect')
 const table = require('./table')
 const type = require('./type')
 const isinstance = require('./isinstance')
+const isGenerator = require('./isGenerator')
 
 module.exports = {
   ProcessManager,
@@ -18,5 +19,6 @@ module.exports = {
   table,
   type,
   inspect,
-  isinstance
+  isinstance,
+  isGenerator
 }
