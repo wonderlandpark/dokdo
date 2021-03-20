@@ -4,9 +4,9 @@
   "description": "Easy Discord bot debuging tool.",
   "authors": {
     "name": "Junseo Park",
-    "email": "wonderlandpark@callisto.team"
+    "email": "me@wonder.im"
   },
-  "repository": "https://github.com/wonderlandpark/dokdo/Dokdo",
+  "repository": "https://github.com/wonderlandpark/dokdo",
   "scripts": {
     "dev": "vuepress dev .",
     "build": "vuepress build ."

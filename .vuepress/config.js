@@ -27,6 +27,9 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
    */
   themeConfig: {
+    repo: 'wonderlandpark/dokdo',
+    docsRepo: 'wonderlandpark/dokdo',
+    docsBranch: 'docs',
     editLinks: true,
     displayAllHeaders: true,
     sidebarDepth: 1,
@@ -47,7 +50,6 @@ module.exports = {
           }
         ],
         sidebar: [
-          '/',
           {
             title: 'Introduction',
             path: '/docs/'
