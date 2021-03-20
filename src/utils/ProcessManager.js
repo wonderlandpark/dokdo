@@ -167,8 +167,8 @@ module.exports = class ProcessManager {
   }
 
   destroy () {
+    this.message.reactions.removeAll().catch(() => {})
     this.reactCollector.stop()
-    this.message.reactions.removeAll()
   }
 
   genText () {
