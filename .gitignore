@@ -10,5 +10,3 @@ dist
 .basement
 config.local.js
 basement_dist
-dokdo
-src/docs

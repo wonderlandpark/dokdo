@@ -8,14 +8,14 @@
   },
   "repository": "https://github.com/wonderlandpark/dokdo/Dokdo",
   "scripts": {
-    "jsdoc": "git clone https://github.com/wonderlandpark/dokdo -b main dokdo & cd dokdo & npm i & cd .. & vuepress-jsdoc --source ./dokdo/src --dist ./src --folder docs --title Dokdo",
+    "jsdoc": "rm -rf dokdo && git clone https://github.com/wonderlandpark/dokdo -b main dokdo && cd dokdo && npm i && cd .. && vuepress-jsdoc --source ./dokdo/src --dist ./src --folder docs",
     "dev": "vuepress dev src",
     "build": "vuepress build src",
-    "deploy": "npm run jsdoc & npm run build"
+    "deploy": "npm run jsdoc && npm run build"
   },
   "license": "MIT",
   "devDependencies": {
-    "vuepress": "^1.5.3",
+    "vuepress": "^1.8.2",
     "vuepress-jsdoc": "^3.2.0"
   }
 }

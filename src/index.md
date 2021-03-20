@@ -10,6 +10,6 @@ features:
 - title: Object oriented.
   details: The codes are Object-Oriented
 - title: Customizable.
-  details: Prefix, aliases, owners and permission error message. You could customize everything.
+  details: Prefix, aliases, owners, variables and permission error message. You could customize everything.
 footer: Made by wonderlandpark with ❤️
 ---

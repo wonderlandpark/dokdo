@@ -1,5 +1,5 @@
 const { description } = require('../../package')
-const { sidebarTree } = require('../docs/config')
+
 module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
@@ -28,18 +28,56 @@ module.exports = {
    */
   themeConfig: {
     editLinks: true,
-    sidebarDepth: 4,
-    docsDir: 'code',
+    displayAllHeaders: true,
+    sidebarDepth: 1,
     locales: {
       '/': {
+        lang: 'en',
+        selectText: 'Languages',
+        label: '🇺🇸 English',
+        ariaLabel: 'Languages',
         nav: [
           {
             text: 'Home',
             link: '/'
+          },
+          {
+            text: 'Document',
+            link: '/docs/'
           }
         ],
-        // Add the generated sidebar
-        sidebar: Object.assign({}, sidebarTree('Mainpage title'))
+        sidebar: [
+          '/',
+          {
+            title: 'Introduction',
+            path: '/docs/'
+          },
+          {
+            title: 'Examples',
+            path: '/docs/examples'
+          },
+          {
+            title: 'Typing',
+            path: '/docs/types'
+          }
+
+        ]
+      },
+      '/ko/': {
+        lang: 'ko',
+        selectText: '언어',
+        label: '🇰🇷 한국어',
+        ariaLabel: '언어',
+        nav: [
+          {
+            text: '홈',
+            link: '/ko'
+          },
+          {
+            text: '문서',
+            link: '/ko/docs/'
+          }
+        ]
       }
     }
   },
