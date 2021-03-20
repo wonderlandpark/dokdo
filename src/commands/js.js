@@ -52,8 +52,8 @@ module.exports = async function js (message, parent) {
   const msg = new ProcessManager(message, result || '', parent, { lang: 'js', noCode: typeOf !== 'object' })
   await msg.init()
   await msg.addAction([
-    { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true },
     { emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true },
     { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }
