@@ -35,11 +35,21 @@ module.exports = class Dokdo {
    * @param {Discord.Client} client Discord Client
    * @param {DokdoOptions} options Dokdo Options
    */
-  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false } = {}) {
+  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false, globalVariable = {} } = {}) {
     if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
     // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
-    if (noPerm && typeof noPerm !== 'function') throw new Error('`noPerm` parameter is must be Function.')
+    if (noPerm && typeof noPerm !== 'function') throw new Error('`noPerm` parameter must be Function.')
+    if (globalVariable) {
+      if (typeof globalVariable !== 'object') throw new Error('`globalVariable` parameter must be Object.')
+      else {
+        Object.keys(globalVariable).forEach(el => {
+          global[el] = globalVariable[el]
+        })
+      }
+    }
+
     this.owners = owners
+
     client.on('ready', () => {
       if (!this.owners) {
         console.warn('[dokdo] Owners not given. Fetching from Application.')

@@ -14,6 +14,7 @@ declare module 'dokdo' {
     owners?: string[]
     prefix?: string
     secrets?: any[]
+    globalVariable?: Record<string, any>
     noPerm(message: Discord.Message): any|Promise<any>
   }
 

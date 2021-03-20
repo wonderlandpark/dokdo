@@ -4,7 +4,7 @@ const config = require('./config')
 
 const Dokdo = require('../src')
 
-const DokdoHandler = new Dokdo(client, { aliases: ['dokdo', 'dok'], prefix: '!', noPerm: (message) => message.reply('No Permission') })
+const DokdoHandler = new Dokdo(client, { aliases: ['dokdo', 'dok'], prefix: '!', noPerm: (message) => message.reply('No Permission'), globalVariable: { WONDER_IS_COOL: true } })
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
