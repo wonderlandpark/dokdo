@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Examples | Dokdo</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="Easy Discord bot debuging tool.">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/assets/css/0.styles.c3efbb04.css" as="style"><link rel="preload" href="/assets/js/app.052d5589.js" as="script"><link rel="preload" href="/assets/js/2.249a7e42.js" as="script"><link rel="preload" href="/assets/js/8.399b8e34.js" as="script"><link rel="prefetch" href="/assets/js/10.e2c5e4bd.js"><link rel="prefetch" href="/assets/js/11.d7c7535e.js"><link rel="prefetch" href="/assets/js/3.085d7fde.js"><link rel="prefetch" href="/assets/js/4.0830f08b.js"><link rel="prefetch" href="/assets/js/5.46c7abcb.js"><link rel="prefetch" href="/assets/js/6.5b7f3dca.js"><link rel="prefetch" href="/assets/js/7.dce4eb50.js"><link rel="prefetch" href="/assets/js/9.eeeddcbf.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.c3efbb04.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Dokdo</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link router-link-active">
+  Document
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link router-link-active">
+  Document
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/" aria-current="page" class="sidebar-link">Home</a></li><li><a href="/docs/" aria-current="page" class="sidebar-link">Introduction</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/#getting-started" class="sidebar-link">Getting Started</a></li><li class="sidebar-sub-header"><a href="/docs/#examples" class="sidebar-link">Examples</a></li><li class="sidebar-sub-header"><a href="/docs/#contributing" class="sidebar-link">Contributing</a></li></ul></li><li><a href="/docs/examples.html" aria-current="page" class="active sidebar-link">Examples</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/examples.html#return-message-for-non-owner-user" class="sidebar-link">Return message for Non-owner user</a></li></ul></li><li><a href="/docs/types.html" class="sidebar-link">Typing</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/types.html#dokdo" class="sidebar-link">Dokdo</a></li><li class="sidebar-sub-header"><a href="/docs/types.html#dokdooptions" class="sidebar-link">DokdoOptions</a></li></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="examples"><a href="#examples" class="header-anchor">#</a> Examples</h1> <p>Example usages of Dokdo.</p> <h2 id="return-message-for-non-owner-user"><a href="#return-message-for-non-owner-user" class="header-anchor">#</a> Return message for Non-owner user</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> dokdo <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'dokdo'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> DokdoHandler <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dokdo</span><span class="token punctuation">(</span>client<span class="token punctuation">,</span> <span class="token punctuation">{</span> prefix<span class="token operator">:</span> <span class="token string">'!'</span><span class="token punctuation">,</span> <span class="token function-variable function">noPerm</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">message</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> message<span class="token punctuation">.</span><span class="token function">reply</span><span class="token punctuation">(</span><span class="token string">'🚫 You have no permission to use dokdo.'</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+client<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'ready'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Logged in as </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>client<span class="token punctuation">.</span>user<span class="token punctuation">.</span>tag<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">!</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+client<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'message'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token parameter">message</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>message<span class="token punctuation">.</span>content <span class="token operator">===</span> <span class="token string">'ping'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> message<span class="token punctuation">.</span><span class="token function">reply</span><span class="token punctuation">(</span><span class="token string">'pong'</span><span class="token punctuation">)</span>
+  <span class="token keyword">await</span> DokdoHandler<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="result"><a href="#result" class="header-anchor">#</a> Result</h3> <p><img src="/noPerm.png" alt="Preview"></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/docs/" class="prev router-link-active">
+        Introduction
+      </a></span> <span class="next"><a href="/docs/types.html">
+        Typing
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.052d5589.js" defer></script><script src="/assets/js/2.249a7e42.js" defer></script><script src="/assets/js/8.399b8e34.js" defer></script>
+  </body>
+</html>
