@@ -40,17 +40,18 @@ module.exports = class Dokdo {
     // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
     if (noPerm && typeof noPerm !== 'function') throw new Error('`noPerm` parameter is must be Function.')
     this.owners = owners
-    if (!this.owners) {
-      console.warn('[dokdo] Owners not given. Fetching from Application.')
+    client.on('ready', () => {
+      if (!this.owners) {
+        console.warn('[dokdo] Owners not given. Fetching from Application.')
+        client.fetchApplication().then(data => {
+          if (data.owner.members) this.owners = data.owner.members.map(el => el.id)
+          else if (data.owner.id) this.owners = [data.owner.id]
+          else this.owners = []
 
-      client.fetchApplication().then(data => {
-        if (data.owner.members) this.owners = data.owner.members.map(el => el.id)
-        else if (data.owner.id) this.owners = [data.owner.id]
-        else this.owners = []
-
-        console.info(`[dokdo] Fetched ${this.owners.length} owner(s): ${this.owners.length > 3 ? this.owners.slice(0, 3).join(', ') + ` and ${this.owners.length - 3} more owners` : this.owners.join(', ')}`)
-      })
-    }
+          console.info(`[dokdo] Fetched ${this.owners.length} owner(s): ${this.owners.length > 3 ? this.owners.slice(0, 3).join(', ') + ` and ${this.owners.length - 3} more owners` : this.owners.join(', ')}`)
+        })
+      }
+    })
 
     this.client = client
     this.process = []
