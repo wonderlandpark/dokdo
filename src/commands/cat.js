@@ -9,6 +9,6 @@ module.exports = async function curl (message, parent) {
     if (err) msg = new ProcessManager(message, err.toString(), parent, { lang: 'js' })
     else msg = new ProcessManager(message, data.toString(), parent, { lang: HLJS.getLang(filename.split('.').pop()) })
     await msg.init()
-    await msg.addAction([{ emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true }, { emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true }, { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }])
+    await msg.addAction([{ emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true }, { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true }, { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }])
   })
 }

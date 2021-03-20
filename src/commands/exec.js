@@ -18,26 +18,27 @@ module.exports = async function Exec (message, parent) {
   }, 180000)
   console.log(res.pid)
 
-  await msg.addAction([{
-    emoji: '⏹️',
-    action: async ({ res, manager }) => {
-      res.stdin.pause()
-      const gg = await kill(res)
-      console.log(gg)
-      manager.destroy()
-      msg.add('^C')
-    }
-  },
-  {
-    emoji: '◀️',
-    action: ({ manager }) => manager.previousPage(),
-    requirePage: true
-  },
-  {
-    emoji: '▶️',
-    action: ({ manager }) => manager.nextPage(),
-    requirePage: true
-  }], { res })
+  await msg.addAction([
+    {
+      emoji: '◀️',
+      action: ({ manager }) => manager.previousPage(),
+      requirePage: true
+    },
+    {
+      emoji: '⏹️',
+      action: async ({ res, manager }) => {
+        res.stdin.pause()
+        const gg = await kill(res)
+        console.log(gg)
+        manager.destroy()
+        msg.add('^C')
+      }
+    },
+    {
+      emoji: '▶️',
+      action: ({ manager }) => manager.nextPage(),
+      requirePage: true
+    }], { res })
 
   res.stdout.on('data', (data) => {
     console.log(data.toString())

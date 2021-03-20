@@ -35,22 +35,30 @@ module.exports = class Dokdo {
    * @param {Discord.Client} client Discord Client
    * @param {DokdoOptions} options Dokdo Options
    */
-  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false } = {}) {
+  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false, globalVariable = {} } = {}) {
     if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
     // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
-    if (noPerm && typeof noPerm !== 'function') throw new Error('`noPerm` parameter is must be Function.')
-    this.owners = owners
-    if (!this.owners) {
-      console.warn('[dokdo] Owners not given. Fetching from Application.')
-
-      client.fetchApplication().then(data => {
-        if (data.owner.members) this.owners = data.owner.members.map(el => el.id)
-        else if (data.owner.id) this.owners = [data.owner.id]
-        else this.owners = []
-
-        console.info(`[dokdo] Fetched ${this.owners.length} owner(s): ${this.owners.length > 3 ? this.owners.slice(0, 3).join(', ') + ` and ${this.owners.length - 3} more owners` : this.owners.join(', ')}`)
-      })
+    if (noPerm && typeof noPerm !== 'function') throw new Error('`noPerm` parameter must be Function.')
+    if (globalVariable) {
+      if (typeof globalVariable !== 'object') throw new Error('`globalVariable` parameter must be Object.')
+      else {
+        Object.keys(globalVariable).forEach(el => {
+          global[el] = globalVariable[el]
+        })
+      }
     }
+
+    this.owners = owners
+
+    client.on('ready', () => {
+      if (!this.owners) {
+        console.warn('[dokdo] Owners not given. Fetching from Application.')
+        client.fetchApplication().then(data => {
+          this.owners = data.owner.members?.map(el => el.id) || [data.owner.id] || []
+          console.info(`[dokdo] Fetched ${this.owners.length} owner(s): ${this.owners.length > 3 ? this.owners.slice(0, 3).join(', ') + ` and ${this.owners.length - 3} more owners` : this.owners.join(', ')}`)
+        })
+      }
+    })
 
     this.client = client
     this.process = []
@@ -120,7 +128,7 @@ module.exports = class Dokdo {
         Commands.cat(message, this)
         break
       default:
-        message.channel.send('Available Options: `sh`, `js`, `shard`')
+        message.channel.send('Available Options: `sh`, `js`, `shard`, `jsi`, `curl`, `cat`')
     }
   }
 

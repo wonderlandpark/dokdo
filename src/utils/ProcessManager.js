@@ -39,10 +39,9 @@ const codeBlock = require('./codeBlock')
    */
 module.exports = class ProcessManager {
   constructor (message, content, dokdo, options = {}) {
-    if (!content || typeof content !== 'string') throw new Error('Please pass valid content')
     this.target = message.channel
     this.dokdo = dokdo
-    this.content = content || ''
+    this.content = content || '​'
     this.messageContent = ''
     this.options = options
     this.limit = options.limit || 1900
@@ -53,6 +52,7 @@ module.exports = class ProcessManager {
     this.wait = 1
     this.message = null
     this.argument = []
+    if (typeof this.content !== 'string') throw new Error('Please pass valid content')
   }
 
   async init () {
@@ -167,8 +167,8 @@ module.exports = class ProcessManager {
   }
 
   destroy () {
+    this.message.reactions.removeAll().catch(() => {})
     this.reactCollector.stop()
-    this.message.reactions.removeAll()
   }
 
   genText () {
