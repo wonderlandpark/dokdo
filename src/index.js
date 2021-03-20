@@ -16,6 +16,7 @@ const Utils = require('./utils')
  * @property {string[]} [owners] ID of owners
  * @property {string} [prefix] Prefix of Bot
  * @property {any[]} [secrets=[]] Secrets to hide
+ * @property {Record<string, any>} [globalVariable={}] Custom global Variable for eval
  * @property {noPerm} [noPerm] Executed when command runned by not allowed user
  * @property {boolean} [disableAttachmentExecution=false] Disable attachment execution.
  */
