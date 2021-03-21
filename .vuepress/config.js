@@ -29,59 +29,94 @@ module.exports = {
    */
   themeConfig: {
     repo: 'wonderlandpark/dokdo',
+    logo: '/logo.png',
     docsRepo: 'wonderlandpark/dokdo',
     docsBranch: 'docs',
     editLinks: true,
     displayAllHeaders: true,
     sidebarDepth: 1,
+    sidebar: [
+      {
+        title: 'Introduction',
+        path: '/docs/'
+      },
+      {
+        title: 'Examples',
+        path: '/docs/examples'
+      },
+      {
+        title: 'Commands',
+        path: '/docs/commands'
+      },
+      {
+        title: 'Typing',
+        path: '/docs/types'
+      }
+
+    ],
     locales: {
-      '/': {
-        lang: 'en',
-        selectText: 'Languages',
-        label: '🇺🇸 English',
-        ariaLabel: 'Languages',
-        nav: [
-          {
-            text: 'Home',
-            link: '/'
-          },
-          {
-            text: 'Document',
-            link: '/docs/'
-          }
-        ],
+      '/ko/': {
+        selectText: '언어',
         sidebar: [
           {
-            title: 'Introduction',
-            path: '/docs/'
+            title: '소개',
+            path: '/ko/docs/'
           },
           {
-            title: 'Examples',
-            path: '/docs/examples'
+            title: '예시',
+            path: '/ko/docs/examples'
           },
           {
-            title: 'Typing',
-            path: '/docs/types'
+            title: '타입',
+            path: '/ko/docs/types'
           }
-
-        ]
-      },
-      '/ko/': {
-        lang: 'ko',
-        selectText: '언어',
-        label: '🇰🇷 한국어',
-        ariaLabel: '언어',
-        nav: [
-          {
-            text: '홈',
-            link: '/ko'
-          },
-          {
-            text: '문서',
-            link: '/ko/docs/'
-          }
+  
         ]
       }
+    }
+  },
+
+  locales: {
+    '/': {
+      lang: '🇺🇸 English',
+      nav: [
+        {
+          text: 'Home',
+          link: '/'
+        },
+        {
+          text: 'Document',
+          link: '/docs/'
+        }
+      ]
+    },
+    '/ko/': {
+      lang: '🇰🇷 한국어',
+      nav: [
+        {
+          text: '홈',
+          link: '/ko'
+        },
+        {
+          text: '문서',
+          link: '/ko/docs/'
+        }
+      ],
+      sidebar: [
+        {
+          title: 'Introductidon',
+          path: '/docs/'
+        },
+        {
+          title: 'Examples',
+          path: '/docs/examples'
+        },
+        {
+          title: 'Typing',
+          path: '/docs/types'
+        }
+
+      ]
     }
   },
 

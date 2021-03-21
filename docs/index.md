@@ -34,13 +34,13 @@ const Dokdo = require('dokdo')
 const DokdoHandler = new Dokdo(client, { prefix: '!' })
 ```
 
-You could check Dokdo class options [here](/docs/types.md#).
+You could check Dokdo class options [here](/docs/types.md#dokdooptions).
 
 At Message Handler:
 
 ```js
 client.on('message', async (message) => {
-  DokdoHandler.run(message)
+  await DokdoHandler.run(message)
   // your command code
 })
 ```
