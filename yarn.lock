@@ -140,9 +140,9 @@
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/node@^14.14.10":
-  version "14.14.37"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.37.tgz#a3dd8da4eb84a996c36e331df98d82abd76b516e"
-  integrity sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
+  version "14.14.38"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.38.tgz#f8338bc36d81c31abf410ba64af9a6e3e8c14bf0"
+  integrity sha512-cTiIM5yNu+CxZO+QzKZ8W+FeiDbgIWKhU3HniQjyzb0R7SvmyEMFYtEu8l9A3wU7emobj6mxZV/4dmkY6jsftw==
 
 "@typescript-eslint/eslint-plugin@^4.9.0":
   version "4.21.0"
