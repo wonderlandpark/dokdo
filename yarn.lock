@@ -93,6 +93,15 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@es-joy/jsdoccomment@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.4.3.tgz#c66b42aa66d2e0718f77fccc8d9061cf0b1092ac"
+  integrity sha512-t0JWZfQiG+Qkr6+tl05dlGcgE/MMPqs7QfNlFkTsbpcCu2Zfukcan/fIiHKTc0iOs4Yh3cnfklMayJnlmKaOwQ==
+  dependencies:
+    comment-parser "^1.1.5"
+    esquery "^1.4.0"
+    jsdoctypeparser "^9.0.0"
+
 "@eslint/eslintrc@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.0.tgz#99cc0a0584d72f1df38b900fb062ba995f395547"
@@ -502,7 +511,7 @@ color-name@~1.1.4:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-comment-parser@1.1.5:
+comment-parser@1.1.5, comment-parser@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.5.tgz#453627ef8f67dbcec44e79a9bd5baa37f0bce9b2"
   integrity sha512-RePCE4leIhBlmrqiYTvaqEeGYg7qpSl4etaIabKtdOQVi+mSTIBBklGUwIr79GXYnl3LpMwmDw4KeR2stNc6FA==
@@ -715,13 +724,15 @@ eslint-plugin-import@^2.22.1:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jsdoc@^32.1.0:
-  version "32.3.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-32.3.2.tgz#69cf9ad42bcb0cf265890e7477207392fbfa541d"
-  integrity sha512-kcdg0OvhI466KgMYXwxGvP6+m9J/sIBg0Jkn9eDU5lnM6RSVM27M9zKZim2XY6AUbbdqmkBPEP4ixvtBXRHktQ==
+eslint-plugin-jsdoc@^33.1.0:
+  version "33.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-33.1.0.tgz#9aa52d0eb0126ea42528aa352265007dce320565"
+  integrity sha512-nyH1qAj5f4uDnDpg4aiAS65wJSfxfBDf0lIgNfxtew31z3VRaM8WsVmpe4UhI2u27oOD/ChRuye6KAzzuHn6Jw==
   dependencies:
+    "@es-joy/jsdoccomment" "^0.4.3"
     comment-parser "1.1.5"
     debug "^4.3.1"
+    esquery "^1.4.0"
     jsdoctypeparser "^9.0.0"
     lodash "^4.17.21"
     regextras "^0.7.1"
