@@ -54,7 +54,7 @@ module.exports = class Dokdo {
     client.once('ready', () => {
       if (!this.owners) {
         console.warn('[dokdo] Owners not given. Fetching from Application.')
-        client.fetchApplication().then(data => {
+        client.application.fetch().then(data => {
           this.owners = data.owner.members?.map(el => el.id) || [data.owner.id] || []
           console.info(`[dokdo] Fetched ${this.owners.length} owner(s): ${this.owners.length > 3 ? this.owners.slice(0, 3).join(', ') + ` and ${this.owners.length - 3} more owners` : this.owners.join(', ')}`)
         })

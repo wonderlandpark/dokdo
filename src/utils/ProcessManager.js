@@ -178,6 +178,7 @@ module.exports = class ProcessManager {
 
   splitContent () {
     const strings = this.content.split('\n')
-    return Discord.Util.splitMessage(strings.map(str => str.length > this.limit ? str.match(new RegExp(`.{1,${this.limit}}`, 'g')) : str).flat(), { maxLength: this.limit })
+    const text = strings.map(str => str.length > this.limit ? str.match(new RegExp(`.{1,${this.limit}}`, 'g')) : str).flat().join('\n')
+    return Discord.Util.splitMessage(text, { maxLength: this.limit })
   }
 }
