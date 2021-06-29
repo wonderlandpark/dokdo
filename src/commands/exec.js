@@ -1,5 +1,6 @@
 const child = require('child_process')
 const { ProcessManager, codeBlock } = require('../utils')
+const Discord = require('discord.js')
 
 module.exports = async function Exec (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
@@ -39,6 +40,22 @@ module.exports = async function Exec (message, parent) {
       action: ({ manager }) => manager.nextPage(),
       requirePage: true
     }], { res })
+
+  await msg.addAction([
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomID('dokdo$back').setLabel('이전'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    {
+      button: new Discord.MessageButton().setStyle('SECONDARY').setCustomID('dokdo$stop').setLabel('정지'),
+      action: async ({ res, manager }) => {
+        res.stdin.pause()
+        const gg = await kill(res)
+        console.log(gg)
+        manager.destroy()
+        msg.add('^C')
+      },
+      requirePage: true
+    },
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('다음'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+  ], { res })
 
   res.stdout.on('data', (data) => {
     console.log(data.toString())

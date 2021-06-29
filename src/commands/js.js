@@ -14,7 +14,7 @@ module.exports = async function js (message, parent) {
       typeOf = typeof output
 
       async function prettify (target) {
-        if (target instanceof Discord.MessageEmbed) await message.channel.send(target)
+        if (target instanceof Discord.MessageEmbed) await message.channel.send({ embeds: [target] })
         else if (isinstance(target, Discord.MessageAttachment)) {
           await message.channel.send({
             files: target instanceof Discord.Collection ? target.array() : [target]
@@ -52,8 +52,8 @@ module.exports = async function js (message, parent) {
   const msg = new ProcessManager(message, result || '', parent, { lang: 'js', noCode: typeOf !== 'object' })
   await msg.init()
   await msg.addAction([
-    { emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true },
-    { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true },
-    { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomID('dokdo$back').setLabel('이전'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomID('dokdo$stop').setLabel('정지'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('다음'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }

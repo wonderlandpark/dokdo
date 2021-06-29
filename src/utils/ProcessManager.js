@@ -74,34 +74,29 @@ module.exports = class ProcessManager {
 
     this.args.manager = this
 
-    this.reactMessage()
-    this.reactCollector = this.message.createReactionCollector((reaction, user) => this.actions.find(e => e.emoji === reaction.emoji.name) && user.id === this.author.id, { time: 300000, error: ['time'], dispose: true })
+    this.createMessageComponentMessage()
+    this.componentInteractionCollector =
+    this.message.createMessageComponentInteractionCollector((interaction) => this.actions.find(e => e.button.customID === interaction.customID) && interaction.user.id === this.author.id, { time: 300000, error: ['time'], dispose: true })
 
-    this.reactCollector.on('collect', r => {
-      const e = this.actions.find(e => e.emoji === r.emoji.name)
+    this.componentInteractionCollector.on('collect', r => {
+      const e = this.actions.find(e => e.button.customID === r.customID)
       if (!e) return
+      r.deferUpdate()
       e.action(this.args)
     })
 
-    this.reactCollector.on('remove', r => {
-      const e = this.actions.find(e => e.emoji === r.emoji.name)
-
-      if (!e) return
-      e.action(this.args)
-    })
-
-    this.reactCollector.on('end', () => {
-      this.message.reactions.removeAll().catch(e => e)
+    this.componentInteractionCollector.on('end', () => {
+      this.message.edit({ components: [] })
     })
   }
 
-  async reactMessage () {
+  async createMessageComponentMessage () {
     if (this.options.noCode && this.splitted.length < 2) return
-    this.actions.filter(el => !el.reacted).forEach(el => {
-      if (el.requirePage && this.splitted.length <= 1) return
-      el.reacted = true
-      this.message.react(el.emoji)
-    })
+    const buttons = this.actions.filter(el => !(el.requirePage && this.splitted.length <= 1))
+      .map(el => el.button)
+    const actionRow = new Discord.MessageActionRow({ components: buttons })
+
+    this.message.edit({ components: [actionRow] })
   }
 
   filterSecret (string) {
@@ -153,7 +148,7 @@ module.exports = class ProcessManager {
   }
 
   edit () {
-    if (this.splitted.length > 1) this.reactMessage()
+    if (this.splitted.length > 1) this.createMessageComponentMessage()
     this.message.edit(this.filterSecret(this.messageContent))
   }
 
@@ -168,8 +163,8 @@ module.exports = class ProcessManager {
   }
 
   destroy () {
-    this.message.reactions.removeAll().catch(() => {})
-    this.reactCollector.stop()
+    this.message.edit({ components: [] })
+    this.componentInteractionCollector.stop()
   }
 
   genText () {
