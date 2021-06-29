@@ -94,8 +94,8 @@ module.exports = class ProcessManager {
     if (this.options.noCode && this.splitted.length < 2) return
     const buttons = this.actions.filter(el => !(el.requirePage && this.splitted.length <= 1))
       .map(el => el.button)
+    if (!buttons.length <= 0) return
     const actionRow = new Discord.MessageActionRow({ components: buttons })
-
     this.message.edit({ components: [actionRow] })
   }
 
