@@ -20,28 +20,6 @@ module.exports = async function Exec (message, parent) {
   console.log(res.pid)
 
   await msg.addAction([
-    {
-      emoji: '◀️',
-      action: ({ manager }) => manager.previousPage(),
-      requirePage: true
-    },
-    {
-      emoji: '⏹️',
-      action: async ({ res, manager }) => {
-        res.stdin.pause()
-        const gg = await kill(res)
-        console.log(gg)
-        manager.destroy()
-        msg.add('^C')
-      }
-    },
-    {
-      emoji: '▶️',
-      action: ({ manager }) => manager.nextPage(),
-      requirePage: true
-    }], { res })
-
-  await msg.addAction([
     { button: new Discord.MessageButton().setStyle('DANGER').setCustomID('dokdo$back').setLabel('이전'), action: ({ manager }) => manager.previousPage(), requirePage: true },
     {
       button: new Discord.MessageButton().setStyle('SECONDARY').setCustomID('dokdo$stop').setLabel('정지'),
