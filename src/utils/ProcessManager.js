@@ -76,7 +76,7 @@ module.exports = class ProcessManager {
 
     this.createMessageComponentMessage()
     this.componentInteractionCollector =
-    this.message.createMessageComponentInteractionCollector((interaction) => this.actions.find(e => e.button.customID === interaction.customID) && interaction.user.id === this.author.id, { time: 300000, error: ['time'], dispose: true })
+    this.message.createMessageComponentInteractionCollector({ filter: (interaction) => this.actions.find(e => e.button.customID === interaction.customID) && interaction.user.id === this.author.id, time: 300000, error: ['time'], dispose: true })
 
     this.componentInteractionCollector.on('collect', r => {
       const e = this.actions.find(e => e.button.customID === r.customID)
