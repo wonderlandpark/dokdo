@@ -27,8 +27,8 @@ module.exports = async function Exec (message, parent) {
         res.stdin.pause()
         const gg = await kill(res)
         console.log(gg)
-        manager.destroy()
         msg.add('^C')
+        manager.destroy()
       }
     },
     { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('다음'), action: ({ manager }) => manager.nextPage(), requirePage: true }
