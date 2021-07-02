@@ -51,7 +51,7 @@ module.exports = class Dokdo {
 
     this.owners = owners
 
-    client.on('ready', () => {
+    client.once('ready', () => {
       if (!this.owners) {
         console.warn('[dokdo] Owners not given. Fetching from Application.')
         client.fetchApplication().then(data => {
