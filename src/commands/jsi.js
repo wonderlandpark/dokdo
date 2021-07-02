@@ -21,8 +21,8 @@ module.exports = async function jsi (message, parent) {
 
   await msg.init()
   await msg.addAction([
-    { button: new Discord.MessageButton().setStyle('DANGER').setCustomID('dokdo$back').setLabel('이전'), action: ({ manager }) => manager.previousPage(), requirePage: true },
-    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomID('dokdo$stop').setLabel('정지'), action: ({ manager }) => manager.destroy(), requirePage: true },
-    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('다음'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomID('dokdo$prev').setLabel('prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomID('dokdo$stop').setLabel('stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }
