@@ -29,8 +29,7 @@ module.exports = async function Exec (message, parent) {
         console.log(gg)
         manager.destroy()
         msg.add('^C')
-      },
-      requirePage: true
+      }
     },
     { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('다음'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ], { res })
