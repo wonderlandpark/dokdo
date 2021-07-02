@@ -16,8 +16,8 @@ module.exports = async function shard (message, parent) {
 
   await msg.init()
   await msg.addAction([
-    { button: new Discord.MessageButton().setStyle('DANGER').setCustomID('dokdo$prev').setLabel('prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
-    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomID('dokdo$stop').setLabel('stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
-    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomID('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomID('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomID('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }
