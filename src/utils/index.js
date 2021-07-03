@@ -9,6 +9,7 @@ const table = require('./table')
 const type = require('./type')
 const isinstance = require('./isinstance')
 const isGenerator = require('./isGenerator')
+const regexpEscape = require('./regexpEscape')
 
 module.exports = {
   ProcessManager,
@@ -20,5 +21,6 @@ module.exports = {
   type,
   inspect,
   isinstance,
-  isGenerator
+  isGenerator,
+  regexpEscape
 }

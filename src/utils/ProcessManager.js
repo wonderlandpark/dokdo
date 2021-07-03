@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 
 const Dokdo = require('../') // eslint-disable-line no-unused-vars
 const codeBlock = require('./codeBlock')
+const regexpEscape = require('./regexpEscape')
 /**
  * @typedef {Dokdo} Dokdo
  */
@@ -107,7 +108,7 @@ module.exports = class ProcessManager {
     string = string.replace(new RegExp(this.dokdo.client.token, 'gi'), '[accesstoken was hidden]')
 
     for (const el of this.dokdo.options.secrets) {
-      string = string.replace(new RegExp(el, 'gi'), '[secret]')
+      string = string.replace(new RegExp(regexpEscape(el), 'gi'), '[secret]')
     }
 
     return string
