@@ -22,8 +22,6 @@ It's debugging tool for `discord.js` projects.
 
 ## Installation
 
-For now I recommend using Dev version.
-
 ### Stable
 
 ```sh
