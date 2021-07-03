@@ -22,8 +22,6 @@ It's debugging tool for `discord.js` projects.
 
 ## Installation
 
-For now I recommend using Dev version.
-
 ### Stable
 
 ```sh
@@ -37,6 +35,10 @@ npm i wonderlandpark/dokdo#main
 ```
 
 ## Features
+
+### Shell command on stdout update
+
+![shell](assets/dokdo.gif)
 
 ### Easy shard broadcastEval manager
 
