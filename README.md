@@ -36,6 +36,10 @@ npm i wonderlandpark/dokdo#main
 
 ## Features
 
+### Shell command on stdout update
+
+![shell](assets/dokdo.gif)
+
 ### Easy shard broadcastEval manager
 
 ![shard](assets/shard.png)
