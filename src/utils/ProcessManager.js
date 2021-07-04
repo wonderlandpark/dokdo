@@ -75,17 +75,17 @@ module.exports = class ProcessManager {
     this.args.manager = this
 
     this.createMessageComponentMessage()
-    this.componentInteractionCollector =
-    this.message.createMessageComponentInteractionCollector({ filter: (interaction) => this.actions.find(e => e.button.customID === interaction.customID) && interaction.user.id === this.author.id, time: 300000, error: ['time'], dispose: true })
+    this.messageComponentCollector =
+    this.message.createMessageComponentCollector({ filter: (interaction) => this.actions.find(e => e.button.customID === interaction.customID) && interaction.user.id === this.author.id, time: 300000, error: ['time'], dispose: true })
 
-    this.componentInteractionCollector.on('collect', r => {
+    this.messageComponentCollector.on('collect', r => {
       const e = this.actions.find(e => e.button.customID === r.customID)
       if (!e) return
       r.deferUpdate()
       e.action(this.args)
     })
 
-    this.componentInteractionCollector.on('end', () => {
+    this.messageComponentCollector.on('end', () => {
       this.message.edit({ components: [] })
     })
   }
@@ -164,7 +164,7 @@ module.exports = class ProcessManager {
 
   destroy () {
     this.message.edit({ components: [] })
-    this.componentInteractionCollector.stop()
+    this.messageComponentCollector.stop()
   }
 
   genText () {
