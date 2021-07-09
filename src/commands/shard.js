@@ -1,4 +1,5 @@
 const { ProcessManager, inspect } = require('../utils')
+const Discord = require('discord.js')
 
 module.exports = async function shard (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
@@ -14,5 +15,9 @@ module.exports = async function shard (message, parent) {
   }
 
   await msg.init()
-  await msg.addAction([{ emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true }, { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: false }, { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }])
+  await msg.addAction([
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+  ])
 }
