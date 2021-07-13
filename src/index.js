@@ -128,6 +128,9 @@ module.exports = class Dokdo {
       case 'cat':
         Commands.cat(message, this)
         break
+      case 'docs':
+      case 'djs':
+        Commands.docs(message, this)
       default:
         message.channel.send('Available Options: `sh`, `js`, `shard`, `jsi`, `curl`, `cat`')
     }
