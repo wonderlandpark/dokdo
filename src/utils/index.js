@@ -4,6 +4,7 @@ const HLJS = require('./hljs')
 const system = require('./system')
 
 const count = require('./count')
+const djsDocs = require('./djsDocs')
 const inspect = require('./inspect')
 const table = require('./table')
 const type = require('./type')
@@ -17,6 +18,7 @@ module.exports = {
   HLJS,
   system,
   count,
+  djsDocs,
   table,
   type,
   inspect,

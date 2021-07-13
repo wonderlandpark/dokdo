@@ -128,6 +128,10 @@ module.exports = class Dokdo {
       case 'cat':
         Commands.cat(message, this)
         break
+      case 'docs':
+      case 'djs':
+        Commands.docs(message, this)
+        break
       default:
         message.channel.send(`Available Options: ${Object.keys(Commands).map(t => `\`${t}\``).join(', ')}`)
     }

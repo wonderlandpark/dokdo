@@ -5,6 +5,7 @@ const shard = require('./shard')
 const jsi = require('./jsi')
 const curl = require('./curl')
 const cat = require('./cat')
+const docs = require('./docs')
 
 module.exports = {
   main,
@@ -13,5 +14,6 @@ module.exports = {
   shard,
   jsi,
   curl,
-  cat
+  cat,
+  docs
 }
