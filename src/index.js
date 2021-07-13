@@ -129,7 +129,7 @@ module.exports = class Dokdo {
         Commands.cat(message, this)
         break
       default:
-        message.channel.send('Available Options: `sh`, `js`, `shard`, `jsi`, `curl`, `cat`')
+        message.channel.send(`Available Options: ${Object.keys(Commands).map(t => `\`${t}\``).join(', ')}`)
     }
   }
 
