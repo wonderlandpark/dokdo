@@ -1,8 +1,6 @@
-module.exports = class RelativeTime {
-  /**
-   * @param {Date} [date]
-   */
-  static construct (date) {
-    return `<t:${Math.floor(date / 1000)}:R>`
-  }
+/**
+ * @param {Date} date
+ */
+module.exports = function relativeTime (date) {
+  return `<t:${Math.floor(date / 1000)}:R>`
 }
