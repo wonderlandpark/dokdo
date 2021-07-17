@@ -18,6 +18,6 @@ module.exports = class System {
   }
 
   static processReadyAt () {
-    return new Date(new Date() - process.uptime() * 1000)
+    return new Date(Date.now() - process.uptime() * 1000)
   }
 }
