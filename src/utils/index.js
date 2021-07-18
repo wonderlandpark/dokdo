@@ -10,6 +10,7 @@ const table = require('./table')
 const type = require('./type')
 const isinstance = require('./isinstance')
 const isGenerator = require('./isGenerator')
+const relativeTime = require('./relativeTime')
 const regexpEscape = require('./regexpEscape')
 
 module.exports = {
@@ -24,5 +25,6 @@ module.exports = {
   inspect,
   isinstance,
   isGenerator,
+  relativeTime,
   regexpEscape
 }

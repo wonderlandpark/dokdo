@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/wonderlandpark/dokdo#readme",
   "dependencies": {
-    "dayjs": "^1.9.6",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
