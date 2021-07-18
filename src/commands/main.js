@@ -1,10 +1,10 @@
 const Discord = require('discord.js')
 
-const { system, relativeTime } = require('../utils')
+const { system, DateFormatting } = require('../utils')
 const version = require('../../package.json').version
 
 module.exports = async function (message, parent) {
-  let summary = `Dokdo v${version}, discord.js \`${Discord.version}\`, \`Node.js ${process.version}\` on \`${process.platform}\`\nProcess started at ${relativeTime(system.processReadyAt())}, bot was ready at ${relativeTime(parent.client.readyAt)}.\n`
+  let summary = `Dokdo v${version}, discord.js \`${Discord.version}\`, \`Node.js ${process.version}\` on \`${process.platform}\`\nProcess started at ${DateFormatting.relative(system.processReadyAt())}, bot was ready at ${DateFormatting.relative(parent.client.readyAt)}.\n`
 
   summary += `\nUsing ${system.memory().rss} at this process.\n`
   const cache = `${parent.client.guilds.cache.size} guild(s) and ${parent.client.users.cache.size} user(s)`
