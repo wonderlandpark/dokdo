@@ -1,8 +1,7 @@
 const Discord = require('discord.js')
 const type = require('./type')
 module.exports = function count (argument) {
-  if (argument instanceof Discord.Collection) argument = argument.array()
-  else if (argument instanceof Map || argument instanceof Set) argument = Array.from(argument.values())
+  if (argument instanceof Map || argument instanceof Set || argument instanceof Discord.Collection) argument = Array.from(argument.values())
   if (Array.isArray(argument)) {
     const typed = argument.map(el => el.constructor ? el.constructor.name : type(el))
     const obj = { }
