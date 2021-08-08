@@ -4,7 +4,14 @@ const Discord = require('discord.js')
 module.exports = async function shard (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
   if (!parent.client.shard) return message.channel.send('Shard Manager not found.')
-  const result = await parent.client.shard.broadcastEval(message.data.args).then(el => el).catch(e => e.toString())
+  let evalFunction
+  try {
+    // eslint-disable-next-line no-new-func
+    evalFunction = Function('client', `return ${message.data.args}`) // catch syntax error
+  } catch (err) {
+    return message.channel.send(err.toString())
+  }
+  const result = await parent.client.shard.broadcastEval(evalFunction).then(el => el).catch(e => e.toString())
   let msg
   if (!Array.isArray(result)) msg = new ProcessManager(message, result, parent, { lang: 'js' })
   else {
