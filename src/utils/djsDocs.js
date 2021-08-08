@@ -1,4 +1,3 @@
-const qs = require('querystring')
 const fetch = require('node-fetch')
 const Discord = require('discord.js')
 
@@ -8,8 +7,8 @@ module.exports.source = version => {
 }
 
 module.exports.docs = async (q) => {
-  const queryString = qs.stringify({ src: this.source(Discord.version), q })
-  const res = await fetch(`https://djsdocs.sorta.moe/v2/embed?${queryString}`)
+  const params = new URLSearchParams({ src: this.source(Discord.version), q })
+  const res = await fetch(`https://djsdocs.sorta.moe/v2/embed?${params}`)
   const embed = await res.json()
   console.log(embed)
   if (!embed) return 'Nothing found'
