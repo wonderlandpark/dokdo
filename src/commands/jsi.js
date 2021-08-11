@@ -1,5 +1,5 @@
-const { ProcessManager, count, inspect, table, type } = require('../utils')
 const Discord = require('discord.js')
+const { ProcessManager, count, inspect, table, type } = require('../utils')
 
 module.exports = async function jsi (message, parent) {
   // eslint-disable-next-line no-unused-vars
