@@ -1,6 +1,6 @@
 const child = require('child_process')
-const { ProcessManager, codeBlock } = require('../utils')
 const Discord = require('discord.js')
+const { ProcessManager, codeBlock } = require('../utils')
 
 module.exports = async function Exec (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
