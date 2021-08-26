@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const client = new Discord.Client()
+const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES'] })
 const config = require('./config')
 
 const Dokdo = require('../src')
@@ -9,7 +9,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
-client.on('message', async message => {
+client.on('messageCreate', async message => {
   if (message.content === 'ping') return message.reply('pong')
   await DokdoHandler.run(message)
 })

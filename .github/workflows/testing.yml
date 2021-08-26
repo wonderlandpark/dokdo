@@ -9,10 +9,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: install node v14
+    - name: install node v16
       uses: actions/setup-node@v1
       with:
-        node-version: 14
+        node-version: 16
 
     - name: Install dependencies
       run: yarn install
@@ -28,15 +28,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: install node v14
+    - name: install node v16
       uses: actions/setup-node@v1
       with:
-        node-version: 14
+        node-version: 16
 
     - name: Install dependencies
       run: |
         yarn install
-        yarn add discord.js@12
+        yarn add discord.js@13
     
     - name: Run test scripts
       run: yarn test

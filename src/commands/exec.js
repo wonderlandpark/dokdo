@@ -1,4 +1,5 @@
 const child = require('child_process')
+const Discord = require('discord.js')
 const { ProcessManager, codeBlock } = require('../utils')
 
 module.exports = async function Exec (message, parent) {
@@ -19,26 +20,19 @@ module.exports = async function Exec (message, parent) {
   console.log(res.pid)
 
   await msg.addAction([
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
     {
-      emoji: '◀️',
-      action: ({ manager }) => manager.previousPage(),
-      requirePage: true
-    },
-    {
-      emoji: '⏹️',
+      button: new Discord.MessageButton().setStyle('SECONDARY').setCustomId('dokdo$stop').setLabel('Stop'),
       action: async ({ res, manager }) => {
         res.stdin.pause()
         const gg = await kill(res)
         console.log(gg)
-        manager.destroy()
         msg.add('^C')
+        manager.destroy()
       }
     },
-    {
-      emoji: '▶️',
-      action: ({ manager }) => manager.nextPage(),
-      requirePage: true
-    }], { res })
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+  ], { res })
 
   res.stdout.on('data', (data) => {
     console.log(data.toString())

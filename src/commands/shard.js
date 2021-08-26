@@ -1,9 +1,17 @@
+const Discord = require('discord.js')
 const { ProcessManager, inspect } = require('../utils')
 
 module.exports = async function shard (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
   if (!parent.client.shard) return message.channel.send('Shard Manager not found.')
-  const result = await parent.client.shard.broadcastEval(message.data.args).then(el => el).catch(e => e.toString())
+  let evalFunction
+  try {
+    // eslint-disable-next-line no-new-func
+    evalFunction = Function('client', `return ${message.data.args}`) // catch syntax error
+  } catch (err) {
+    return message.channel.send(err.toString())
+  }
+  const result = await parent.client.shard.broadcastEval(evalFunction).then(el => el).catch(e => e.toString())
   let msg
   if (!Array.isArray(result)) msg = new ProcessManager(message, result, parent, { lang: 'js' })
   else {
@@ -14,5 +22,9 @@ module.exports = async function shard (message, parent) {
   }
 
   await msg.init()
-  await msg.addAction([{ emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true }, { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: false }, { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }])
+  await msg.addAction([
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+  ])
 }

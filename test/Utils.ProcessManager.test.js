@@ -1,13 +1,15 @@
 const assert = require('assert')
-const { Client, Message } = require('discord.js')
+const { Client, Message, SnowflakeUtil } = require('discord.js')
 
 const Dokdo = require('../src')
 const ProcessManager = require('../src/utils/ProcessManager')
 
 const secret = 'youshalln0tpa$$...'
-const BotClient = new Client()
+// Mock Client
+const BotClient = new Client({ intents: [] })
 const dokdo = new Dokdo(BotClient, { secrets: [secret] })
-const message = new Message()
+// Mock Message
+const message = new Message(BotClient, { id: SnowflakeUtil.generate(), channel_id: SnowflakeUtil.generate() })
 const Manager = new ProcessManager(message, 'anystring', dokdo)
 
 describe('filter secret', function () {

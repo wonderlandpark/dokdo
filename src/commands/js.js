@@ -1,5 +1,5 @@
-const { ProcessManager, inspect, isinstance, isGenerator } = require('../utils')
 const Discord = require('discord.js')
+const { ProcessManager, inspect, isinstance, isGenerator } = require('../utils')
 
 module.exports = async function js (message, parent) {
   // eslint-disable-next-line no-unused-vars
@@ -14,7 +14,7 @@ module.exports = async function js (message, parent) {
       typeOf = typeof output
 
       async function prettify (target) {
-        if (target instanceof Discord.MessageEmbed) await message.channel.send(target)
+        if (target instanceof Discord.MessageEmbed) await message.channel.send({ embeds: [target] })
         else if (isinstance(target, Discord.MessageAttachment)) {
           await message.channel.send({
             files: target instanceof Discord.Collection ? target.array() : [target]
@@ -52,8 +52,8 @@ module.exports = async function js (message, parent) {
   const msg = new ProcessManager(message, result || '', parent, { lang: 'js', noCode: typeOf !== 'object' })
   await msg.init()
   await msg.addAction([
-    { emoji: '◀️', action: ({ manager }) => manager.previousPage(), requirePage: true },
-    { emoji: '⏹️', action: ({ manager }) => manager.destroy(), requirePage: true },
-    { emoji: '▶️', action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.MessageButton().setStyle('DANGER').setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }
