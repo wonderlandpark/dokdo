@@ -1,0 +1,37 @@
+name: 🖐️ Feature Request
+description: Submit a feature request!
+title: "[FR] "
+labels: ["type: enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for submitting a feature request!
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem? Please describe.
+    validations:
+      required: true
+  - type: textarea
+    id: explain
+    attributes:
+      label: Describe the ideal solution.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered.
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+  # - type: checkboxes
+  #   id: terms
+  #   attributes:
+  #     label: Code of Conduct
+  #     description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+  #     options:
+  #       - label: I agree to follow this project's Code of Conduct
+  #         required: true
