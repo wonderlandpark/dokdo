@@ -1,0 +1,59 @@
+name: 🐛 Bug Report
+description: Submit a bug report!
+title: "[BUG] "
+labels: ["type: bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Please explain the bug!
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      placeholder: |
+        SyntaxError: ...
+      render: shell
+  - type: textarea
+    id: repro-steps
+    attributes:
+      label: What steps do you need to take to make this bug reproduced?
+      description: Please tell us step by step.
+      placeholder: Step 1. ...
+      value: |
+        - Step 1. 
+        - Step 2. 
+        - Step 3. 
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Dokdo Version
+      description: What version of dokdo are you using?
+      placeholder: v1.0
+    validations:
+      required: true
+  - type: input
+    id: node-djs-version
+    attributes:
+      label: Node.js / Discord.js Version
+      description: What version of Node.js and Discord.js are you using?
+      placeholder: v16.6.1 / v13.1.0
+  # - type: checkboxes
+  #   id: terms
+  #   attributes:
+  #     label: Code of Conduct
+  #     description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+  #     options:
+  #       - label: I agree to follow this project's Code of Conduct
+  #         required: true
