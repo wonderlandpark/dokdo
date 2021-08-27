@@ -1,6 +1,6 @@
-name: Bug Report
-description: Submit a bug report
-title: "[BUG]: "
+name: 🐛 Bug Report
+description: Submit a bug report!
+title: "[BUG] "
 labels: [bug]
 body:
   - type: markdown
@@ -20,17 +20,19 @@ body:
     attributes:
       label: Relevant log output
       description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      placeholder: |
+        SyntaxError: ...
       render: shell
   - type: textarea
     id: repro-steps
     attributes:
       label: What steps do you need to take to make this bug reproduced?
       description: Please tell us step by step.
-      placeholder: Step 1.
+      placeholder: Step 1. ...
       value: |
-        - Step 1.
-        - Step 2.
-        - Step 3.
+        - Step 1. 
+        - Step 2. 
+        - Step 3. 
     validations:
       required: true
   - type: input
