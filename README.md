@@ -22,6 +22,16 @@ It's debugging tool for `discord.js` projects.
 
 ## Installation
 
+<details>
+    <summary><strong>Using Discord.js v12?</strong></summary>
+
+You could install `dokdo@0.4` by
+    
+```sh
+  npm i dokdo@djsv12
+```
+</details>
+
 ### Stable
 
 ```sh
@@ -33,6 +43,8 @@ npm i dokdo@latest
 ```sh
 npm i wonderlandpark/dokdo#main
 ```
+
+
 
 ## Features
 
