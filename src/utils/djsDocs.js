@@ -11,7 +11,7 @@ module.exports.source = version => {
  * @returns {Promise<string|Discord.MessageOptions>}
  */
 module.exports.docs = async (q) => {
-  const params = new URLSearchParams({ src: this.source(Discord.version), q })
+  const params = new URLSearchParams({ force: true, src: this.source(Discord.version), q })
   const res = await fetch(`https://djsdocs.sorta.moe/v2/embed?${params}`)
   const embed = await res.json()
   console.log(embed)
