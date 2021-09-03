@@ -110,6 +110,7 @@ module.exports = class Dokdo {
       case 'powershell':
       case 'shell':
       case 'zsh':
+      case 'exec':
         Commands.exec(message, this)
         break
       case 'js':
