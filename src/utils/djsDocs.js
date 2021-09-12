@@ -5,7 +5,7 @@ module.exports.source = version => {
   const parsed = version.match(/^(\d+)\.\d+\.\d+$/)?.[1]
   if(parsed === '13')
         return 'stable'
-  return `https://raw.githubusercontent.com/discordjs/discord.js/docs/${parsed ? `v${parsed}` : 'stable'}.json`
+  return `https://raw.githubusercontent.com/discordjs/discord.js/docs/${parsed ? `v${parsed}` : 'main'}.json`
 }
 
 /**
