@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 const Discord = require('discord.js')
 
 module.exports.source = version => {
-  const isDev = version.includes("dev")
+  const isDev = version.includes('dev')
   const parsed = version.match(/^(\d+)\.\d+\.\d+$/)?.[0]
   return `https://raw.githubusercontent.com/discordjs/discord.js/docs/${isDev ? 'main' : parsed}.json`
 }
