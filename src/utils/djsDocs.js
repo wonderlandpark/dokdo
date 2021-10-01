@@ -15,7 +15,6 @@ module.exports.docs = async (q) => {
   const params = new URLSearchParams({ force: true, src: this.source(Discord.version), q })
   const res = await fetch(`https://djsdocs.sorta.moe/v2/embed?${params}`)
   const embed = await res.json()
-  console.log(embed)
   if (!embed) return { content: 'Nothing found' }
   else return { embeds: [embed] }
 }
