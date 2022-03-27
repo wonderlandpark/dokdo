@@ -25,7 +25,7 @@ const regexpEscape = require('./regexpEscape')
 
 /**
  * @typedef Action
- * @property {Discord.MessageButton} button
+ * @property {Discord.ButtonBuilder} button
  * @property {onAction} action
  * @property {boolean} [requirePage]
  */
