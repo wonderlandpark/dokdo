@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const { ProcessManager, inspect } = require('../utils')
+const { ButtonStyle } = require('discord.js')
 
 module.exports = async function shard (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
@@ -23,8 +24,8 @@ module.exports = async function shard (message, parent) {
 
   await msg.init()
   await msg.addAction([
-    { button: new Discord.ButtonBuilder().setStyle('DANGER').setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
-    { button: new Discord.ButtonBuilder().setStyle('SECONDARY').setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
-    { button: new Discord.ButtonBuilder().setStyle('SUCCESS').setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Primary).setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Secondary).setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Success).setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }
