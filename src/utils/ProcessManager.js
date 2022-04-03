@@ -76,10 +76,10 @@ module.exports = class ProcessManager {
 
     this.createMessageComponentMessage()
     this.messageComponentCollector =
-    this.message.createMessageComponentCollector({ filter: (interaction) => this.actions.find(e => e.button.customId === interaction.customId) && interaction.user.id === this.author.id, time: 300000, error: ['time'], dispose: true })
+    this.message.createMessageComponentCollector({ filter: (interaction) => this.actions.find(e => e.button.data.custom_id === interaction.customId) && interaction.user.id === this.author.id, time: 300000, error: ['time'], dispose: true })
 
     this.messageComponentCollector.on('collect', component => {
-      const event = this.actions.find(e => e.button.customId === component.customId)
+      const event = this.actions.find(e => e.button.data.custom_id === component.customId)
       if (!event) return
       component.deferUpdate()
       event.action(this.args)
