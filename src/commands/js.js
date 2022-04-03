@@ -15,7 +15,7 @@ module.exports = async function js (message, parent) {
       typeOf = typeof output
 
       async function prettify (target) {
-        if (target instanceof Discord.MessageEmbed) await message.channel.send({ embeds: [target] })
+        if (target instanceof Discord.Embed) await message.channel.send({ embeds: [target] })
         else if (isinstance(target, Discord.MessageAttachment)) {
           await message.channel.send({
             files: target instanceof Discord.Collection ? target.array() : [target]
