@@ -172,6 +172,28 @@ module.exports = class ProcessManager {
   }
 
   splitContent () {
-    return Discord.Util.splitMessage(this.content, { maxLength: this.limit, char: [new RegExp(`.{1,${this.limit}}`, 'g'), '\n'] })
+    const char = [new RegExp(`.{1,${this.limit}}`, 'g'), '\n']
+    this.content = Discord.Util.verifyString(this.content)
+    if (this.content.length <= this.limit) return [this.content]
+    let splitText = [this.content]
+    while (char.length > 0 && splitText.some(elem => elem.length > this.limit)) {
+      const currentChar = char.shift()
+      if (currentChar instanceof RegExp) {
+        splitText = splitText.flatMap(chunk => chunk.match(currentChar))
+      } else {
+        splitText = splitText.flatMap(chunk => chunk.split(currentChar))
+      }
+    }
+    if (splitText.some(elem => elem.length > this.limit)) throw new RangeError('SPLIT_MAX_LEN')
+    const messages = []
+    let msg = ''
+    for (const chunk of splitText) {
+      if (msg && (msg + char + chunk).length > this.limit) {
+        messages.push(msg)
+        msg = ''
+      }
+      msg += (msg && msg !== '') + chunk
+    }
+    return messages.concat(msg).filter(m => m)
   }
 }
