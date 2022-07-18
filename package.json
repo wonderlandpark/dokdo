@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/wonderlandpark/dokdo#readme",
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^3.2.9"
   },
   "devDependencies": {
     "@types/node": "^16.3.1",
