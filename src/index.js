@@ -36,7 +36,7 @@ module.exports = class Dokdo {
    * @param {Discord.Client} client Discord Client
    * @param {DokdoOptions} options Dokdo Options
    */
-  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false, globalVariable = {} } = {}) {
+  constructor (client, { aliases = ['dokdo', 'dok'], owners = null, prefix, secrets = [], noPerm, disableAttachmentExecution = false, globalVariable = {}, isOwner = undefined } = {}) {
     if (!(client instanceof Discord.Client)) throw new Error('Invalid `client`. `client` parameter is required.')
     // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
     if (noPerm && typeof noPerm !== 'function') throw new Error('`noPerm` parameter must be Function.')
@@ -51,6 +51,8 @@ module.exports = class Dokdo {
 
     this.owners = owners
 
+    if (isOwner && !owners) this.owners = []
+
     client.once('ready', () => {
       if (!this.owners) {
         console.warn('[dokdo] Owners not given. Fetching from Application.')
@@ -63,7 +65,7 @@ module.exports = class Dokdo {
 
     this.client = client
     this.process = []
-    this.options = { prefix, aliases, secrets, noPerm, disableAttachmentExecution }
+    this.options = { prefix, aliases, secrets, noPerm, disableAttachmentExecution, isOwner }
     if (!this.options.secrets || !Array.isArray(this.options.secrets)) this.options.secrets = []
     if (!this.options.aliases) this.options.aliases = ['dokdo', 'dok']
   }
@@ -98,8 +100,16 @@ module.exports = class Dokdo {
     }
     if (this.options.aliases && !this.options.aliases.includes(message.data.cmd)) return
     if (!this.owners.includes(message.author.id)) {
-      if (this.options.noPerm) return this.options.noPerm(message)
-      else return
+      let isOwner = false
+
+      if (this.options.isOwner) {
+        isOwner = await this.options.isOwner(message.author)
+      }
+
+      if (!isOwner) {
+        if (this.options.noPerm) return this.options.noPerm(message)
+        else return
+      }
     }
 
     if (!message.data.type) return Commands.main(message, this)
