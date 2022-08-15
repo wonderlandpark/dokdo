@@ -173,7 +173,7 @@ module.exports = class ProcessManager {
 
   splitContent () {
     const char = [new RegExp(`.{1,${this.limit}}`, 'g'), '\n']
-    this.content = Discord.Util.verifyString(this.content)
+    this.content = Discord.verifyString(this.content)
     if (this.content.length <= this.limit) return [this.content]
     let splitText = [this.content]
     while (char.length > 0 && splitText.some(elem => elem.length > this.limit)) {
