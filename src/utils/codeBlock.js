@@ -1,4 +1,4 @@
-const { Util } = require('discord.js')
+const { escapeCodeBlock } = require('discord.js')
 
 module.exports = class codeBlock {
   /**
@@ -7,7 +7,7 @@ module.exports = class codeBlock {
    */
   static construct (content, lang) {
     return `\`\`\`${content ? lang || '' : ''}
-${Util.escapeCodeBlock(content)}
+${escapeCodeBlock(content)}
 \`\`\``
   }
 
