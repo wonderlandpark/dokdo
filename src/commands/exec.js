@@ -1,7 +1,6 @@
 const child = require('child_process')
 const Discord = require('discord.js')
 const { ProcessManager, codeBlock } = require('../utils')
-const { ButtonStyle } = require('discord.js')
 
 module.exports = async function Exec (message, parent) {
   if (!message.data.args) return message.channel.send('Missing Arguments.')
@@ -21,9 +20,9 @@ module.exports = async function Exec (message, parent) {
   console.log(res.pid)
 
   await msg.addAction([
-    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Danger).setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Danger).setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
     {
-      button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Secondary).setCustomId('dokdo$stop').setLabel('Stop'),
+      button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('dokdo$stop').setLabel('Stop'),
       action: async ({ res, manager }) => {
         res.stdin.pause()
         const gg = await kill(res)
@@ -32,7 +31,7 @@ module.exports = async function Exec (message, parent) {
         manager.destroy()
       }
     },
-    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Success).setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Success).setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ], { res })
 
   res.stdout.on('data', (data) => {
