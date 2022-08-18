@@ -173,9 +173,10 @@ module.exports = class ProcessManager {
 
   splitContent () {
     const char = [new RegExp(`.{1,${this.limit}}`, 'g'), '\n']
-    this.content = Discord.verifyString(this.content)
-    if (this.content.length <= this.limit) return [this.content]
-    let splitText = [this.content]
+    const text = Discord.verifyString(this.content)
+    if (text.length <= this.limit) return [text]
+    let splitText = [text]
+
     while (char.length > 0 && splitText.some(elem => elem.length > this.limit)) {
       const currentChar = char.shift()
       if (currentChar instanceof RegExp) {
@@ -192,7 +193,7 @@ module.exports = class ProcessManager {
         messages.push(msg)
         msg = ''
       }
-      msg += (msg && msg !== '') + chunk
+      msg += (msg && msg !== '' ? char : '') + chunk
     }
     return messages.concat(msg).filter(m => m)
   }
