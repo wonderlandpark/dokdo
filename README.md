@@ -23,12 +23,22 @@ It's debugging tool for `discord.js` projects.
 ## Installation
 
 <details>
-    <summary><strong>Using Discord.js v12?</strong></summary>
+    <summary>Using Discord.js v12?</summary>
 
-You could install `dokdo@0.4` by
+You could install `dokdo@0.4.1` by
     
 ```sh
   npm i dokdo@djsv12
+```
+</details>
+
+<details>
+    <summary>Using Discord.js v13?</summary>
+
+You could install `dokdo@0.5.1` by
+    
+```sh
+  npm i dokdo@djsv13
 ```
 </details>
 
@@ -43,8 +53,6 @@ npm i dokdo@latest
 ```sh
 npm i wonderlandpark/dokdo#main
 ```
-
-
 
 ## Features
 
@@ -72,6 +80,20 @@ client.on('messageCreate', async message => {
 })
 
 client.login('super secret token')
+```
+
+## Notes
+
+### Message contents intent not approved?
+
+You can set the Dokdo prefix including mentions. This allows the client to read the message content.
+
+Example:
+
+```js
+new Dokdo(client, {  prefix: '<@285185716240252929>' })
+
+// Commmand Usage: <@285185716240252929> dokdo
 ```
 
 ## Contributing
