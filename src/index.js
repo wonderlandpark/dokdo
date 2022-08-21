@@ -144,7 +144,7 @@ module.exports = class Dokdo {
         Commands.docs(message, this)
         break
       default:
-        message.channel.send(`Available Options: ${Object.keys(Commands).map(t => `\`${t}\``).join(', ')}`)
+        message.channel.send(`Available Options: ${Object.keys(Commands).filter(t => t !== 'main').map(t => `\`${t}\``).join(', ')}`)
     }
   }
 
