@@ -52,8 +52,8 @@ module.exports = async function js (message, parent) {
   const msg = new ProcessManager(message, result || '', parent, { lang: 'js', noCode: typeOf !== 'object' })
   await msg.init()
   await msg.addAction([
-    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Danger).setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
-    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Secondary).setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
-    { button: new Discord.ButtonBuilder().setStyle(ButtonStyle.Success).setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Danger).setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Success).setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }
