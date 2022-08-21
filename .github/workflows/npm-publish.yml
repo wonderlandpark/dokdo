@@ -12,7 +12,7 @@ jobs:
       
     - name: Install node v16
       uses: actions/setup-node@v1
-        with:
+      with:
           node-version: 16
           registry-url: https://registry.npmjs.org
           
