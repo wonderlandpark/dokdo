@@ -12,6 +12,7 @@ const type = require('./type')
 const isinstance = require('./isinstance')
 const isGenerator = require('./isGenerator')
 const regexpEscape = require('./regexpEscape')
+const join = require('./join')
 
 module.exports = {
   ProcessManager,
@@ -26,5 +27,6 @@ module.exports = {
   inspect,
   isinstance,
   isGenerator,
-  regexpEscape
+  regexpEscape,
+  join
 }
