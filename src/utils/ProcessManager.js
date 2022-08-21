@@ -25,7 +25,7 @@ const regexpEscape = require('./regexpEscape')
 
 /**
  * @typedef Action
- * @property {Discord.MessageButton} button
+ * @property {Discord.ButtonBuilder} button
  * @property {onAction} action
  * @property {boolean} [requirePage]
  */
@@ -76,10 +76,10 @@ module.exports = class ProcessManager {
 
     this.createMessageComponentMessage()
     this.messageComponentCollector =
-    this.message.createMessageComponentCollector({ filter: (interaction) => this.actions.find(e => e.button.customId === interaction.customId) && interaction.user.id === this.author.id, time: 300000, error: ['time'], dispose: true })
+    this.message.createMessageComponentCollector({ filter: (interaction) => this.actions.find(e => e.button.data.custom_id === interaction.customId) && interaction.user.id === this.author.id, time: 300000, error: ['time'], dispose: true })
 
     this.messageComponentCollector.on('collect', component => {
-      const event = this.actions.find(e => e.button.customId === component.customId)
+      const event = this.actions.find(e => e.button.data.custom_id === component.customId)
       if (!event) return
       component.deferUpdate()
       event.action(this.args)
@@ -95,7 +95,7 @@ module.exports = class ProcessManager {
     const buttons = this.actions.filter(el => !(el.requirePage && this.splitted.length <= 1))
       .map(el => el.button)
     if (buttons.length <= 0) return
-    const actionRow = new Discord.MessageActionRow({ components: buttons })
+    const actionRow = new Discord.ActionRowBuilder({ components: buttons })
     this.message.edit({ components: [actionRow] })
   }
 
@@ -172,6 +172,29 @@ module.exports = class ProcessManager {
   }
 
   splitContent () {
-    return Discord.Util.splitMessage(this.content, { maxLength: this.limit, char: [new RegExp(`.{1,${this.limit}}`, 'g'), '\n'] })
+    const char = [new RegExp(`.{1,${this.limit}}`, 'g'), '\n']
+    const text = Discord.verifyString(this.content)
+    if (text.length <= this.limit) return [text]
+    let splitText = [text]
+
+    while (char.length > 0 && splitText.some(elem => elem.length > this.limit)) {
+      const currentChar = char.shift()
+      if (currentChar instanceof RegExp) {
+        splitText = splitText.flatMap(chunk => chunk.match(currentChar))
+      } else {
+        splitText = splitText.flatMap(chunk => chunk.split(currentChar))
+      }
+    }
+    if (splitText.some(elem => elem.length > this.limit)) throw new RangeError('SPLIT_MAX_LEN')
+    const messages = []
+    let msg = ''
+    for (const chunk of splitText) {
+      if (msg && (msg + char + chunk).length > this.limit) {
+        messages.push(msg)
+        msg = ''
+      }
+      msg += (msg && msg !== '' ? char : '') + chunk
+    }
+    return messages.concat(msg).filter(m => m)
   }
 }

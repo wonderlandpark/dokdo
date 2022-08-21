@@ -20,9 +20,9 @@ module.exports = async function Exec (message, parent) {
   console.log(res.pid)
 
   await msg.addAction([
-    { button: new Discord.MessageButton().setStyle('DANGER').setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Danger).setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
     {
-      button: new Discord.MessageButton().setStyle('SECONDARY').setCustomId('dokdo$stop').setLabel('Stop'),
+      button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('dokdo$stop').setLabel('Stop'),
       action: async ({ res, manager }) => {
         res.stdin.pause()
         const gg = await kill(res)
@@ -31,7 +31,7 @@ module.exports = async function Exec (message, parent) {
         manager.destroy()
       }
     },
-    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Success).setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ], { res })
 
   res.stdout.on('data', (data) => {

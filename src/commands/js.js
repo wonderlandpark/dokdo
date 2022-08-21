@@ -14,8 +14,8 @@ module.exports = async function js (message, parent) {
       typeOf = typeof output
 
       async function prettify (target) {
-        if (target instanceof Discord.MessageEmbed) await message.channel.send({ embeds: [target] })
-        else if (isinstance(target, Discord.MessageAttachment)) {
+        if (target instanceof Discord.Embed || target instanceof Discord.EmbedBuilder) await message.channel.send({ embeds: [target] })
+        else if (isinstance(target, Discord.Attachment)) {
           await message.channel.send({
             files: target instanceof Discord.Collection ? target.array() : [target]
           })
@@ -52,8 +52,8 @@ module.exports = async function js (message, parent) {
   const msg = new ProcessManager(message, result || '', parent, { lang: 'js', noCode: typeOf !== 'object' })
   await msg.init()
   await msg.addAction([
-    { button: new Discord.MessageButton().setStyle('DANGER').setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
-    { button: new Discord.MessageButton().setStyle('SECONDARY').setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
-    { button: new Discord.MessageButton().setStyle('SUCCESS').setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Danger).setCustomId('dokdo$prev').setLabel('Prev'), action: ({ manager }) => manager.previousPage(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('dokdo$stop').setLabel('Stop'), action: ({ manager }) => manager.destroy(), requirePage: true },
+    { button: new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Success).setCustomId('dokdo$next').setLabel('Next'), action: ({ manager }) => manager.nextPage(), requirePage: true }
   ])
 }
