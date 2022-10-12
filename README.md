@@ -93,7 +93,7 @@ Example:
 ```js
 new Dokdo(client, {  prefix: '<@285185716240252929>' })
 
-// Commmand Usage: <@285185716240252929> dokdo
+// Commmand Usage: <@285185716240252929>dokdo
 ```
 
 ## Contributing
