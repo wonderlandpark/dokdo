@@ -1,4 +1,14 @@
-import { Snowflake, Client, Message, User } from 'discord.js'
+import {
+  Snowflake,
+  Client,
+  Message,
+  User,
+  ChatInputCommandInteraction,
+} from 'discord.js'
+import fetch from 'node-fetch'
+import * as Commands from '../commands'
+import { cat, curl, djs, exec, js, jsi, main, shard } from '../commands'
+import { codeBlock } from '../utils'
 
 /**
  * @typedef MessageData
@@ -14,22 +24,32 @@ export interface DokdoOptions {
   prefix?: string
   secrets?: any[]
   globalVariable?: Record<string, any>
-  noPerm?(message: Message): Promise<any>
   disableAttachmentExecution?: boolean
+  noPerm?(context: Message | ChatInputCommandInteraction): Promise<any>
   isOwner?: (user: User) => boolean | Promise<boolean>
 }
-
 export interface MessageData {
   raw: string
   command: string
   type: string
-  args: string
+  args?: string
+}
+
+declare module 'discord.js' {
+  interface Message {
+    data: MessageData
+  }
 }
 
 export class Dokdo {
   public owners: Snowflake[]
   public process: never[]
 
+  /**
+   * Main Client of Dokdo
+   * @param client Discord Client
+   * @param options Dokdo Options
+   */
   public constructor(public client: Client, public options: DokdoOptions) {
     if (!(client instanceof Client))
       throw new TypeError('Invalid `client`. `client` parameter is required.')
@@ -82,6 +102,99 @@ export class Dokdo {
     })
   }
 
+  public async run(ctx: Context) {
+    if (ctx instanceof Message) {
+      if (!this.options.prefix) return
+      if (!ctx.content.startsWith(this.options.prefix)) return
+
+      const parsed = ctx.content.replace(this.options.prefix, '').split(' ')
+      const codeParsed = codeBlock.parse(parsed.slice(2).join(' '))
+
+      ctx.data = {
+        raw: ctx.content,
+        command: parsed[0]!,
+        type: parsed[1]!,
+        args: codeParsed ? codeParsed[2] : parsed.slice(2).join(' '),
+      }
+
+      if (
+        !ctx.data.args &&
+        ctx.attachments.size > 0 &&
+        !this.options.disableAttachmentExecution
+      ) {
+        const file = ctx.attachments.first()
+        if (!file) return
+
+        const buffer = await (await fetch(file.url)).buffer()
+        const type = { ext: file.name?.split('.').pop(), fileName: file.name }
+
+        if (
+          ['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext!)
+        ) {
+          ctx.data.args = buffer.toString()
+          if (!ctx.data.type && type.ext !== 'txt') ctx.data.type = type.ext!
+        }
+      }
+      if (
+        this.options.aliases &&
+        !this.options.aliases.includes(ctx.data.command)
+      )
+        return
+      if (!this.owners.includes(ctx.author.id)) {
+        let isOwner = false
+
+        if (this.options.isOwner) {
+          isOwner = await this.options.isOwner(ctx.author)
+        }
+
+        if (!isOwner) {
+          if (this.options.noPerm) return this.options.noPerm(ctx)
+          else return
+        }
+      }
+
+      if (!ctx.data.type) return main(ctx, this)
+      switch (ctx.data.type) {
+        case 'sh':
+        case 'bash':
+        case 'ps':
+        case 'powershell':
+        case 'shell':
+        case 'zsh':
+        case 'exec':
+          exec(ctx, this)
+          break
+        case 'js':
+        case 'javascript':
+          js(ctx, this)
+          break
+        case 'shard':
+          shard(ctx, this)
+          break
+        case 'jsi':
+          jsi(ctx, this)
+          break
+        case 'curl':
+          curl(ctx, this)
+          break
+        case 'cat':
+          cat(ctx, this)
+          break
+        case 'docs':
+        case 'djs':
+          djs(ctx, this)
+          break
+        default:
+          ctx.reply(
+            `Available Options: ${Object.keys(Commands)
+              .filter((t) => t !== 'main')
+              .map((t) => `\`${t}\``)
+              .join(', ')}`
+          )
+      }
+    }
+  }
+
   public _addOwner(id: Snowflake) {
     if (this.owners.includes(id)) return
     this.owners.push(id)
@@ -94,3 +207,5 @@ export class Dokdo {
     return this.owners
   }
 }
+
+export type Context = ChatInputCommandInteraction | Message

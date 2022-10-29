@@ -5,10 +5,13 @@
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "markdown"],
   "rules": {
     "no-extend-native": 0,
     "prettier": 0,
-    "@typescript-eslint/no-explicit-any": 0
-  }
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/ban-ts-comment": 0
+  },
+  "ignorePatterns": ["dist/*", "node_modules/*"]
 }
