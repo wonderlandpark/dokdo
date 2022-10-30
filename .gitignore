@@ -1,9 +1,8 @@
-# Modules
-
 node_modules/
+config.js
 package-lock.json # we are using yarn
+.DS_Store
 
-# Yarn
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -12,28 +11,8 @@ package-lock.json # we are using yarn
 !.yarn/sdks
 !.yarn/versions
 
-# Config
-.env
-config.js
-
-# Dist
 dist/
 
-# Log files
-logs/
-*.log
-npm-debug.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-
-# Miscellaneous
-.tmp/
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
-.idea/
-.DS_Store
-tsconfig.tsbuildinfo

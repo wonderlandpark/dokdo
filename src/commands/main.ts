@@ -2,42 +2,38 @@ import {
   GatewayIntentBits,
   IntentsBitField,
   version as djsVersion,
-} from 'discord.js'
+} from "discord.js";
+import type { Context, Dokdo } from "../";
 
-import { System, DateFormatting, join } from '../utils'
+import { System, DateFormatting, join } from "../utils";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const version = require('../../package.json').version
+const version = require("../../package.json").version;
 
-export async function main(message, parent) {
-  const intents = new IntentsBitField(parent.client.options.intents)
+export async function main(message: Context, parent: Dokdo) {
+  const intents = new IntentsBitField(parent.client.options.intents);
 
   let summary = `Dokdo v${version}, discord.js \`${djsVersion}\`, \`Node.js ${
     process.version
   }\` on \`${process.platform}\`\nProcess started at ${DateFormatting.relative(
     System.processReadyAt()
-  )}, bot was ready at ${DateFormatting.relative(parent.client.readyAt)}.\n`
+  )}, bot was ready at ${DateFormatting.relative(parent.client.readyAt!)}.\n`;
 
-  summary += `\nUsing ${System.memory().rss} at this process.\n`
-  const cache = `${parent.client.guilds.cache.size} guild(s) and ${parent.client.users.cache.size} user(s)`
+  summary += `\nUsing ${System.memory().rss} at this process.\n`;
+  const cache = `${parent.client.guilds.cache.size} guild(s) and ${parent.client.users.cache.size} user(s)`;
 
   if (parent.client.shard) {
     const guilds = await parent.client.shard
-      .fetchClientValues('guilds.cache.size')
-      .then((r: number[]) => r.reduce((prev, val) => prev + val, 0))
-    summary += `Running on PID ${
-      process.pid
-    } for this client, and running on PID ${
-      process.ppid
-    } for the parent process.\n\nThis bot is sharded in ${
-      Array.isArray(parent.client.shard.shards)
-        ? parent.client.shard.shards.length
-        : parent.client.shard.count
-    } shard(s) and running in ${guilds} guild(s).\nCan see ${cache} in this client.`
+      .fetchClientValues("guilds.cache.size")
+      .then((r) => {
+        const out = r as number[];
+        out.reduce((prev, val) => prev + val, 0);
+      });
+    summary += `Running on PID ${process.pid} for this client, and running on PID ${process.ppid} for the parent process.\n\nThis bot is sharded in ${parent.client.shard.count} shard(s) and running in ${guilds} guild(s).\nCan see ${cache} in this client.`;
   } else
-    summary += `Running on PID ${process.pid}\n\nThis bot is not sharded and can see ${cache}.`
+    summary += `Running on PID ${process.pid}\n\nThis bot is not sharded and can see ${cache}.`;
 
   summary +=
-    '\n' +
+    "\n" +
     join(
       [
         GatewayIntentBits.GuildPresences,
@@ -46,14 +42,14 @@ export async function main(message, parent) {
       ].map(
         (u) =>
           `\`${GatewayIntentBits[u]}\` intent is ${
-            intents.has(u) ? 'enabled' : 'disabled'
+            intents.has(u) ? "enabled" : "disabled"
           }`
       ),
-      ', ',
-      ' and '
+      ", ",
+      " and "
     ) +
-    '.'
-  summary += `\nAverage websocket latency: ${parent.client.ws.ping}ms`
+    ".";
+  summary += `\nAverage websocket latency: ${parent.client.ws.ping}ms`;
 
-  return message.reply(summary)
+  return message.reply(summary);
 }

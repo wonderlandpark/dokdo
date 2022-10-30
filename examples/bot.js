@@ -1,6 +1,4 @@
-require('dotenv').config()
-
-const { Client, GatewayIntentBits } = require('discord.js')
+const { Client, GatewayIntentBits } = require("discord.js");
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -8,23 +6,24 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],
-})
+});
+const config = require("./config");
 
-const { Dokdo } = require('../dist/')
+const Dokdo = require("../dist");
 
 const DokdoHandler = new Dokdo(client, {
-  aliases: ['dokdo', 'dok'],
-  prefix: '!',
-  noPerm: (message) => message.reply('🚫 You have no permission to use dokdo.'),
+  aliases: ["dokdo", "dok"],
+  prefix: "!",
+  noPerm: (message) => message.reply("🚫 You have no permission to use dokdo."),
   globalVariable: { WONDER_IS_COOL: true },
-})
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`)
-})
+});
+client.on("ready", () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
 
-client.on('messageCreate', async (message) => {
-  if (message.content === 'ping') return message.reply('pong')
-  await DokdoHandler.run(message)
-})
+client.on("messageCreate", async (message) => {
+  if (message.content === "ping") return message.reply("pong");
+  await DokdoHandler.run(message);
+});
 
-client.login(process.env.TOKEN)
+client.login(config.token);

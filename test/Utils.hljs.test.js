@@ -1,6 +1,6 @@
 const assert = require('assert')
 
-const HLJS = require('../src/utils/hljs')
+const { HLJS } = require('../dist')
 
 describe('Highlight.js', function () {
   it('Get Language', function () {
@@ -9,7 +9,7 @@ describe('Highlight.js', function () {
   })
 
   it('Invalid Test', function () {
-    assert.strictEqual(HLJS.getLang(''), null)
-    assert.strictEqual(HLJS.getLang(1), null)
+    assert.strictEqual(HLJS.getLang(''), undefined)
+    assert.strictEqual(HLJS.getLang(1), undefined)
   })
 })

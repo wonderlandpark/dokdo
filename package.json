@@ -4,12 +4,10 @@
   "description": "Dokdo. Easy Discord bot debuging tool.",
   "scripts": {
     "build": "tsup",
-    "format": "prettier --check '**/*.ts'",
-    "format:fix": "prettier --write '**/*.ts'",
     "lint": "eslint --ext js,jsx,ts,tsx src",
     "lint:fix": "eslint --ext js,jsx,ts,tsx src --fix",
-    "test": "mocha --exit",
-    "test:bot": "yarn build && node examples/bot --inspect",
+    "test": "yarn build && mocha --exit",
+    "test:bot": "yarn build && node examples/bot",
     "test:shard": "yarn build && node examples/shard",
     "update": "yarn upgrade-interactive"
   },
@@ -42,24 +40,23 @@
   "devDependencies": {
     "@types/node": "^18.11.7",
     "@types/node-fetch": "^2.6.2",
-    "@types/prettier": "^2",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "eslint": "^8.26.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsdoc": "^36.0.6",
     "eslint-plugin-markdown": "^3.0.0",
+    "eslint-plugin-mocha": "^9.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
     "mocha": "^10.1.0",
-    "prettier": "^2.7.1",
     "tsup": "^6.3.0",
     "typescript": "^4.8.4"
   },
   "engines": {
     "node": ">=16.9.0"
   },
-  "eslintIgnore": [
-    "node_modules",
-    "examples"
-  ],
   "publishConfig": {
     "access": "public"
   },

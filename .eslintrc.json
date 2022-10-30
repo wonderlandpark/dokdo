@@ -1,17 +1,26 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "mocha": true,
+    "project": "./tsconfig.json"
+  },
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "markdown"],
+  "parserOptions": {
+    "ecmaVersion": 2021
+  },
+  "plugins": ["@typescript-eslint", "jsdoc", "markdown", "mocha"],
   "rules": {
     "no-extend-native": 0,
-    "prettier": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/ban-ts-comment": 0
   },
-  "ignorePatterns": ["dist/*", "node_modules/*"]
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "ignorePatterns": ["dist/*", "node_modules/*", "examples", "test"]
 }
