@@ -206,4 +206,4 @@ export interface MessageData {
 }
 export type Context = ChatInputCommandInteraction | Message;
 
-export { Dokdo as Client, Utils, Commands }
+export { Dokdo as Client, Utils, Commands };

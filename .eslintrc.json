@@ -3,8 +3,7 @@
     "browser": true,
     "es6": true,
     "node": true,
-    "mocha": true,
-    "project": "./tsconfig.json"
+    "mocha": true
   },
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
@@ -16,7 +15,9 @@
     "no-extend-native": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
-    "@typescript-eslint/ban-ts-comment": 0
+    "@typescript-eslint/ban-ts-comment": 0,
+    "quotes": 1,
+    "semi": 1
   },
   "globals": {
     "Atomics": "readonly",
