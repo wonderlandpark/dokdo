@@ -3,13 +3,13 @@ import {
   IntentsBitField,
   version as djsVersion,
 } from "discord.js";
-import type { Context, Dokdo } from "../";
+import type { Client, Context } from "../";
 
 import { System, DateFormatting, join } from "../utils";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const version = require("../../package.json").version;
 
-export async function main(message: Context, parent: Dokdo) {
+export async function main(message: Context, parent: Client) {
   const intents = new IntentsBitField(parent.client.options.intents);
 
   let summary = `Dokdo v${version}, discord.js \`${djsVersion}\`, \`Node.js ${

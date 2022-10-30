@@ -8,7 +8,7 @@ import Discord, {
   User,
 } from "discord.js";
 import { codeBlock, regexpEscape } from ".";
-import type { Context, Dokdo } from "../";
+import type { Client, Context } from "../";
 
 export interface ProcessOptions {
   /**
@@ -56,7 +56,7 @@ export class ProcessManager {
   constructor(
     message: Context,
     public content: string,
-    public dokdo: Dokdo,
+    public dokdo: Client,
     public options: ProcessOptions = {}
   ) {
     this.target = message.channel!;

@@ -1,15 +1,15 @@
 const assert = require('assert')
 
-const { HLJS } = require('../dist')
+const { Utils } = require('../dist')
 
 describe('Highlight.js', function () {
   it('Get Language', function () {
-    assert.strictEqual(HLJS.getLang('js'), 'js')
-    assert.strictEqual(HLJS.getLang('python'), 'python')
+    assert.strictEqual(Utils.HLJS.getLang('js'), 'js')
+    assert.strictEqual(Utils.HLJS.getLang('python'), 'python')
   })
 
   it('Invalid Test', function () {
-    assert.strictEqual(HLJS.getLang(''), undefined)
-    assert.strictEqual(HLJS.getLang(1), undefined)
+    assert.strictEqual(Utils.HLJS.getLang(''), undefined)
+    assert.strictEqual(Utils.HLJS.getLang(1), undefined)
   })
 })

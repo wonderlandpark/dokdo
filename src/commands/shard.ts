@@ -1,15 +1,15 @@
-import Discord, { Client, Message } from "discord.js";
-import type { Dokdo } from "../";
+import Discord, { Client as DiscordClient, Message } from "discord.js";
+import type { Client } from "../";
 import { ProcessManager, inspect } from "../utils";
 
-export async function shard(message: Message, parent: Dokdo) {
+export async function shard(message: Message, parent: Client) {
   if (!message.data.args) return message.reply("Missing Arguments.");
   if (!parent.client.shard) return message.reply("Shard Manager not found.");
-  let evalFunction: (client: Client) => any;
+  let evalFunction: (client: DiscordClient) => any;
   try {
     // eslint-disable-next-line no-new-func
     evalFunction = Function("client", `return ${message.data.args}`) as (
-      client: Client
+      client: DiscordClient
     ) => any; // catch syntax error
   } catch (err: any) {
     return message.reply(err.toString());

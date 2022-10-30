@@ -1,9 +1,9 @@
 import child from "child_process";
 import Discord, { Message } from "discord.js";
-import type { Dokdo } from "../";
+import type {Client } from "../";
 import { ProcessManager, codeBlock } from "../utils";
 
-export async function exec(message: Message, parent: Dokdo) {
+export async function exec(message: Message, parent: Client) {
   if (!message.data.args) return message.reply("Missing Arguments.");
 
   const shell =

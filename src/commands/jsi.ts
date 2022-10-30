@@ -1,8 +1,8 @@
 import Discord, { Message } from "discord.js";
-import type { Dokdo } from "../";
+import type { Client } from "../";
 import { ProcessManager, count, inspect, table, typeFind } from "../utils";
 
-export async function jsi(message: Message, parent: Dokdo) {
+export async function jsi(message: Message, parent: Client) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { client } = parent;
   if (!message.data.args) return message.reply("Missing Arguments.");

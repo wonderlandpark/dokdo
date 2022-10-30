@@ -1,9 +1,9 @@
 import fetch from "node-fetch";
 import Discord, { Message } from "discord.js";
 import { ProcessManager, HLJS } from "../utils";
-import type { Dokdo } from "../";
+import type { Client } from "../";
 
-export async function curl(message: Message, parent: Dokdo) {
+export async function curl(message: Message, parent: Client) {
   if (!message.data.args) return message.reply("Missing Arguments.");
 
   let type;

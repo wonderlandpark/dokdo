@@ -1,8 +1,8 @@
 import Discord, { Message } from "discord.js";
-import type { Context, Dokdo } from "../";
+import type { Client, Context } from "../";
 import { ProcessManager, inspect, isInstance, isGenerator } from "../utils";
 
-export async function js(message: Context, parent: Dokdo) {
+export async function js(message: Context, parent: Client) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { client } = parent; // for eval
   const isMessage = message instanceof Message;

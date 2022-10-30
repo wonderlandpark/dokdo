@@ -1,9 +1,9 @@
 import fs from "fs";
 import { ButtonBuilder, ButtonStyle, Message } from "discord.js";
 import { ProcessManager, HLJS } from "../utils";
-import type { Dokdo } from "../";
+import type { Client } from "../";
 
-export async function cat(message: Message, parent: Dokdo) {
+export async function cat(message: Message, parent: Client) {
   if (!message.data.args) return message.reply("Missing Arguments.");
   const filename = message.data.args;
   let msg;

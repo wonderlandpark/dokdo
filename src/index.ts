@@ -6,9 +6,11 @@ import {
   ChatInputCommandInteraction,
 } from "discord.js";
 import fetch from "node-fetch";
+
+import * as Utils from "./utils";
 import * as Commands from "./commands";
 import { cat, curl, djs, exec, js, jsi, main, shard } from "./commands";
-import { codeBlock } from "./utils";
+
 
 declare module "discord.js" {
   interface Message {
@@ -16,7 +18,7 @@ declare module "discord.js" {
   }
 }
 
-export class Dokdo {
+class Dokdo {
   public owners: Snowflake[];
   public process: never[];
 
@@ -86,7 +88,7 @@ export class Dokdo {
       if (!ctx.content.startsWith(this.options.prefix)) return;
 
       const parsed = ctx.content.replace(this.options.prefix, "").split(" ");
-      const codeParsed = codeBlock.parse(parsed.slice(2).join(" "));
+      const codeParsed = Utils.codeBlock.parse(parsed.slice(2).join(" "));
 
       ctx.data = {
         raw: ctx.content,
@@ -203,5 +205,5 @@ export interface MessageData {
   args?: string;
 }
 export type Context = ChatInputCommandInteraction | Message;
-export * from "./utils";
-export * from "./commands";
+
+export { Dokdo as Client, Utils, Commands }

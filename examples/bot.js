@@ -11,7 +11,7 @@ const config = require("./config");
 
 const Dokdo = require("../dist");
 
-const DokdoHandler = new Dokdo(client, {
+const DokdoHandler = new Dokdo.Client(client, {
   aliases: ["dokdo", "dok"],
   prefix: "!",
   noPerm: (message) => message.reply("🚫 You have no permission to use dokdo."),
