@@ -6,40 +6,37 @@ jobs:
     name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: install node v16
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
+    - name: install node v16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
 
-      - name: Install dependencies
-        run: yarn install
+    - name: Install dependencies
+      run: yarn install
 
-      - name: ESLint
-        uses: icrawl/action-eslint@v1
-        env:
-          CI: false
-  test:
+    - name: ESLint
+      uses: icrawl/action-eslint@v1
+      env:
+        CI: false
+ test:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: install node v16
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
+    - name: install node v16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
 
-      - name: Install dependencies
-        run: |
-          yarn install
-          yarn add discord.js@14 -D
-
-      - name: Build data
-        run: yarn build
-
-      - name: Run test scripts
-        run: yarn test
+    - name: Install dependencies
+      run: |
+        yarn install
+        yarn add discord.js@^14.0.0 -P
+    
+    - name: Run test scripts
+      run: yarn test
