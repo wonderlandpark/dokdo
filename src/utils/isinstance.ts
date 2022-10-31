@@ -1,16 +1,12 @@
-import { Collection } from "discord.js";
+import { Collection } from 'discord.js'
 
-export function isInstance(target: any, theClass: any) {
+export function isInstance (target: any, theClass: any) {
   if (
     target instanceof Collection &&
     target.map((f) => f instanceof theClass).includes(false)
-  )
-    return false;
-  else if (
+  ) { return false } else if (
     Array.isArray(target) &&
     target.map((f) => f instanceof theClass).includes(false)
-  )
-    return false;
-  else if (!(target instanceof theClass)) return false;
-  else return true;
+  ) { return false } else if (!(target instanceof theClass)) return false
+  else return true
 }

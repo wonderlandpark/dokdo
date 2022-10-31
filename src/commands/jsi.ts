@@ -1,70 +1,70 @@
-import Discord, { Message } from "discord.js";
-import type { Client } from "../";
-import { ProcessManager, count, inspect, table, typeFind } from "../utils";
+import Discord, { Message } from 'discord.js'
+import type { Client } from '../'
+import { ProcessManager, count, inspect, table, typeFind } from '../utils'
 
-export async function jsi(message: Message, parent: Client) {
+export async function jsi (message: Message, parent: Client) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { client } = parent;
-  if (!message.data.args) return message.reply("Missing Arguments.");
+  const { client } = parent
+  if (!message.data.args) return message.reply('Missing Arguments.')
 
   // eslint-disable-next-line no-eval
-  const res = new Promise((resolve) => resolve(eval(message.data.args ?? "")));
-  let msg!: ProcessManager;
+  const res = new Promise((resolve) => resolve(eval(message.data.args ?? '')))
+  let msg!: ProcessManager
   await res
     .then((output) => {
-      const typeofTheRes = typeFind(output);
-      const overview = inspect(output, { depth: -1 });
+      const typeofTheRes = typeFind(output)
+      const overview = inspect(output, { depth: -1 })
       const constructorName =
         output && output.constructor
           ? Object.getPrototypeOf(output.constructor).name
-          : null;
-      const arrCount = count(output);
+          : null
+      const arrCount = count(output)
       msg = new ProcessManager(
         message,
         `=== ${overview.slice(0, 100)}${
-          overview.length > 100 ? "..." : ""
+          overview.length > 100 ? '...' : ''
         } ===\n\n${table({
           Type: `${typeof output}(${typeofTheRes})`,
           Name: constructorName || null,
-          Length: typeof output === "string" && output.length,
+          Length: typeof output === 'string' && output.length,
           Size: output instanceof Discord.Collection ? output.size : null,
-          "Content Types": arrCount
-            ? arrCount.map((el) => `${el.name} (${el.ratio}％)`).join(", ")
-            : null,
+          'Content Types': arrCount
+            ? arrCount.map((el) => `${el.name} (${el.ratio}％)`).join(', ')
+            : null
         })}`,
         parent,
-        { lang: "prolog" }
-      );
+        { lang: 'prolog' }
+      )
     })
     .catch((e) => {
-      msg = new ProcessManager(message, e.stack, parent, { lang: "js" });
-    });
+      msg = new ProcessManager(message, e.stack, parent, { lang: 'js' })
+    })
 
-  await msg.init();
+  await msg.init()
   await msg.addAction([
     {
       button: new Discord.ButtonBuilder()
         .setStyle(Discord.ButtonStyle.Danger)
-        .setCustomId("dokdo$prev")
-        .setLabel("Prev"),
+        .setCustomId('dokdo$prev')
+        .setLabel('Prev'),
       action: ({ manager }) => manager.previousPage(),
-      requirePage: true,
+      requirePage: true
     },
     {
       button: new Discord.ButtonBuilder()
         .setStyle(Discord.ButtonStyle.Secondary)
-        .setCustomId("dokdo$stop")
-        .setLabel("Stop"),
+        .setCustomId('dokdo$stop')
+        .setLabel('Stop'),
       action: ({ manager }) => manager.destroy(),
-      requirePage: true,
+      requirePage: true
     },
     {
       button: new Discord.ButtonBuilder()
         .setStyle(Discord.ButtonStyle.Success)
-        .setCustomId("dokdo$next")
-        .setLabel("Next"),
+        .setCustomId('dokdo$next')
+        .setLabel('Next'),
       action: ({ manager }) => manager.nextPage(),
-      requirePage: true,
-    },
-  ]);
+      requirePage: true
+    }
+  ])
 }

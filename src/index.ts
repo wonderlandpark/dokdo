@@ -3,16 +3,15 @@ import {
   Client,
   Message,
   User,
-  ChatInputCommandInteraction,
-} from "discord.js";
-import fetch from "node-fetch";
+  ChatInputCommandInteraction
+} from 'discord.js'
+import fetch from 'node-fetch'
 
-import * as Utils from "./utils";
-import * as Commands from "./commands";
-import { cat, curl, djs, exec, js, jsi, main, shard } from "./commands";
+import * as Utils from './utils'
+import * as Commands from './commands'
+import { cat, curl, djs, exec, js, jsi, main, shard } from './commands'
 
-
-declare module "discord.js" {
+declare module 'discord.js' {
   interface Message {
     data: MessageData;
   }
@@ -27,164 +26,156 @@ class Dokdo {
    * @param client Discord Client
    * @param options Dokdo Options
    */
-  public constructor(public client: Client, public options: DokdoOptions) {
-    if (!(client instanceof Client))
-      throw new TypeError("Invalid `client`. `client` parameter is required.");
+  public constructor (public client: Client, public options: DokdoOptions) {
+    if (!(client instanceof Client)) { throw new TypeError('Invalid `client`. `client` parameter is required.') }
 
     // if (!this.options || typeof options !== 'object') throw new Error('Invliad `options`. `options` parameter is required.')
 
-    if (options.noPerm && typeof options.noPerm !== "function")
-      throw new Error("`noPerm` parameter must be Function.");
+    if (options.noPerm && typeof options.noPerm !== 'function') { throw new Error('`noPerm` parameter must be Function.') }
 
     if (options.globalVariable) {
-      if (typeof options.globalVariable !== "object")
-        throw new Error("`globalVariable` parameter must be Object.");
-      else {
+      if (typeof options.globalVariable !== 'object') { throw new Error('`globalVariable` parameter must be Object.') } else {
         Object.keys(options.globalVariable).forEach((el) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          if (options.globalVariable) global[el] = options.globalVariable[el];
-        });
+          if (options.globalVariable) global[el] = options.globalVariable[el]
+        })
       }
     }
 
-    if (options.isOwner && !options.owners) options.owners = [];
-    this.owners = options.owners || [];
+    if (options.isOwner && !options.owners) options.owners = []
+    this.owners = options.owners || []
 
-    if (!this.options.secrets || !Array.isArray(this.options.secrets))
-      this.options.secrets = [];
+    if (!this.options.secrets || !Array.isArray(this.options.secrets)) { this.options.secrets = [] }
 
-    if (!this.options.aliases) this.options.aliases = ["dokdo", "dok"];
+    if (!this.options.aliases) this.options.aliases = ['dokdo', 'dok']
 
-    this.process = [];
+    this.process = []
 
-    client.once("ready", (client) => {
+    client.once('ready', (client) => {
       if (!this.owners.length) {
-        console.warn("[ Dokdo ] Owners not given. Fetching from Application.");
+        console.warn('[ Dokdo ] Owners not given. Fetching from Application.')
         client.application.fetch().then((data) => {
-          if (!data.owner)
-            return console.warn("[ Dokdo ] Falied to owner data.");
-          if (data.owner instanceof User)
-            return this.owners.push(data.owner.id);
+          if (!data.owner) { return console.warn('[ Dokdo ] Falied to owner data.') }
+          if (data.owner instanceof User) { return this.owners.push(data.owner.id) }
 
-          this.owners = data.owner.members?.map((el) => el.id);
+          this.owners = data.owner.members?.map((el) => el.id)
 
           console.info(
             `[ Dokdo ] Fetched ${this.owners.length} owner(s): ${
               this.owners.length > 3
-                ? this.owners.slice(0, 3).join(", ") +
+                ? this.owners.slice(0, 3).join(', ') +
                   ` and ${this.owners.length - 3} more owners`
-                : this.owners.join(", ")
+                : this.owners.join(', ')
             }`
-          );
-        });
+          )
+        })
       }
-    });
+    })
   }
 
-  public async run(ctx: Context) {
+  public async run (ctx: Context) {
     if (ctx instanceof Message) {
-      if (!this.options.prefix) return;
-      if (!ctx.content.startsWith(this.options.prefix)) return;
+      if (!this.options.prefix) return
+      if (!ctx.content.startsWith(this.options.prefix)) return
 
-      const parsed = ctx.content.replace(this.options.prefix, "").split(" ");
-      const codeParsed = Utils.codeBlock.parse(parsed.slice(2).join(" "));
+      const parsed = ctx.content.replace(this.options.prefix, '').split(' ')
+      const codeParsed = Utils.codeBlock.parse(parsed.slice(2).join(' '))
 
       ctx.data = {
         raw: ctx.content,
         command: parsed[0]!,
         type: parsed[1]!,
-        args: codeParsed ? codeParsed[2] : parsed.slice(2).join(" "),
-      };
+        args: codeParsed ? codeParsed[2] : parsed.slice(2).join(' ')
+      }
 
       if (
         !ctx.data.args &&
         ctx.attachments.size > 0 &&
         !this.options.disableAttachmentExecution
       ) {
-        const file = ctx.attachments.first();
-        if (!file) return;
+        const file = ctx.attachments.first()
+        if (!file) return
 
-        const buffer = await (await fetch(file.url)).buffer();
-        const type = { ext: file.name?.split(".").pop(), fileName: file.name };
+        const buffer = await (await fetch(file.url)).buffer()
+        const type = { ext: file.name?.split('.').pop(), fileName: file.name }
 
         if (
-          ["txt", "js", "ts", "sh", "bash", "zsh", "ps"].includes(type.ext!)
+          ['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext!)
         ) {
-          ctx.data.args = buffer.toString();
-          if (!ctx.data.type && type.ext !== "txt") ctx.data.type = type.ext!;
+          ctx.data.args = buffer.toString()
+          if (!ctx.data.type && type.ext !== 'txt') ctx.data.type = type.ext!
         }
       }
       if (
         this.options.aliases &&
         !this.options.aliases.includes(ctx.data.command)
-      )
-        return;
+      ) { return }
       if (!this.owners.includes(ctx.author.id)) {
-        let isOwner = false;
+        let isOwner = false
 
         if (this.options.isOwner) {
-          isOwner = await this.options.isOwner(ctx.author);
+          isOwner = await this.options.isOwner(ctx.author)
         }
 
         if (!isOwner) {
-          if (this.options.noPerm) return this.options.noPerm(ctx);
-          else return;
+          if (this.options.noPerm) return this.options.noPerm(ctx)
+          else return
         }
       }
 
-      if (!ctx.data.type) return main(ctx, this);
+      if (!ctx.data.type) return main(ctx, this)
       switch (ctx.data.type) {
-        case "sh":
-        case "bash":
-        case "ps":
-        case "powershell":
-        case "shell":
-        case "zsh":
-        case "exec":
-          exec(ctx, this);
-          break;
-        case "js":
-        case "javascript":
-          js(ctx, this);
-          break;
-        case "shard":
-          shard(ctx, this);
-          break;
-        case "jsi":
-          jsi(ctx, this);
-          break;
-        case "curl":
-          curl(ctx, this);
-          break;
-        case "cat":
-          cat(ctx, this);
-          break;
-        case "docs":
-        case "djs":
-          djs(ctx);
-          break;
+        case 'sh':
+        case 'bash':
+        case 'ps':
+        case 'powershell':
+        case 'shell':
+        case 'zsh':
+        case 'exec':
+          exec(ctx, this)
+          break
+        case 'js':
+        case 'javascript':
+          js(ctx, this)
+          break
+        case 'shard':
+          shard(ctx, this)
+          break
+        case 'jsi':
+          jsi(ctx, this)
+          break
+        case 'curl':
+          curl(ctx, this)
+          break
+        case 'cat':
+          cat(ctx, this)
+          break
+        case 'docs':
+        case 'djs':
+          djs(ctx)
+          break
         default:
           ctx.reply(
             `Available Options: ${Object.keys(Commands)
-              .filter((t) => t !== "main")
+              .filter((t) => t !== 'main')
               .map((t) => `\`${t}\``)
-              .join(", ")}`
-          );
+              .join(', ')}`
+          )
       }
     }
   }
 
-  public _addOwner(id: Snowflake) {
-    if (this.owners.includes(id)) return;
-    this.owners.push(id);
-    return this.owners;
+  public _addOwner (id: Snowflake) {
+    if (this.owners.includes(id)) return
+    this.owners.push(id)
+    return this.owners
   }
 
-  public _removeOwner(id: Snowflake) {
-    if (!this.owners.includes(id)) return null;
-    this.owners.splice(this.owners.indexOf(id), 1);
-    return this.owners;
+  public _removeOwner (id: Snowflake) {
+    if (!this.owners.includes(id)) return null
+    this.owners.splice(this.owners.indexOf(id), 1)
+    return this.owners
   }
 }
 
@@ -206,4 +197,4 @@ export interface MessageData {
 }
 export type Context = ChatInputCommandInteraction | Message;
 
-export { Dokdo as Client, Utils, Commands };
+export { Dokdo as Client, Utils, Commands }
