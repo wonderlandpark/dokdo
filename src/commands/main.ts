@@ -6,8 +6,7 @@ import {
 import type { Client, Context } from '../'
 
 import { System, DateFormatting, join } from '../utils'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const version = require('../../package.json').version
+import { version } from '../../package.json'
 
 export async function main (message: Context, parent: Client) {
   const intents = new IntentsBitField(parent.client.options.intents)

@@ -11,11 +11,29 @@ import * as Utils from './utils'
 import * as Commands from './commands'
 import { cat, curl, djs, exec, js, jsi, main, shard } from './commands'
 
+export interface DokdoOptions {
+  aliases?: string[];
+  owners?: Snowflake[];
+  prefix?: string;
+  secrets?: any[];
+  globalVariable?: Record<string, any>;
+  disableAttachmentExecution?: boolean;
+  noPerm?(context: Message | ChatInputCommandInteraction): Promise<any>;
+  isOwner?: (user: User) => boolean | Promise<boolean>;
+}
+export interface MessageData {
+  raw: string;
+  command: string;
+  type: string;
+  args?: string;
+}
 declare module 'discord.js' {
   interface Message {
     data: MessageData;
   }
 }
+
+export type Context = ChatInputCommandInteraction | Message;
 
 class Dokdo {
   public owners: Snowflake[];
@@ -178,23 +196,5 @@ class Dokdo {
     return this.owners
   }
 }
-
-export interface DokdoOptions {
-  aliases?: string[];
-  owners?: Snowflake[];
-  prefix?: string;
-  secrets?: any[];
-  globalVariable?: Record<string, any>;
-  disableAttachmentExecution?: boolean;
-  noPerm?(context: Message | ChatInputCommandInteraction): Promise<any>;
-  isOwner?: (user: User) => boolean | Promise<boolean>;
-}
-export interface MessageData {
-  raw: string;
-  command: string;
-  type: string;
-  args?: string;
-}
-export type Context = ChatInputCommandInteraction | Message;
 
 export { Dokdo as Client, Utils, Commands }

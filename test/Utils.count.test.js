@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 const assert = require('assert')
 const Discord = require('discord.js')
 
@@ -12,7 +13,7 @@ describe('count function', function () {
   it('Array', function () {
     const numbers = [0, 1, 2, 3, 4, 5]
     const stringsAndNumbers = [0, '1', 2, '3', '4', 5]
-    const others = [0, '1', {}, new Error(), /RegExp/, function () {}]
+    const others = [0, '1', {}, new Error(), /RegExp/, function () { }]
     let result = Utils.count(numbers)
     assert.strictEqual(result.length, 1)
     assert.strictEqual(result[0].name, 'Number')

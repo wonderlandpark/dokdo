@@ -8,9 +8,9 @@ export async function js (message: Context, parent: Client) {
   const isMessage = message instanceof Message
   if (isMessage && !message.data.args) { return message.reply('Missing Arguments.') }
 
-  // eslint-disable-next-line no-eval
   const res = new Promise((resolve) =>
     resolve(
+      // eslint-disable-next-line no-eval
       eval(
         isMessage
           ? message.data.args ?? ''

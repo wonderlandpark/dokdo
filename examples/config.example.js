@@ -1,3 +1,3 @@
 module.exports = {
-  token: "SUPER SECRET TOKEN",
-};
+  token: 'SUPER SECRET TOKEN'
+}

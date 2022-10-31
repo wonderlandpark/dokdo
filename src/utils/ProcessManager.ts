@@ -24,6 +24,7 @@ export interface ProcessOptions {
 }
 
 export interface ActionOptions {
+  // eslint-disable-next-line no-use-before-define
   manager: ProcessManager
   [x: string]: any
 }
