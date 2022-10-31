@@ -24,14 +24,16 @@ module.exports = {
     ecmaVersion: 2021
   },
   rules: {
-    '@typescript-eslint/no-explicit-any': 0,
-    '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/ban-ts-comment': 0,
-    'no-extend-native': 0,
-    'no-eval': 0,
-    'no-use-before-define': 0,
-    quotes: 1,
-    semi: 1
+    'no-extend-native': 0
   },
-  ignorePatterns: ['dist/*', 'node_modules/*', 'examples', 'test']
+  ignorePatterns: ['*.json'],
+  overrides: [
+    {
+      files: ['*.js', '*.test.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 0
+      }
+    }
+  ]
 }
