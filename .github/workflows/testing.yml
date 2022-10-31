@@ -21,7 +21,7 @@ jobs:
       uses: icrawl/action-eslint@v1
       env:
         CI: false
- test:
+  test:
     name: Tests
     runs-on: ubuntu-latest
     steps:
