@@ -32,7 +32,7 @@ describe('count function', function () {
       ['two', 2],
       ['three', 3],
       ['four', 4],
-      ['five', 5],
+      ['five', 5]
     ])
     const stringsAndNumbers = new Discord.Collection([
       ['zero', 0],
@@ -40,7 +40,7 @@ describe('count function', function () {
       ['two', 2],
       ['three', '3'],
       ['four', 4],
-      ['five', '5'],
+      ['five', '5']
     ])
     const others = new Discord.Collection([
       ['number', 0],
@@ -48,7 +48,7 @@ describe('count function', function () {
       ['object', {}],
       ['error', new Error()],
       ['regexp', /RegExp/],
-      ['function', function () {}],
+      ['function', function () {}]
     ])
     let result = Utils.count(numbers)
     assert.strictEqual(result.length, 1)
