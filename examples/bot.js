@@ -21,7 +21,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
-client.on('messageCreate', async (message) => {
+client.on('messageCreate', async message => {
   if (message.content === 'ping') return message.reply('pong')
   await DokdoHandler.run(message)
 })
