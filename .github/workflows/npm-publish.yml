@@ -18,6 +18,7 @@ jobs:
           
     - name: Install Dependencies
       run: yarn
+      
     - name: Build & Run Test
       run: yarn test
     - name: Publish package
