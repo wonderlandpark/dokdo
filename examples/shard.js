@@ -5,5 +5,5 @@ const manager = new ShardingManager('./examples/bot.js', {
   totalShards: 2
 })
 
-manager.on('shardCreate', (shard) => console.log(`Launched shard ${shard.id}`))
+manager.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`))
 manager.spawn()
