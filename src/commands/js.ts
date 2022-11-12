@@ -27,7 +27,7 @@ export async function js (message: Context, parent: Client): Promise<void> {
     .then(async (output) => {
       typeOf = typeof output
 
-      async function prettify (target: any) {
+      async function prettify (target: unknown): Promise<void> {
         if (
           target instanceof Embed ||
           target instanceof EmbedBuilder

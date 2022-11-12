@@ -8,7 +8,7 @@ import type { Client, Context } from '../'
 import { System, DateFormatting, join } from '../utils'
 import { version } from '../../package.json'
 
-export async function main (message: Context, parent: Client) {
+export async function main (message: Context, parent: Client): Promise<void> {
   const intents = new IntentsBitField(parent.client.options.intents)
 
   let summary = `Dokdo v${version}, discord.js \`${djsVersion}\`, \`Node.js ${
@@ -49,5 +49,5 @@ export async function main (message: Context, parent: Client) {
     '.'
   summary += `\nAverage websocket latency: ${parent.client.ws.ping}ms`
 
-  return message.reply(summary)
+  message.reply(summary)
 }

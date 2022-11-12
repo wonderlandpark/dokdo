@@ -10,7 +10,7 @@ export async function curl (message: Message, parent: Client): Promise<void> {
   }
 
   let type
-  const res = await fetch(message.data.args.split(' ')[0]!)
+  const res = await fetch(message.data.args.split(' ')[0] as string)
     .then(async r => {
       const text = await r.text()
       try {

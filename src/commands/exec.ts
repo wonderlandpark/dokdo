@@ -94,7 +94,7 @@ export async function exec (message: Message, parent: Client): Promise<void> {
   })
 }
 
-function kill (res: any, signal?: NodeJS.Signals) {
+function kill (res: child.ChildProcessWithoutNullStreams, signal?: NodeJS.Signals) {
   if (process.platform === 'win32') {
     return child.exec(
       `powershell -File "..\\utils\\KillChildrenProcess.ps1" ${res.pid}`,

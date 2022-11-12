@@ -2,10 +2,13 @@ import { Collection, ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import type { Client } from '../'
 import { ProcessManager, count, inspect, table, typeFind } from '../utils'
 
-export async function jsi (message: Message, parent: Client) {
+export async function jsi (message: Message, parent: Client): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { client } = parent
-  if (!message.data.args) return message.reply('Missing Arguments.')
+  if (!message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
 
   // eslint-disable-next-line no-eval
   const res = new Promise((resolve) => resolve(eval(message.data.args ?? '')))

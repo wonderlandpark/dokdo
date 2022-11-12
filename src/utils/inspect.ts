@@ -1,5 +1,5 @@
 import util from 'util'
 
-export function inspect (value: any, obj: any) {
-  return util.inspect(value, obj)
+export function inspect (value: string, options: util.InspectOptions): string {
+  return util.inspect(value, options)
 }

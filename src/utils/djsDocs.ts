@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import { APIEmbed, MessageReplyOptions, version } from 'discord.js'
 
-export const source = (version: string) => {
+export const source = (version: string): string => {
   const isDev = version.includes('dev')
   const parsed = version.match(/^(\d+)\.\d+\.\d+$/)?.[0]
   return `https://raw.githubusercontent.com/discordjs/discord.js/docs/${

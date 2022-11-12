@@ -2,21 +2,28 @@ import { Client as DiscordClient, ButtonBuilder, ButtonStyle, Message } from 'di
 import type { Client } from '../'
 import { ProcessManager, inspect } from '../utils'
 
-export async function shard (message: Message, parent: Client) {
-  if (!message.data.args) return message.reply('Missing Arguments.')
-  if (!parent.client.shard) return message.reply('Shard Manager not found.')
-  let evalFunction: (client: DiscordClient) => any
+export async function shard (message: Message, parent: Client): Promise<void> {
+  if (!message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
+  if (!parent.client.shard) {
+    message.reply('Shard Manager not found.')
+    return
+  }
+  let evalFunction: (client: DiscordClient) => unknown
   try {
     // eslint-disable-next-line no-new-func
     evalFunction = Function('client', `return ${message.data.args}`) as (
       client: DiscordClient
-    ) => any // catch syntax error
-  } catch (err: any) {
-    return message.reply(err.toString())
+    ) => unknown // catch syntax error
+  } catch (err) {
+    message.reply(err?.toString() ?? 'Error Occurred.')
+    return
   }
   const result = await parent.client.shard
     .broadcastEval(evalFunction)
-    .then((el: any) => el)
+    .then(el => el)
     .catch((e: any) => e.toString())
   let msg
   if (!Array.isArray(result)) { msg = new ProcessManager(message, result, parent, { lang: 'js' }) } else {
