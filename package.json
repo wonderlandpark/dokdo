@@ -4,6 +4,7 @@
   "description": "Dokdo. Easy Discord bot debuging tool.",
   "scripts": {
     "build": "tsup",
+    "dev": "yarn test:bot",
     "lint": "eslint --ext js,jsx,ts,tsx src",
     "lint:fix": "eslint --ext js,jsx,ts,tsx src --fix",
     "test": "yarn build && mocha --exit",
