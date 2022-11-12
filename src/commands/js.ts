@@ -1,12 +1,16 @@
-import Discord, { Message } from 'discord.js'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Discord, { Embed, EmbedBuilder, Collection, Attachment, ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import type { Client, Context } from '../'
 import { ProcessManager, inspect, isInstance, isGenerator } from '../utils'
 
-export async function js (message: Context, parent: Client) {
+export async function js (message: Context, parent: Client): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { client } = parent // for eval
   const isMessage = message instanceof Message
-  if (isMessage && !message.data.args) { return message.reply('Missing Arguments.') }
+  if (isMessage && !message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
 
   const res = new Promise((resolve) =>
     resolve(
@@ -25,12 +29,12 @@ export async function js (message: Context, parent: Client) {
 
       async function prettify (target: any) {
         if (
-          target instanceof Discord.Embed ||
-          target instanceof Discord.EmbedBuilder
-        ) { await message.reply({ embeds: [target] }) } else if (isInstance(target, Discord.Attachment)) {
+          target instanceof Embed ||
+          target instanceof EmbedBuilder
+        ) { await message.reply({ embeds: [target] }) } else if (isInstance(target, Attachment)) {
           await message.reply({
             files:
-              target instanceof Discord.Collection ? target.toJSON() : [target]
+              target instanceof Collection ? target.toJSON() : [target]
           })
         }
       }
@@ -70,24 +74,24 @@ export async function js (message: Context, parent: Client) {
   await msg.init()
   await msg.addAction([
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Danger)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Danger)
         .setCustomId('dokdo$prev')
         .setLabel('Prev'),
       action: ({ manager }) => manager.previousPage(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Secondary)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
         .setCustomId('dokdo$stop')
         .setLabel('Stop'),
       action: ({ manager }) => manager.destroy(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Success)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Success)
         .setCustomId('dokdo$next')
         .setLabel('Next'),
       action: ({ manager }) => manager.nextPage(),

@@ -15,8 +15,8 @@ export async function docs (q: string): Promise<MessageReplyOptions> {
     src: source(version),
     q
   })
-  const res = await fetch(`https://djsdocs.sorta.moe/v2/embed?${params}`)
-  const embed = (await res.json()) as APIEmbed
-  if (!embed) return { content: 'Nothing found' }
+  const res = await fetch(`https://djsdocs.sorta.moe/v2/embed?${params}`).then(r => r).catch(() => null)
+  const embed = (res && await res.json().then(r => r).catch(() => null)) as APIEmbed | false
+  if (!embed) return { content: 'Nothing found or Request Failed' }
   else return { embeds: [embed] }
 }

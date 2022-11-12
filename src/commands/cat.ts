@@ -3,8 +3,11 @@ import { ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import { ProcessManager, HLJS } from '../utils'
 import type { Client } from '../'
 
-export async function cat (message: Message, parent: Client) {
-  if (!message.data.args) return message.reply('Missing Arguments.')
+export async function cat (message: Message, parent: Client): Promise<void> {
+  if (!message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
   const filename = message.data.args
   let msg
   fs.readFile(filename, async (err, data) => {

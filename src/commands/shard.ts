@@ -1,4 +1,4 @@
-import Discord, { Client as DiscordClient, Message } from 'discord.js'
+import { Client as DiscordClient, ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import type { Client } from '../'
 import { ProcessManager, inspect } from '../utils'
 
@@ -41,24 +41,24 @@ export async function shard (message: Message, parent: Client) {
   await msg.init()
   await msg.addAction([
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Primary)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Primary)
         .setCustomId('dokdo$prev')
         .setLabel('Prev'),
       action: ({ manager }) => manager.previousPage(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Secondary)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
         .setCustomId('dokdo$stop')
         .setLabel('Stop'),
       action: ({ manager }) => manager.destroy(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Success)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Success)
         .setCustomId('dokdo$next')
         .setLabel('Next'),
       action: ({ manager }) => manager.nextPage(),

@@ -1,18 +1,22 @@
 import child from 'child_process'
-import Discord, { Message } from 'discord.js'
+import { ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import type { Client } from '../'
 import { ProcessManager, codeBlock } from '../utils'
 
-export async function exec (message: Message, parent: Client) {
-  if (!message.data.args) return message.reply('Missing Arguments.')
+export async function exec (message: Message, parent: Client): Promise<void> {
+  if (!message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
 
   const shell =
     process.env.SHELL || (process.platform === 'win32' ? 'powershell' : null)
   console.log(shell)
   if (!shell) {
-    return message.reply(
+    message.reply(
       'Sorry, we are not able to find your default shell.\nPlease set `process.env.SHELL`.'
     )
+    return
   }
 
   const msg = new ProcessManager(message, `$ ${message.data.args}\n`, parent, {
@@ -33,16 +37,16 @@ export async function exec (message: Message, parent: Client) {
   await msg.addAction(
     [
       {
-        button: new Discord.ButtonBuilder()
-          .setStyle(Discord.ButtonStyle.Danger)
+        button: new ButtonBuilder()
+          .setStyle(ButtonStyle.Danger)
           .setCustomId('dokdo$prev')
           .setLabel('Prev'),
         action: ({ manager }) => manager.previousPage(),
         requirePage: true
       },
       {
-        button: new Discord.ButtonBuilder()
-          .setStyle(Discord.ButtonStyle.Secondary)
+        button: new ButtonBuilder()
+          .setStyle(ButtonStyle.Secondary)
           .setCustomId('dokdo$stop')
           .setLabel('Stop'),
         action: async ({ res, manager }) => {
@@ -55,8 +59,8 @@ export async function exec (message: Message, parent: Client) {
         requirePage: true
       },
       {
-        button: new Discord.ButtonBuilder()
-          .setStyle(Discord.ButtonStyle.Success)
+        button: new ButtonBuilder()
+          .setStyle(ButtonStyle.Success)
           .setCustomId('dokdo$next')
           .setLabel('Next'),
         action: ({ manager }) => manager.nextPage(),
