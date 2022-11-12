@@ -24,7 +24,7 @@ export async function js (message: Context, parent: Client): Promise<void> {
   )
   let typeOf
   const result = await res
-    .then(async (output) => {
+    .then(async (output: any) => {
       typeOf = typeof output
 
       async function prettify (target: unknown): Promise<void> {
@@ -40,7 +40,7 @@ export async function js (message: Context, parent: Client): Promise<void> {
       }
 
       if (isGenerator(output)) {
-        for (const value of output as any) {
+        for (const value of output) {
           prettify(value)
 
           if (typeof value === 'function') { await message.reply(value.toString()) } else if (typeof value === 'string') await message.reply(value)
