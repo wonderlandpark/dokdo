@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    // Type Checking
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "useUnknownInCatchVariables": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+
+    // Emit
+    "declaration": true,
+    "declarationMap": true,
+    "importHelpers": true,
+    "importsNotUsedAsValues": "error",
+    "inlineSources": true,
+    "newLine": "lf",
+    "noEmitHelpers": true,
+    "outDir": "dist",
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Language and Environment
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["ESNext"],
+    "target": "ES2021",
+    "useDefineForClassFields": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/*"]
+}

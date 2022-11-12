@@ -2,14 +2,22 @@
   "name": "dokdo",
   "version": "0.6.2",
   "description": "Dokdo. Easy Discord bot debuging tool.",
-  "main": "./src/index.js",
-  "types": "./typings/index.d.ts",
   "scripts": {
-    "test": "mocha --exit",
-    "test:bot": "node examples/bot",
-    "test:shard": "node examples/shard",
+    "build": "tsup",
     "lint": "eslint --ext js,jsx,ts,tsx src",
-    "lint:fix": "eslint --ext js,jsx,ts,tsx src --fix"
+    "lint:fix": "eslint --ext js,jsx,ts,tsx src --fix",
+    "test": "yarn build && mocha --exit",
+    "test:bot": "yarn build && node examples/bot",
+    "test:shard": "yarn build && node examples/shard",
+    "update": "yarn upgrade-interactive"
+  },
+  "main": "./dist/index.js",
+  "module": "./esm/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "import": "./esm/index.js",
+    "require": "./dist/index.js",
+    "types": "./dist/index.d.ts"
   },
   "repository": {
     "type": "git",
@@ -25,13 +33,13 @@
   },
   "homepage": "https://github.com/wonderlandpark/dokdo#readme",
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@types/node": "^16.3.1",
-    "@typescript-eslint/eslint-plugin": "^4.9.0",
-    "@typescript-eslint/parser": "^4.9.0",
-    "babel-eslint": "^10.1.0",
+    "@types/node-fetch": "^2.6.2",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
     "eslint": "^7.15.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -41,9 +49,14 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "mocha": "^9.0.1",
+    "tsup": "^6.3.0",
     "typescript": "^4.1.2"
   },
+  "engines": {
+    "node": ">=16.9.0"
+  },
+  "packageManager": "yarn@3.2.4",
   "peerDependencies": {
-    "discord.js": "^14.0.0"
+    "discord.js": "14"
   }
 }
