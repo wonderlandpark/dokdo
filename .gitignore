@@ -14,5 +14,3 @@ package-lock.json # we are using yarn
 dist/
 
 .vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
