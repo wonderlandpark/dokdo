@@ -24,6 +24,7 @@ export async function js (message: Context, parent: Client): Promise<void> {
   )
   let typeOf
   const result = await res
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .then(async (output: any) => {
       typeOf = typeof output
 

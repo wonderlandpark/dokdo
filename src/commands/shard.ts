@@ -24,7 +24,7 @@ export async function shard (message: Message, parent: Client): Promise<void> {
   const result = await parent.client.shard
     .broadcastEval(evalFunction)
     .then(el => el)
-    .catch((e: any) => e.toString())
+    .catch(e => e.toString())
   let msg
   if (!Array.isArray(result)) { msg = new ProcessManager(message, result, parent, { lang: 'js' }) } else {
     let sum
