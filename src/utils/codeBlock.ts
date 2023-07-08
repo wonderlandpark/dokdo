@@ -1,9 +1,7 @@
-import { escapeCodeBlock } from 'discord.js'
-
 export class codeBlock {
   static construct (content: string, lang?: string): string {
     return `\`\`\`${content ? lang || '' : ''}
-${escapeCodeBlock(content)}
+${content.replaceAll('```', '\\`\\`\\`')}
 \`\`\``
   }
 

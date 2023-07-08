@@ -11,7 +11,6 @@ export async function exec (message: Message, parent: Client): Promise<void> {
 
   const shell =
     process.env.SHELL || (process.platform === 'win32' ? 'powershell' : null)
-  console.log(shell)
   if (!shell) {
     message.reply(
       'Sorry, we are not able to find your default shell.\nPlease set `process.env.SHELL`.'
@@ -32,7 +31,6 @@ export async function exec (message: Message, parent: Client): Promise<void> {
     kill(res, 'SIGTERM')
     message.reply('Shell timeout occured.')
   }, 180000)
-  console.log(res.pid)
 
   await msg.addAction(
     [
@@ -51,12 +49,11 @@ export async function exec (message: Message, parent: Client): Promise<void> {
           .setLabel('Stop'),
         action: async ({ res, manager }) => {
           res.stdin.pause()
-          const gg = await kill(res)
-          console.log(gg)
+          kill(res)
           msg.add('^C')
           manager.destroy()
         },
-        requirePage: true
+        requirePage: false
       },
       {
         button: new ButtonBuilder()
@@ -71,16 +68,14 @@ export async function exec (message: Message, parent: Client): Promise<void> {
   )
 
   res.stdout.on('data', (data) => {
-    console.log(data.toString())
-    msg.add('\n' + data.toString())
+    msg.add(data.toString())
   })
 
   res.stderr.on('data', (data) => {
-    msg.add(`\n[stderr] ${data.toString()}`)
+    msg.add(`[stderr] ${data.toString()}`)
   })
 
   res.on('error', (err) => {
-    console.log(err)
     return message.reply(
       `Error occurred while spawning process\n${codeBlock.construct(
         err.toString(),
@@ -89,7 +84,7 @@ export async function exec (message: Message, parent: Client): Promise<void> {
     )
   })
   res.on('close', (code) => {
-    console.log(clearTimeout(timeout))
+    clearTimeout(timeout)
     msg.add(`\n[status] process exited with code ${code}`)
   })
 }
