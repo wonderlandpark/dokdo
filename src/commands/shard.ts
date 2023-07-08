@@ -1,23 +1,30 @@
-import Discord, { Client as DiscordClient, Message } from 'discord.js'
+import { Client as DiscordClient, ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import type { Client } from '../'
 import { ProcessManager, inspect } from '../utils'
 
-export async function shard (message: Message, parent: Client) {
-  if (!message.data.args) return message.reply('Missing Arguments.')
-  if (!parent.client.shard) return message.reply('Shard Manager not found.')
-  let evalFunction: (client: DiscordClient) => any
+export async function shard (message: Message, parent: Client): Promise<void> {
+  if (!message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
+  if (!parent.client.shard) {
+    message.reply('Shard Manager not found.')
+    return
+  }
+  let evalFunction: (client: DiscordClient) => unknown
   try {
     // eslint-disable-next-line no-new-func
     evalFunction = Function('client', `return ${message.data.args}`) as (
       client: DiscordClient
-    ) => any // catch syntax error
-  } catch (err: any) {
-    return message.reply(err.toString())
+    ) => unknown // catch syntax error
+  } catch (err) {
+    message.reply(err?.toString() ?? 'Error Occurred.')
+    return
   }
   const result = await parent.client.shard
     .broadcastEval(evalFunction)
-    .then((el: any) => el)
-    .catch((e: any) => e.toString())
+    .then(el => el)
+    .catch(e => e.toString())
   let msg
   if (!Array.isArray(result)) { msg = new ProcessManager(message, result, parent, { lang: 'js' }) } else {
     let sum
@@ -41,24 +48,24 @@ export async function shard (message: Message, parent: Client) {
   await msg.init()
   await msg.addAction([
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Primary)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Primary)
         .setCustomId('dokdo$prev')
         .setLabel('Prev'),
       action: ({ manager }) => manager.previousPage(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Secondary)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
         .setCustomId('dokdo$stop')
         .setLabel('Stop'),
       action: ({ manager }) => manager.destroy(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Success)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Success)
         .setCustomId('dokdo$next')
         .setLabel('Next'),
       action: ({ manager }) => manager.nextPage(),

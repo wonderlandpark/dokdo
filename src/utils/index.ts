@@ -5,7 +5,6 @@ export * from './system'
 export * from './DateFormatting'
 
 export * from './count'
-export * from './djsDocs'
 export * from './inspect'
 export * from './table'
 export * from './type'

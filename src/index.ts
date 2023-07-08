@@ -9,16 +9,16 @@ import fetch from 'node-fetch'
 
 import * as Utils from './utils'
 import * as Commands from './commands'
-import { cat, curl, djs, exec, js, jsi, main, shard } from './commands'
+import { cat, curl, exec, js, jsi, main, shard } from './commands'
 
 export interface DokdoOptions {
   aliases?: string[];
   owners?: Snowflake[];
   prefix?: string;
-  secrets?: any[];
+  secrets?: string[];
   globalVariable?: Record<string, any>;
   disableAttachmentExecution?: boolean;
-  noPerm?(context: Message | ChatInputCommandInteraction): Promise<any>;
+  noPerm?(context: Message | ChatInputCommandInteraction): Promise<unknown>;
   isOwner?: (user: User) => boolean | Promise<boolean>;
 }
 export interface MessageData {
@@ -92,7 +92,7 @@ class Dokdo {
     })
   }
 
-  public async run (ctx: Context) {
+  public async run (ctx: Context): Promise<void> {
     if (ctx instanceof Message) {
       if (!this.options.prefix) return
       if (!ctx.content.startsWith(this.options.prefix)) return
@@ -137,8 +137,8 @@ class Dokdo {
         }
 
         if (!isOwner) {
-          if (this.options.noPerm) return this.options.noPerm(ctx)
-          else return
+          if (this.options.noPerm) this.options.noPerm(ctx)
+          return
         }
       }
 
@@ -169,10 +169,6 @@ class Dokdo {
         case 'cat':
           cat(ctx, this)
           break
-        case 'docs':
-        case 'djs':
-          djs(ctx)
-          break
         default:
           ctx.reply(
             `Available Options: ${Object.keys(Commands)
@@ -184,15 +180,13 @@ class Dokdo {
     }
   }
 
-  public _addOwner (id: Snowflake) {
-    if (this.owners.includes(id)) return
-    this.owners.push(id)
+  public _addOwner (id: Snowflake): Snowflake[] {
+    if (!this.owners.includes(id)) this.owners.push(id)
     return this.owners
   }
 
-  public _removeOwner (id: Snowflake) {
-    if (!this.owners.includes(id)) return null
-    this.owners.splice(this.owners.indexOf(id), 1)
+  public _removeOwner (id: Snowflake): Snowflake[] {
+    if (this.owners.includes(id)) this.owners.splice(this.owners.indexOf(id), 1)
     return this.owners
   }
 }

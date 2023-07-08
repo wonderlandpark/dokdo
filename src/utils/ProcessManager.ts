@@ -19,7 +19,7 @@ export interface ProcessOptions {
    * @default false
    */
   noCode?: boolean
-  secrets?: any[]
+  secrets?: string[]
   lang?: string
 }
 
@@ -79,14 +79,14 @@ export class ProcessManager {
     }
   }
 
-  async init () {
+  async init (): Promise<void> {
     this.messageContent = this.genText()
     this.message = await this.target.send(
       this.filterSecret(this.messageContent)
     )
   }
 
-  async addAction (actions: Action[], args?: Record<string, any>) {
+  async addAction (actions: Action[], args?: Record<string, unknown>): Promise<void> {
     if (!this.message) return
 
     this.actions.push(...actions)
@@ -124,7 +124,7 @@ export class ProcessManager {
     })
   }
 
-  async createMessageComponentMessage () {
+  async createMessageComponentMessage (): Promise<void> {
     if (this.options.noCode && this.splitted.length < 2) return
     const buttons = this.actions
       .filter((el) => !(el.requirePage && this.splitted.length <= 1))
@@ -136,7 +136,7 @@ export class ProcessManager {
     this.message?.edit({ components: [actionRow] })
   }
 
-  filterSecret (string: string) {
+  filterSecret (string: string): string {
     string = string.replace(
       new RegExp(this.dokdo.client.token!, 'gi'),
       '[accesstoken was hidden]'
@@ -151,7 +151,7 @@ export class ProcessManager {
     return string
   }
 
-  updatePage (num: number) {
+  updatePage (num: number): void {
     if (!this.message) return
     if (this.splitted.length < num || num < 1) throw new Error('Invalid page.')
     this.page = num
@@ -160,19 +160,19 @@ export class ProcessManager {
     this.update()
   }
 
-  nextPage () {
+  nextPage (): void {
     if (this.page >= this.splitted.length) return
 
     this.updatePage(this.page + 1)
   }
 
-  previousPage () {
+  previousPage (): void {
     if (this.page <= 1) return
 
     this.updatePage(this.page - 1)
   }
 
-  update () {
+  update (): void {
     if (!this.message) return
     this.splitted = this.splitContent()
     if (this.wait === 0) this.messageContent = this.genText()
@@ -190,24 +190,24 @@ export class ProcessManager {
     }
   }
 
-  edit () {
+  edit (): void {
     if (this.splitted.length > 1) this.createMessageComponentMessage()
     this.message?.edit(this.filterSecret(this.messageContent))
   }
 
-  add (content: string) {
+  add (content: string): void {
     if (!this.message) return
     this.content += content
 
     this.update()
   }
 
-  destroy () {
+  destroy (): void {
     this.message?.edit({ components: [] })
     this.messageComponentCollector?.stop()
   }
 
-  genText () {
+  genText (): string {
     return this.options.noCode && this.splitted.length < 2
       ? `${this.splitted[this.page - 1]}`
       : `${codeBlock.construct(
@@ -216,7 +216,7 @@ export class ProcessManager {
         )}\n\nPage ${this.page}/${this.splitted.length}`
   }
 
-  splitContent () {
+  splitContent (): string[] {
     const char = [new RegExp(`.{1,${this.limit}}`, 'g'), '\n']
     const text = Discord.verifyString(this.content)
     if (text.length <= this.limit) return [text]

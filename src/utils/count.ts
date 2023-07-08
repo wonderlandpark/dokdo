@@ -1,7 +1,7 @@
 import { Collection } from 'discord.js'
 import { typeFind } from './type'
 
-export function count (argument: any) {
+export function count (argument: any): { name: string; count: number; ratio: string }[] | null {
   if (
     argument instanceof Map ||
     argument instanceof Set ||
@@ -19,7 +19,7 @@ export function count (argument: any) {
     }
 
     const items = Object.keys(obj).map((el) => {
-      return { name: el, count: obj[el] }
+      return { name: el, count: obj[el] as number }
     })
     const total = items.reduce(
       (previous, current) => previous + current.count,

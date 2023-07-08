@@ -8,14 +8,14 @@ import type { Client, Context } from '../'
 import { System, DateFormatting, join } from '../utils'
 import { version } from '../../package.json'
 
-export async function main (message: Context, parent: Client) {
+export async function main (message: Context, parent: Client): Promise<void> {
   const intents = new IntentsBitField(parent.client.options.intents)
 
   let summary = `Dokdo v${version}, discord.js \`${djsVersion}\`, \`Node.js ${
     process.version
   }\` on \`${process.platform}\`\nProcess started at ${DateFormatting.relative(
     System.processReadyAt()
-  )}, bot was ready at ${DateFormatting.relative(parent.client.readyAt!)}.\n`
+  )}, bot was ready at ${DateFormatting.relative(parent.client.readyAt ?? 0)}.\n`
 
   summary += `\nUsing ${System.memory().rss} at this process.\n`
   const cache = `${parent.client.guilds.cache.size} guild(s) and ${parent.client.users.cache.size} user(s)`
@@ -49,5 +49,5 @@ export async function main (message: Context, parent: Client) {
     '.'
   summary += `\nAverage websocket latency: ${parent.client.ws.ping}ms`
 
-  return message.reply(summary)
+  message.reply(summary)
 }

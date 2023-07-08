@@ -1,14 +1,17 @@
 import fetch from 'node-fetch'
-import Discord, { Message } from 'discord.js'
+import { ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import { ProcessManager, HLJS } from '../utils'
 import type { Client } from '../'
 
-export async function curl (message: Message, parent: Client) {
-  if (!message.data.args) return message.reply('Missing Arguments.')
+export async function curl (message: Message, parent: Client): Promise<void> {
+  if (!message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
 
   let type
-  const res = await fetch(message.data.args.split(' ')[0]!)
-    .then(async (r) => {
+  const res = await fetch(message.data.args.split(' ')[0] as string)
+    .then(async r => {
       const text = await r.text()
       try {
         type = 'json'
@@ -30,24 +33,24 @@ export async function curl (message: Message, parent: Client) {
   await msg.init()
   await msg.addAction([
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Danger)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Danger)
         .setCustomId('dokdo$prev')
         .setLabel('Prev'),
       action: ({ manager }) => manager.previousPage(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Secondary)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
         .setCustomId('dokdo$stop')
         .setLabel('Stop'),
       action: ({ manager }) => manager.destroy(),
       requirePage: true
     },
     {
-      button: new Discord.ButtonBuilder()
-        .setStyle(Discord.ButtonStyle.Success)
+      button: new ButtonBuilder()
+        .setStyle(ButtonStyle.Success)
         .setCustomId('dokdo$next')
         .setLabel('Next'),
       action: ({ manager }) => manager.nextPage(),

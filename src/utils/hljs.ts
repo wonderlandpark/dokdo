@@ -322,7 +322,7 @@ export class HLJS {
   /**
    * Get highlight.js language of given query.
    */
-  static getLang (query?: string | null) {
+  static getLang (query?: string | null): string | undefined {
     if (!query || typeof query !== 'string') return undefined
     return this.languages.find((l) => query.endsWith(l))
   }

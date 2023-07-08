@@ -1,18 +1,21 @@
 import child from 'child_process'
-import Discord, { Message } from 'discord.js'
+import { ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import type { Client } from '../'
 import { ProcessManager, codeBlock } from '../utils'
 
-export async function exec (message: Message, parent: Client) {
-  if (!message.data.args) return message.reply('Missing Arguments.')
+export async function exec (message: Message, parent: Client): Promise<void> {
+  if (!message.data.args) {
+    message.reply('Missing Arguments.')
+    return
+  }
 
   const shell =
     process.env.SHELL || (process.platform === 'win32' ? 'powershell' : null)
-  console.log(shell)
   if (!shell) {
-    return message.reply(
+    message.reply(
       'Sorry, we are not able to find your default shell.\nPlease set `process.env.SHELL`.'
     )
+    return
   }
 
   const msg = new ProcessManager(message, `$ ${message.data.args}\n`, parent, {
@@ -28,35 +31,33 @@ export async function exec (message: Message, parent: Client) {
     kill(res, 'SIGTERM')
     message.reply('Shell timeout occured.')
   }, 180000)
-  console.log(res.pid)
 
   await msg.addAction(
     [
       {
-        button: new Discord.ButtonBuilder()
-          .setStyle(Discord.ButtonStyle.Danger)
+        button: new ButtonBuilder()
+          .setStyle(ButtonStyle.Danger)
           .setCustomId('dokdo$prev')
           .setLabel('Prev'),
         action: ({ manager }) => manager.previousPage(),
         requirePage: true
       },
       {
-        button: new Discord.ButtonBuilder()
-          .setStyle(Discord.ButtonStyle.Secondary)
+        button: new ButtonBuilder()
+          .setStyle(ButtonStyle.Secondary)
           .setCustomId('dokdo$stop')
           .setLabel('Stop'),
         action: async ({ res, manager }) => {
           res.stdin.pause()
-          const gg = await kill(res)
-          console.log(gg)
+          kill(res)
           msg.add('^C')
           manager.destroy()
         },
-        requirePage: true
+        requirePage: false
       },
       {
-        button: new Discord.ButtonBuilder()
-          .setStyle(Discord.ButtonStyle.Success)
+        button: new ButtonBuilder()
+          .setStyle(ButtonStyle.Success)
           .setCustomId('dokdo$next')
           .setLabel('Next'),
         action: ({ manager }) => manager.nextPage(),
@@ -67,16 +68,14 @@ export async function exec (message: Message, parent: Client) {
   )
 
   res.stdout.on('data', (data) => {
-    console.log(data.toString())
-    msg.add('\n' + data.toString())
+    msg.add(data.toString())
   })
 
   res.stderr.on('data', (data) => {
-    msg.add(`\n[stderr] ${data.toString()}`)
+    msg.add(`[stderr] ${data.toString()}`)
   })
 
   res.on('error', (err) => {
-    console.log(err)
     return message.reply(
       `Error occurred while spawning process\n${codeBlock.construct(
         err.toString(),
@@ -85,12 +84,12 @@ export async function exec (message: Message, parent: Client) {
     )
   })
   res.on('close', (code) => {
-    console.log(clearTimeout(timeout))
+    clearTimeout(timeout)
     msg.add(`\n[status] process exited with code ${code}`)
   })
 }
 
-function kill (res: any, signal?: NodeJS.Signals) {
+function kill (res: child.ChildProcessWithoutNullStreams, signal?: NodeJS.Signals) {
   if (process.platform === 'win32') {
     return child.exec(
       `powershell -File "..\\utils\\KillChildrenProcess.ps1" ${res.pid}`,
