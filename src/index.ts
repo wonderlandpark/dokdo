@@ -9,7 +9,7 @@ import fetch from 'node-fetch'
 
 import * as Utils from './utils'
 import * as Commands from './commands'
-import { cat, curl, djs, exec, js, jsi, main, shard } from './commands'
+import { cat, curl, exec, js, jsi, main, shard } from './commands'
 
 export interface DokdoOptions {
   aliases?: string[];
@@ -168,10 +168,6 @@ class Dokdo {
           break
         case 'cat':
           cat(ctx, this)
-          break
-        case 'docs':
-        case 'djs':
-          djs(ctx)
           break
         default:
           ctx.reply(
