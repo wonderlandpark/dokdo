@@ -56,9 +56,5 @@
   "peerDependencies": {
     "discord.js": "^14.0.0",
     "undici": "^5.0.0"
-  },
-  "dependencies": {
-    "@types/node-fetch": "^2.6.4",
-    "node-fetch": "^2.6.12"
   }
 }
