@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import { request } from 'undici'
 import { ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import { ProcessManager, HLJS } from '../utils'
 import type { Client } from '../'
@@ -10,14 +10,14 @@ export async function curl (message: Message, parent: Client): Promise<void> {
   }
 
   let type
-  const res = await fetch(message.data.args.split(' ')[0] as string)
+  const res = await request(message.data.args.split(' ')[0] as string)
     .then(async r => {
-      const text = await r.text()
+      const text = await r.body.text()
       try {
         type = 'json'
         return JSON.stringify(JSON.parse(text), null, 2)
       } catch {
-        type = HLJS.getLang(r.headers.get('Content-Type')) || 'html'
+        type = HLJS.getLang(r.headers['content-type'] as string | undefined) || 'html'
         return text
       }
     })
