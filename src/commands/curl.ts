@@ -10,23 +10,23 @@ export async function curl (message: Message, parent: Client): Promise<void> {
   }
 
   let type
-  const res = await request(message.data.args.split(' ')[0] as string)
-    .then(async r => {
-      const text = await r.body.text()
-      try {
-        type = 'json'
-        return JSON.stringify(JSON.parse(text), null, 2)
-      } catch {
-        type = HLJS.getLang(r.headers['content-type'] as string | undefined) || 'html'
-        return text
-      }
-    })
-    .catch((e) => {
-      type = 'js'
-      message.react('❗')
-      console.log(e.stack)
-      return e.toString()
-    })
+  let res
+  try {
+    const response = await request(message.data.args.split(' ')[0] as string)
+    const text = await response.body.text()
+    try {
+      type = 'json'
+      res = JSON.stringify(JSON.parse(text), null, 2)
+    } catch {
+      type = HLJS.getLang(response.headers['content-type'] as string | undefined) || 'html'
+      res = text
+    }
+  } catch (e: any) {
+    type = 'js'
+    message.react('❗')
+    console.log(e.stack)
+    res = e.toString()
+  }
 
   // console.log(res)
   const msg = new ProcessManager(message, res || '', parent, { lang: type })
