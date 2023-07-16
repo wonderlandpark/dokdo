@@ -5,11 +5,11 @@ import {
   User,
   ChatInputCommandInteraction
 } from 'discord.js'
-import fetch from 'node-fetch'
 
 import * as Utils from './utils'
 import * as Commands from './commands'
 import { cat, curl, exec, js, jsi, main, shard } from './commands'
+import { request } from 'undici'
 
 export interface DokdoOptions {
   aliases?: string[];
@@ -115,13 +115,13 @@ class Dokdo {
         const file = ctx.attachments.first()
         if (!file) return
 
-        const buffer = await (await fetch(file.url)).buffer()
+        const text = await request(file.url).then((res) => res.body.text())
         const type = { ext: file.name?.split('.').pop(), fileName: file.name }
 
         if (
           ['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext!)
         ) {
-          ctx.data.args = buffer.toString()
+          ctx.data.args = text
           if (!ctx.data.type && type.ext !== 'txt') ctx.data.type = type.ext!
         }
       }
