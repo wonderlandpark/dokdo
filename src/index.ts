@@ -116,13 +116,14 @@ class Dokdo {
         if (!file) return
 
         const text = await request(file.url).then((res) => res.body.text())
-        const type = { ext: file.name?.split('.').pop(), fileName: file.name }
+        const type = { ext: file.name.split('.').pop(), fileName: file.name }
 
         if (
-          ['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext!)
+          type.ext &&
+          ['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext)
         ) {
           ctx.data.args = text
-          if (!ctx.data.type && type.ext !== 'txt') ctx.data.type = type.ext!
+          if (!ctx.data.type && type.ext !== 'txt') ctx.data.type = type.ext
         }
       }
       if (
