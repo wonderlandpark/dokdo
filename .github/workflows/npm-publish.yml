@@ -17,7 +17,13 @@ jobs:
           registry-url: https://registry.npmjs.org
           
     - name: Install Dependencies
-      run: yarn
+      run: |
+            yarn install
+            yarn add -D discord.js
+            git stash
+      
+    - name: Build package
+      run: yarn build
     
     - name: Publish package
       run: yarn publish

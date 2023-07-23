@@ -20,6 +20,11 @@
     "require": "./dist/index.js",
     "types": "./dist/index.d.ts"
   },
+  "files": [
+    "src/**/*",
+    "dist/**/*",
+    "examples/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wonderlandpark/dokdo.git"
