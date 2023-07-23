@@ -23,7 +23,6 @@
   "files": [
     "src/**/*",
     "dist/**/*",
-    "yarn.lock",
     "examples/**/*"
   ],
   "repository": {
