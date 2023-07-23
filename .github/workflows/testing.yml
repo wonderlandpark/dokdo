@@ -37,8 +37,6 @@ jobs:
       run: |
         yarn install
         yarn add discord.js -D
-    - name: Build packages
-      run: yarn build
-      
+    
     - name: Run test scripts
       run: yarn test
