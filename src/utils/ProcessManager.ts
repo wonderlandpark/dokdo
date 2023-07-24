@@ -119,8 +119,10 @@ export class ProcessManager {
       event.action(this.args)
     })
 
-    this.messageComponentCollector.on('end', () => {
-      this.message?.edit({ components: [] })
+    this.messageComponentCollector.on('end', (_, reason) => {
+      if (reason === 'time') {
+        this.message?.edit({ components: [] }).catch(() => null)
+      }
     })
   }
 
@@ -203,7 +205,7 @@ export class ProcessManager {
   }
 
   destroy (): void {
-    this.message?.edit({ components: [] })
+    this.message?.edit({ components: [] }).catch(() => null)
     this.messageComponentCollector?.stop()
   }
 
