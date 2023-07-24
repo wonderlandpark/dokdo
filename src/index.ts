@@ -5,11 +5,10 @@ import {
   User,
   ChatInputCommandInteraction
 } from 'discord.js'
-
+import { request } from 'undici'
 import * as Utils from './utils'
 import * as Commands from './commands'
 import { cat, curl, exec, js, jsi, main, shard } from './commands'
-import { request } from 'undici'
 
 export interface DokdoOptions {
   aliases?: string[];
