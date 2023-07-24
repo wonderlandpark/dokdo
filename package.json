@@ -1,6 +1,6 @@
 {
   "name": "dokdo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dokdo. Easy Discord bot debuging tool.",
   "scripts": {
     "build": "tsup",
@@ -20,6 +20,11 @@
     "require": "./dist/index.js",
     "types": "./dist/index.d.ts"
   },
+  "files": [
+    "src/**/*",
+    "dist/**/*",
+    "examples/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wonderlandpark/dokdo.git"
