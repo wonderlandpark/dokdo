@@ -17,9 +17,15 @@ jobs:
           registry-url: https://registry.npmjs.org
           
     - name: Install Dependencies
-      run: yarn
+      run: |
+            yarn install
+            yarn add -D discord.js
+            git stash
+      
+    - name: Build package
+      run: yarn build
     
     - name: Publish package
-      run: yarn publish
+      run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
