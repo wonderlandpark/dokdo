@@ -19,7 +19,7 @@ jobs:
     - name: Install Dependencies
       run: |
             yarn install
-            yarn add -D discord.js
+            yarn add -D discord.js undici
             git stash
       
     - name: Build package

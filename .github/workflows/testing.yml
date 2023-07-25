@@ -36,7 +36,7 @@ jobs:
     - name: Install dependencies
       run: |
         yarn install
-        yarn add discord.js -D
+        yarn add discord.js undici -D
     
     - name: Run test scripts
       run: yarn test
