@@ -1,6 +1,7 @@
 {
   "name": "dokdo",
   "version": "1.0.1",
+  "type": "module",
   "description": "Dokdo. Easy Discord bot debuging tool.",
   "scripts": {
     "build": "tsup",
