@@ -11,6 +11,4 @@ package-lock.json # we are using yarn
 !.yarn/sdks
 !.yarn/versions
 
-dist/
-
 .vscode/*
