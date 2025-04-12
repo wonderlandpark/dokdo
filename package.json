@@ -60,6 +60,6 @@
   "packageManager": "yarn@3.2.4",
   "peerDependencies": {
     "discord.js": "^14.0.0",
-    "undici": "^7.0.0"
+    "undici": "^7.8.0"
   }
 }
