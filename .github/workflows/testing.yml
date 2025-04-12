@@ -9,10 +9,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: install node v16
+    - name: install node v22
       uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 22
 
     - name: Install dependencies
       run: yarn install
@@ -28,10 +28,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: install node v16
+    - name: install node v22
       uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 22
 
     - name: Install dependencies
       run: |
