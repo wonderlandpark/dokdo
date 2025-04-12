@@ -24,7 +24,6 @@ export async function curl (message: Message, parent: Client): Promise<void> {
   } catch (e: any) {
     type = 'js'
     message.react('❗')
-    console.log(e.stack)
     res = e.toString()
   }
 
