@@ -2,6 +2,7 @@
   "name": "dokdo",
   "version": "1.0.1",
   "description": "Dokdo. Easy Discord bot debuging tool.",
+
   "scripts": {
     "build": "tsup",
     "dev": "yarn test:bot",
@@ -39,10 +40,10 @@
   },
   "homepage": "https://github.com/wonderlandpark/dokdo#readme",
   "devDependencies": {
-    "@types/node": "^16.3.1",
-    "@typescript-eslint/eslint-plugin": "^5.41.0",
-    "@typescript-eslint/parser": "^5.41.0",
-    "eslint": "^7.15.0",
+    "@types/node": "^22.14.1",
+    "@typescript-eslint/eslint-plugin": "^8.29.1",
+    "@typescript-eslint/parser": "^8.29.1",
+    "eslint": "^9.24.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsdoc": "^36.0.6",
