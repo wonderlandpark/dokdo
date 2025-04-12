@@ -1,4 +1,4 @@
-name: Nightly Version Publish
+name: Publish
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
           VERSION="$(node -p "require('./package.json').version)-nightly.${SHORT_SHA}"
-          npm version $(VERSION) --no-git-tag-version
+          npm version ${VERSION} --no-git-tag-version
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git commit -am "Nightly release: ${VERSION}"
