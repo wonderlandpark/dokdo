@@ -20,8 +20,6 @@ jobs:
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com
-      - name: Update Registry in package.json
-        run: jq '.name="@wonderlandpark/dokdo"' package.json > temp.json && mv temp.json package.json
 
       - name: Authenticate to GitHub Packages
         run: echo "@wonderlandpark:registery=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
@@ -41,6 +39,9 @@ jobs:
           git config user.email "actions@github.com"
           git commit -am "Nightly release: ${VERSION}"
 
+      - name: Update Registry in package.json
+        run: jq '.name="@wonderlandpark/dokdo"' package.json > temp.json && mv temp.json package.json
+      
       - name: Publish Nightly Version
         run: npm publish --tag nightly
         env:
