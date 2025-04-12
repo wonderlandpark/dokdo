@@ -55,6 +55,8 @@ export class ProcessManager {
     | InteractionCollector<ButtonInteraction>
     | undefined
 
+  private timer: NodeJS.Timeout | null = null
+  private readonly rateLimitInterval = 5000
   constructor (
     message: Context,
     public content: string,
@@ -158,7 +160,6 @@ export class ProcessManager {
     if (this.splitted.length < num || num < 1) throw new Error('Invalid page.')
     this.page = num
 
-    this.genText()
     this.update()
   }
 
@@ -176,25 +177,26 @@ export class ProcessManager {
 
   update (): void {
     if (!this.message) return
+    this.wait++
     this.splitted = this.splitContent()
-    if (this.wait === 0) this.messageContent = this.genText()
-    else if (this.wait % 2 === 0) {
-      this.wait = 0
-      setTimeout(() => {
-        this.messageContent = this.genText()
-        this.edit()
-        this.wait++
-      }, 1000)
-    } else {
-      this.messageContent = this.genText()
-      this.edit()
-      this.wait++
+    this.messageContent = this.genText()
+    if (this.wait <= 5) this.edit().then(() => this.wait--)
+    else {
+      if (!this.timer) {
+        this.timer = setTimeout(() => {
+          this.edit().then(() => {
+            this.wait = 0
+            this.timer = null
+          })
+        }
+        , this.rateLimitInterval)
+      }
     }
   }
 
-  edit (): void {
+  async edit (): Promise<void> {
     if (this.splitted.length > 1) this.createMessageComponentMessage()
-    this.message?.edit(this.filterSecret(this.messageContent))
+    await this.message?.edit(this.filterSecret(this.messageContent))
   }
 
   add (content: string): void {
