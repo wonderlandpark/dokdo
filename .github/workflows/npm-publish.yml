@@ -10,8 +10,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       
-    - name: Install node v16
-      uses: actions/setup-node@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
           node-version: 22
           registry-url: https://registry.npmjs.org
