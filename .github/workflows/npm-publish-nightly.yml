@@ -30,7 +30,7 @@ jobs:
       - name: Update Version for Nightly
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
-          VERSION="$(node -p "require('./package.json').version)-nightly.${SHORT_SHA}"
+          VERSION="$(node -p "require('./package.json').version")-nightly.${SHORT_SHA}"
           npm version ${VERSION} --no-git-tag-version
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
