@@ -29,7 +29,8 @@ jobs:
               yarn install
               yarn add -D discord.js undici
               git stash
-
+      - name: Build package
+        run: yarn build
       - name: Update Version for Nightly
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
