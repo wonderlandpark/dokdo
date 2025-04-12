@@ -51,7 +51,7 @@ npm i dokdo@latest
 ### Nightly Version
 
 [Github Packages](https://github.com/wonderlandpark/dokdo/pkgs/npm/dokdo)
-(registery configuration needed)
+(registry configuration needed)
 
 ```sh
 npm i @wonderlandpark/dokdo@nightly
