@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import { request } from 'undici'
 import { ButtonBuilder, ButtonStyle, Message } from 'discord.js'
 import { ProcessManager, HLJS } from '../utils'
 import type { Client } from '../'
@@ -10,23 +10,22 @@ export async function curl (message: Message, parent: Client): Promise<void> {
   }
 
   let type
-  const res = await fetch(message.data.args.split(' ')[0] as string)
-    .then(async r => {
-      const text = await r.text()
-      try {
-        type = 'json'
-        return JSON.stringify(JSON.parse(text), null, 2)
-      } catch {
-        type = HLJS.getLang(r.headers.get('Content-Type')) || 'html'
-        return text
-      }
-    })
-    .catch((e) => {
-      type = 'js'
-      message.react('❗')
-      console.log(e.stack)
-      return e.toString()
-    })
+  let res
+  try {
+    const response = await request(message.data.args.split(' ')[0] as string)
+    const text = await response.body.text()
+    try {
+      type = 'json'
+      res = JSON.stringify(JSON.parse(text), null, 2)
+    } catch {
+      type = HLJS.getLang(response.headers['content-type'] as string | undefined) || 'html'
+      res = text
+    }
+  } catch (e: any) {
+    type = 'js'
+    message.react('❗')
+    res = e.toString()
+  }
 
   // console.log(res)
   const msg = new ProcessManager(message, res || '', parent, { lang: type })
