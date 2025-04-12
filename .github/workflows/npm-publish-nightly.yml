@@ -21,9 +21,12 @@ jobs:
           node-version: 22
           registry-url: https://npm.pkg.github.com
       - name: Update Registry in package.json
-        run: jq '.publishConfig.registry="https://npm.pkg.github.com/"' package.json > temp.json && mv temp.json package.json
+        run: | 
+          jq '.publishConfig.registry="https://npm.pkg.github.com/"' package.json > temp.json && mv temp.json package.json
+          cat package.json
       - name: Authenticate to GitHub Packages
-        run: npm login --registry=https://npm.pkg.github.com
+        run: |
+        echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
 
       - name: Install Dependencies
         run: |
