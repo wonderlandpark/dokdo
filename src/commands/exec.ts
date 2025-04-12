@@ -4,6 +4,7 @@ import type { Client } from '../'
 import { ProcessManager, codeBlock } from '../utils'
 
 export async function exec (message: Message, parent: Client): Promise<void> {
+  let closed = false
   if (!message.data.args) {
     message.reply('Missing Arguments.')
     return
@@ -48,10 +49,12 @@ export async function exec (message: Message, parent: Client): Promise<void> {
           .setCustomId('dokdo$stop')
           .setLabel('Stop'),
         action: async ({ res, manager }) => {
-          res.stdin.pause()
-          kill(res)
-          msg.add('^C')
-          manager.destroy()
+          if (!closed) {
+            res.stdin.pause()
+            kill(res)
+            msg.add('^C')
+            if (msg.page < 2) manager.destroy()
+          } else manager.destroy()
         },
         requirePage: false
       },
@@ -86,6 +89,7 @@ export async function exec (message: Message, parent: Client): Promise<void> {
   res.on('close', (code) => {
     clearTimeout(timeout)
     msg.add(`\n[status] process exited with code ${code}`)
+    closed = true
   })
 }
 
@@ -95,5 +99,5 @@ function kill (res: child.ChildProcessWithoutNullStreams, signal?: NodeJS.Signal
       `powershell -File "..\\utils\\KillChildrenProcess.ps1" ${res.pid}`,
       { cwd: __dirname }
     )
-  } else return res.kill('SIGINT' || signal)
+  } else return res.kill(signal || 'SIGINT')
 }
