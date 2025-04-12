@@ -4,7 +4,7 @@ import Discord, {
   ComponentType,
   InteractionCollector,
   Message,
-  TextBasedChannel,
+  TextChannel,
   User
 } from 'discord.js'
 import { codeBlock, regexpEscape } from '.'
@@ -40,7 +40,7 @@ export interface Action {
  * Process Manager of every Process
  */
 export class ProcessManager {
-  public target: TextBasedChannel
+  public target: TextChannel
   public messageContent: string
   public limit: number
   public splitted: string[]
@@ -61,7 +61,7 @@ export class ProcessManager {
     public dokdo: Client,
     public options: ProcessOptions = {}
   ) {
-    this.target = message.channel!
+    this.target = message.channel as TextChannel
     this.dokdo = dokdo
     this.content = content || '​'
     this.messageContent = ''
@@ -69,7 +69,7 @@ export class ProcessManager {
     this.limit = options.limit || 1900
     this.splitted = this.splitContent() || [' ']
     this.page = 1
-    this.author = message instanceof Message ? message.author : message.user
+    this.author = message.author
     this.actions = []
     this.wait = 1
     this.message = undefined

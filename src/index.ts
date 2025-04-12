@@ -5,7 +5,7 @@ import {
   User,
   ChatInputCommandInteraction
 } from 'discord.js'
-import fetch from 'node-fetch'
+import { request } from 'undici'
 
 import * as Utils from './utils'
 import * as Commands from './commands'
@@ -33,7 +33,7 @@ declare module 'discord.js' {
   }
 }
 
-export type Context = ChatInputCommandInteraction | Message;
+export type Context = Message;
 
 class Dokdo {
   public owners: Snowflake[];
@@ -115,14 +115,15 @@ class Dokdo {
         const file = ctx.attachments.first()
         if (!file) return
 
-        const buffer = await (await fetch(file.url)).buffer()
-        const type = { ext: file.name?.split('.').pop(), fileName: file.name }
+        const text = await request(file.url).then((res) => res.body.text())
+        const type = { ext: file.name.split('.').pop(), fileName: file.name }
 
         if (
-          ['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext!)
+          type.ext &&
+          ['txt', 'js', 'ts', 'sh', 'bash', 'zsh', 'ps'].includes(type.ext)
         ) {
-          ctx.data.args = buffer.toString()
-          if (!ctx.data.type && type.ext !== 'txt') ctx.data.type = type.ext!
+          ctx.data.args = text
+          if (!ctx.data.type && type.ext !== 'txt') ctx.data.type = type.ext
         }
       }
       if (
