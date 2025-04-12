@@ -1,0 +1,48 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  publish:
+    name: Publish Nightly Version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+
+      - name: Authenticate to GitHub Packages
+        run: echo "@wonderlandpark:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
+      - name: Install Dependencies
+        run: |
+              yarn install
+              yarn add -D discord.js undici
+              git stash
+      - name: Build package
+        run: yarn build
+      - name: Update Version for Nightly
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          VERSION="$(node -p "require('./package.json').version")-nightly.${SHORT_SHA}"
+          npm version ${VERSION} --no-git-tag-version
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git commit -am "Nightly release: ${VERSION}"
+
+      - name: Update Registry in package.json
+        run: jq '.name="@wonderlandpark/dokdo"' package.json > temp.json && mv temp.json package.json
+      
+      - name: Publish Nightly Version
+        run: npm publish --tag nightly
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

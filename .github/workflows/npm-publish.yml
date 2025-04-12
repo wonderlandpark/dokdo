@@ -1,19 +1,19 @@
-name: NPM Publish
+name: Publish
 on:
   release:
     types: [created]
 jobs:
   publish:
-    name: Publish on NPM Registery
+    name: Publish Stable Version
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
       
-    - name: Install node v16
-      uses: actions/setup-node@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
-          node-version: 16
+          node-version: 22
           registry-url: https://registry.npmjs.org
           
     - name: Install Dependencies

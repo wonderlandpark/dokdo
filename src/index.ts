@@ -193,3 +193,4 @@ class Dokdo {
 }
 
 export { Dokdo as Client, Utils, Commands }
+export default { Client: Dokdo, Utils, Commands }

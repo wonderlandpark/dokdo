@@ -42,16 +42,19 @@ You could install `dokdo@0.5.1` by
 ```
 </details>
 
-### Stable
+### Stable Version
 
 ```sh
 npm i dokdo@latest
 ```
 
-### Dev
+### Nightly Version
+
+[Github Packages](https://github.com/wonderlandpark/dokdo/pkgs/npm/dokdo)
+(registry configuration needed)
 
 ```sh
-npm i wonderlandpark/dokdo#main
+npm i @wonderlandpark/dokdo@nightly
 ```
 
 ## Features
