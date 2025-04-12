@@ -6,8 +6,7 @@ import { ProcessManager, inspect, isInstance, isGenerator } from '../utils'
 export async function js (message: Context, parent: Client): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { client } = parent // for eval
-  const isMessage = message instanceof Message
-  if (isMessage && !message.data.args) {
+  if (!message.data.args) {
     message.reply('Missing Arguments.')
     return
   }
@@ -16,9 +15,7 @@ export async function js (message: Context, parent: Client): Promise<void> {
     resolve(
       // eslint-disable-next-line no-eval
       eval(
-        isMessage
-          ? message.data.args ?? ''
-          : message.options.getString('content', true)
+        message.data.args ?? ''
       )
     )
   )

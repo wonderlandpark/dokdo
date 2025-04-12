@@ -33,7 +33,7 @@ declare module 'discord.js' {
   }
 }
 
-export type Context = ChatInputCommandInteraction | Message;
+export type Context = Message;
 
 class Dokdo {
   public owners: Snowflake[];
