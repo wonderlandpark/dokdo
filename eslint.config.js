@@ -1,39 +1,36 @@
-/**
- * @type {import('eslint').ESLint.ConfigData}
- */
-module.exports = {
-  env: {
-    browser: true,
-    es6: true,
-    node: true,
-    mocha: true
+
+const { defineConfig } = require('eslint/config')
+
+const typescriptParser = require('@typescript-eslint/parser')
+const typescriptPlugin = require('@typescript-eslint/eslint-plugin')
+const jsdocPlugin = require('eslint-plugin-jsdoc')
+const markdownPlugin = require('eslint-plugin-markdown')
+const mochaPlugin = require('eslint-plugin-mocha')
+
+module.exports = defineConfig([
+  {
+    files: ['**/*.js', '**/*.ts'],
+    languageOptions: {
+      ecmaVersion: 2021,
+      sourceType: 'module',
+      parser: typescriptParser,
+    },
+    plugins: {
+      '@typescript-eslint': typescriptPlugin,
+      jsdoc: jsdocPlugin,
+      markdown: markdownPlugin,
+      mocha: mochaPlugin,
+    },
+    rules: {
+      '@typescript-eslint/ban-ts-comment': 'off',
+      'no-extend-native': 'off',
+    },
+    ignores: ['*.json'],
   },
-  extends: [
-    'standard',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:mocha/recommended'
-  ],
-  plugins: ['@typescript-eslint', 'jsdoc', 'markdown', 'mocha'],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+  {
+    files: ['*.js', '*.test.js'],
+    rules: {
+      '@typescript-eslint/no-var-requires': 'off',
+    },
   },
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2021
-  },
-  rules: {
-    '@typescript-eslint/ban-ts-comment': 0,
-    'no-extend-native': 0
-  },
-  ignorePatterns: ['*.json'],
-  overrides: [
-    {
-      files: ['*.js', '*.test.js'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 0
-      }
-    }
-  ]
-}
+])
