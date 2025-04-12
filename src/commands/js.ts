@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Discord, { Embed, EmbedBuilder, Collection, Attachment, ButtonBuilder, ButtonStyle, Message } from 'discord.js'
+import Discord, { Embed, EmbedBuilder, Collection, Attachment, ButtonBuilder, ButtonStyle } from 'discord.js'
 import type { Client, Context } from '../'
 import { ProcessManager, inspect, isInstance, isGenerator } from '../utils'
 
