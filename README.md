@@ -10,17 +10,30 @@
 </p>
 </div>
 
-## About
+# Dokdo
 
-Dokdo. Easy Discord bot debuging tool.
+**Dokdo** is a powerful, extensible debugging toolkit for `discord.js`.
+It allows you to evaluate JavaScript code, run shell commands, and inspect your bot in real-time directly from Discord.
 
-It's debugging tool for `discord.js` projects.
+> Inspired by [Jishaku](https://github.com/scarletcafe/jishaku) for `discord.py`.
 
-## Preview
+## ✨ Features
 
-![sh](assets/dokdo.gif)
+- **Eval Command** – Run JavaScript code directly in the context of your bot.
+![js](assets/js.png)
 
-## Installation
+- **Shell Command** – Execute terminal commands through Discord. You could also abort running process.
+![sh](assets/sh.gif)
+
+- **Command Alias & Prefix System** – Define how and when Dokdo should respond to commands.
+
+- **Easy to Customize** – Tailor prefixes, aliases, owners, variables, and permission error messages to fit your needs.
+
+## 🚀 Installation
+
+```bash
+npm install dokdo
+```
 
 <details>
     <summary>Using Discord.js v12?</summary>
@@ -42,13 +55,8 @@ You could install `dokdo@0.5.1` by
 ```
 </details>
 
-### Stable Version
-
-```sh
-npm i dokdo@latest
-```
-
-### Nightly Version
+<details>
+  <summary>Nightly Version?</summary>
 
 [Github Packages](https://github.com/wonderlandpark/dokdo/pkgs/npm/dokdo)
 (registry configuration needed)
@@ -56,18 +64,11 @@ npm i dokdo@latest
 ```sh
 npm i @wonderlandpark/dokdo@nightly
 ```
+</details>
 
-## Features
 
-### Shell command on stdout update
 
-![shell](assets/dokdo.gif)
-
-### Easy shard broadcastEval manager
-
-![shard](assets/shard.png)
-
-## Example usage
+## 🛠️ Usage
 
 ```js
 const Discord = require('discord.js')
@@ -94,11 +95,16 @@ You can set the Dokdo prefix including mentions. This allows the client to read 
 Example:
 
 ```js
-new Dokdo(client, {  prefix: '<@285185716240252929>' })
-
-// Commmand Usage: <@285185716240252929>dokdo
+new Dokdo.Client(client, {  prefix: '<@285185716240252929>' })
 ```
+Command Usage: `<@285185716240252929>dokdo`
 
-## Contributing
+## 📚 Documentation
 
-Please check out it hasn't already been exists before you create issue, and check [the contribution guide](./.github/CONTRIBUTING.md) before you submit Pull Request.
+Full documentation, examples, and advanced usage: 
+
+👉 https://dokdo.js.org
+
+## 🤝 Contributing
+
+Pull requests and issues are welcome. Dokdo is open-source and built with developer experience in mind. Please check [the contribution guide](./.github/CONTRIBUTING.md) before you submit Pull Request.
