@@ -21,15 +21,22 @@ It allows you to evaluate JavaScript code, run shell commands, and inspect your 
 
 - **Eval Command** – Run JavaScript code directly in the context of your bot.
 ![js](assets/js.png)
+![jsi](assets/jsi.png)
 
 - **Shell Command** – Execute terminal commands through Discord. You could also abort running process.
 ![sh](assets/sh.gif)
 
-- **Command Alias & Prefix System** – Define how and when Dokdo should respond to commands.
+- **Paginated Output** – Long outputs are automatically split and navigable via or buttons.
+![pagination](assets/pagination.png)
 
-- **Easy to Customize** – Tailor prefixes, aliases, owners, variables, and permission error messages to fit your needs.
+- **Security Protection** – Automatically masks bot tokens and other sensitive values from outputs.
+![token](assets/token.png)
+
+- **Easy to Customize** – Tailor prefixes, aliases, owners, variables, and permission error messages etc to fit your needs.
 
 ## 🚀 Installation
+
+Dokdo stable version requires Discord.js v14 or later.
 
 ```bash
 npm install dokdo
@@ -66,8 +73,6 @@ npm i @wonderlandpark/dokdo@nightly
 ```
 </details>
 
-
-
 ## 🛠️ Usage
 
 ```js
@@ -86,7 +91,42 @@ client.on('messageCreate', async message => {
 client.login('super secret token')
 ```
 
-## Notes
+## 📦 Command References
+
+### `> dokdo [js|javascript] <argument>`
+### `> dokdo [jsi|javascript_inspect] <arguemnt>`
+
+Evaluate or execute JavaScript(Node.js) code passed.
+
+Available Variables by default:
+
+| VARIABLE  | DESCRIPTION |
+|---|---|
+| `client` | The bot `client(Discord.Client)` passed by `Dokdo.Client(client)` |
+| `message` | The `message(Discord.Message)` passed by `DokdoHandler.run(message)` |
+| `_dokdo` | The Dokdo Client |
+
+### `> dokdo [exec|sh|bash|ps|powershell|shell] <argument>`
+
+Executes commands at your system shell.
+
+Dokdo detects your `SHELL` environment variable(process.env.SHELL) or using powershell for Windows platform. You could stop running command by Button.
+
+The execution terminates automatically after 3 minutes.
+
+### `> dokdo [cat] <argument>`
+
+Reads a file from your file system.
+
+### `> dokdo [curl] <argument>`
+
+Reads text of given URL.
+
+### `> dokdo [shard] <argument>`
+
+Executes commands on every sharded processes. (Discord.js Sharding)
+
+## 🧾 Notes
 
 ### Message contents intent not approved?
 
