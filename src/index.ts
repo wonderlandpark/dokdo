@@ -150,6 +150,7 @@ class Dokdo {
         case 'ps':
         case 'powershell':
         case 'shell':
+        case 'zsh':
         case 'exec':
           exec(ctx, this)
           break

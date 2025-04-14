@@ -106,7 +106,7 @@ Available Variables by default:
 | `message` | The `message(Discord.Message)` passed by `DokdoHandler.run(message)` |
 | `_dokdo` | The Dokdo Client |
 
-### `> dokdo [exec|sh|bash|ps|powershell|shell] <argument>`
+### `> dokdo [exec||shell|sh|bash|ps|powershell|zsh] <argument>`
 
 Executes commands at your system shell.
 
