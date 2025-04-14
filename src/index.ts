@@ -162,6 +162,7 @@ class Dokdo {
           shard(ctx, this)
           break
         case 'jsi':
+        case 'javascript_inspect':
           jsi(ctx, this)
           break
         case 'curl':
