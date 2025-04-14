@@ -1,11 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Discord, { Embed, EmbedBuilder, Collection, Attachment, ButtonBuilder, ButtonStyle } from 'discord.js'
+import { Embed, EmbedBuilder, Collection, Attachment, ButtonBuilder, ButtonStyle } from 'discord.js'
 import type { Client, Context } from '../'
-import { ProcessManager, inspect, isInstance, isGenerator } from '../utils'
+import { ProcessManager as _ProcessManager, inspect as _inspect, isInstance as _isInstance, isGenerator as _isGenerator } from '../utils'
 
-export async function js (message: Context, parent: Client): Promise<void> {
+export async function js (message: Context, _dokdo: Client): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { client } = parent // for eval
+  const { client } = _dokdo // for eval
   if (!message.data.args) {
     message.reply('Missing Arguments.')
     return
@@ -29,7 +29,7 @@ export async function js (message: Context, parent: Client): Promise<void> {
         if (
           target instanceof Embed ||
           target instanceof EmbedBuilder
-        ) { await message.reply({ embeds: [target] }) } else if (isInstance(target, Attachment)) {
+        ) { await message.reply({ embeds: [target] }) } else if (_isInstance(target, Attachment)) {
           await message.reply({
             files:
               target instanceof Collection ? target.toJSON() : [target]
@@ -37,14 +37,14 @@ export async function js (message: Context, parent: Client): Promise<void> {
         }
       }
 
-      if (isGenerator(output)) {
+      if (_isGenerator(output)) {
         for (const value of output) {
           prettify(value)
 
           if (typeof value === 'function') { await message.reply(value.toString()) } else if (typeof value === 'string') await message.reply(value)
           else {
             await message.reply(
-              inspect(value, { depth: 1, maxArrayLength: 200 })
+              _inspect(value, { depth: 1, maxArrayLength: 200 })
             )
           }
         }
@@ -58,14 +58,14 @@ export async function js (message: Context, parent: Client): Promise<void> {
       } else if (typeof output === 'string') {
         return output
       }
-      return inspect(output, { depth: 1, maxArrayLength: 200 })
+      return _inspect(output, { depth: 1, maxArrayLength: 200 })
     })
     .catch((e) => {
       typeOf = 'object'
       return e.toString()
     })
 
-  const msg = new ProcessManager(message, result || '', parent, {
+  const msg = new _ProcessManager(message, result || '', _dokdo, {
     lang: 'js',
     noCode: typeOf !== 'object'
   })

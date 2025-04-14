@@ -150,7 +150,6 @@ class Dokdo {
         case 'ps':
         case 'powershell':
         case 'shell':
-        case 'zsh':
         case 'exec':
           exec(ctx, this)
           break
@@ -162,6 +161,7 @@ class Dokdo {
           shard(ctx, this)
           break
         case 'jsi':
+        case 'javascript_inspect':
           jsi(ctx, this)
           break
         case 'curl':
