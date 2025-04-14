@@ -110,13 +110,13 @@ Available Variables by default:
 
 Executes commands at your system shell.
 
-Dokdo detects your `SHELL` environment variable(process.env.SHELL) or using powershell for Windows platform. You could stop running command by Button.
+Dokdo detects your `SHELL` environment variable(process.env.SHELL) or uses powershell for Windows platform. You could abort running process by a Button.
 
 The execution terminates automatically after 3 minutes.
 
 ### `> dokdo [cat] <argument>`
 
-Reads a file from your file system.
+Reads a file from your file system. Pass your file path. (Ex: /home/dokdo/bot.js)
 
 ### `> dokdo [curl] <argument>`
 
