@@ -94,8 +94,7 @@ client.login('super secret token')
 ## 📦 Command References
 
 ### `> dokdo [js|javascript] <argument>`
-### `> dokdo [jsi|javascript_inspect] <arguemnt>`
-
+### `> dokdo [jsi|javascript_inspect] <argument>`
 Evaluate or execute JavaScript(Node.js) code passed.
 
 Available Variables by default:
