@@ -85,7 +85,7 @@ const DokdoHandler = new Dokdo.Client(client, { aliases: ['dokdo', 'dok'], prefi
 
 client.on('messageCreate', async message => {
   if (message.content === 'ping') return message.channel.send('Pong') // handle commands first
-  DokdoHandler.run(message) // try !dokdo
+  await DokdoHandler.run(message) // try !dokdo
 })
 
 client.login('super secret token')
