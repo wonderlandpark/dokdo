@@ -1,43 +1,25 @@
-# Commands
+---
+lang: ko-KR
+title: 명령어
+---
 
-In document, its using `!` as prefix and `dokdo` for command.
+# 명령어
 
-## Root Command
+이 페이지는 Dokdo에서 사용할 수 있는 명령어 목록을 포함하고 있습니다.
 
-> `!dokdo`
+## 명령어 목록
 
-### Non-sharded
+### `> dokdo [js|javascript] <argument>`
+JavaScript 코드를 실행합니다.
 
-![root](/root.png)
+### `> dokdo [exec|sh|bash|ps|powershell|shell] <argument>`
+쉘 명령어를 실행합니다.
 
-### Sharded
+### `> dokdo [cat] <argument>`
+파일의 내용을 읽고 출력합니다.
 
-![root-shard](/root-shard.png)
+### `> dokdo [curl] <argument>`
+`curl` 구문을 사용하여 HTTP 요청을 수행합니다.
 
-## Shell
-
-You could run your shell code.
-
-- For Windows, it uses powershell.
-- Others, it uses default shell
-
-> `!dokdo <sh|bash|ps|powershell|shell|zsh> [Command]`
-
-![shell](https://github.com/wonderlandpark/dokdo/raw/main/assets/dokdo.gif)
-
-## Eval
-
-You could eval your script.
-
-### Variables
-
-| VARIABLE | TYPE | DESCRIPTION |
-|----------|------|-------------|
-| message | <Docs type='Message' link='https://discord.js.org/#/docs/main/stable/class/Client' /> | Message on Discord |
-| parent | [Dokdo](/docs/types.md#dokdo) | Dokdo class |
-| client | <Docs type='Client' link='https://discord.js.org/#/docs/main/stable/class/Client' /> | DJS bot client | Discord | Discord Module | Discord Module (`require('discord.js')`) |
-
-You could add variables by [DokdoOptions](/docs/types.md#dokdooptions).globalVariable
-> `!dokdo <js|javascript> [script]`
-
-![javascript](/javascript.png)
+### `> dokdo [shard] <argument>`
+특정 샤드에 대한 명령을 실행하거나 정보를 가져옵니다.

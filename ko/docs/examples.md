@@ -1,29 +1,31 @@
-# 예시
+---
+lang: ko-KR
+title: 예제
+---
 
-Dokdo의 사용 예시
+# 예제
 
-## 권한이 없는 유저에 대한 반환 메시지
+이 페이지는 Dokdo를 사용하는 예제를 포함하고 있습니다.
+
+## 예제 1: 기본 설정
 
 ```js
-const Discord = require('discord.js')
-const dokdo = require('dokdo')
-
-const client = new Discord.Client()
-
-const DokdoHandler = new Dokdo(client, { prefix: '!', noPerm: (message) => message.reply('🚫 dokdo를 사용할 권한이 없습니다.') })
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`)
-})
-
-client.on('message', async message => {
-  if (message.content === '핑') return message.reply('퐁')
+const Dokdo = require('dokdo')
+const DokdoHandler = new Dokdo(client, { prefix: '!' })
+client.on('message', async (message) => {
   await DokdoHandler.run(message)
 })
-
-client.login('token')
 ```
 
-### 결과
+## 예제 2: 사용자 정의 옵션
 
-![Preview](/noPerm.png)
+```js
+const Dokdo = require('dokdo')
+const DokdoHandler = new Dokdo(client, {
+  prefix: '!!',
+  noPerm: (message) => message.reply('이 명령어를 사용할 권한이 없습니다.')
+})
+client.on('message', async (message) => {
+  await DokdoHandler.run(message)
+})
+```

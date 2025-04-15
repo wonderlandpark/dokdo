@@ -1,29 +1,31 @@
+---
+lang: en-US
+title: Examples
+---
+
 # Examples
 
-Example usages of Dokdo.
+This page contains examples of how to use Dokdo.
 
-## Return message for Non-owner user
+## Example 1: Basic Setup
 
 ```js
-const Discord = require('discord.js')
-const dokdo = require('dokdo')
-
-const client = new Discord.Client()
-
-const DokdoHandler = new Dokdo(client, { prefix: '!', noPerm: (message) => message.reply('🚫 You have no permission to use dokdo.') })
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`)
-})
-
-client.on('message', async message => {
-  if (message.content === 'ping') return message.reply('pong')
+const Dokdo = require('dokdo')
+const DokdoHandler = new Dokdo(client, { prefix: '!' })
+client.on('message', async (message) => {
   await DokdoHandler.run(message)
 })
-
-client.login('token')
 ```
 
-### Result
+## Example 2: Custom Options
 
-![Preview](/noPerm.png)
+```js
+const Dokdo = require('dokdo')
+const DokdoHandler = new Dokdo(client, {
+  prefix: '!!',
+  noPerm: (message) => message.reply('You do not have permission to use this command.')
+})
+client.on('message', async (message) => {
+  await DokdoHandler.run(message)
+})
+```

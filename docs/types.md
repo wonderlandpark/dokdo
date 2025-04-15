@@ -1,4 +1,11 @@
-# Typings
+---
+lang: en-US
+title: Types
+---
+
+# Types
+
+This page contains type definitions and options for Dokdo.
 
 ## Dokdo
 
@@ -50,6 +57,16 @@ Runs dokdo command
 > Returns: <Docs type='void' link='https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined' />
 
 ## DokdoOptions
+
+```ts
+interface DokdoOptions {
+  prefix?: string
+  noPerm?: (message: Message) => void
+  secrets?: string[]
+  aliases?: string[]
+  globalVariable?: Record<string, any>
+}
+```
 
 ### Types
 

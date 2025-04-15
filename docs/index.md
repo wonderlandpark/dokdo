@@ -1,8 +1,12 @@
-# Welcome to Dokdo
+---
+lang: en-US
+title: Dokdo Documentation
+description: Easy Discord bot debugging tool.
+---
 
-Dokdo is easy Discord bot debuging tool.
+# Welcome to Dokdo Documentation
 
-You could easily run script, debug and more on your own Discord bot.
+This is the official documentation for Dokdo, an easy-to-use Discord bot debugging tool.
 
 ## Getting Started
 

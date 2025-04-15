@@ -1,33 +1,21 @@
-const { description } = require('../package')
+import { defineUserConfig } from 'vuepress';
+import { defaultTheme } from '@vuepress/theme-default';
+import { backToTopPlugin } from '@vuepress/plugin-back-to-top';
+import { mediumZoomPlugin } from '@vuepress/plugin-medium-zoom';
+import { viteBundler } from '@vuepress/bundler-vite';
 
-module.exports = {
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#title
-   */
+export default defineUserConfig({
+  base: '/',
   title: 'Dokdo',
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#description
-   */
-  description: description,
-
-  /**
-   * Extra tags to be injected to the page HTML `<head>`
-   *
-   * ref：https://v1.vuepress.vuejs.org/config/#head
-   */
+  description: 'Easy Discord bot debugging tool.',
   head: [
     ['link', { rel: 'icon', href: '/logo.png' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
-    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
   ],
-
-  /**
-   * Theme configuration, here is the default theme configuration for VuePress.
-   *
-   * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
-   */
-  themeConfig: {
+  bundler: viteBundler(),
+  theme: defaultTheme({
     repo: 'wonderlandpark/dokdo',
     logo: '/logo.png',
     docsRepo: 'wonderlandpark/dokdo',
@@ -37,48 +25,44 @@ module.exports = {
     sidebarDepth: 1,
     sidebar: [
       {
-        title: 'Introduction',
-        path: '/docs/'
+        text: 'Introduction',
+        link: '/docs/'
       },
       {
-        title: 'Examples',
-        path: '/docs/examples'
+        text: 'Examples',
+        link: '/docs/examples'
       },
       {
-        title: 'Commands',
-        path: '/docs/commands'
+        text: 'Commands',
+        link: '/docs/commands'
       },
       {
-        title: 'Typing',
-        path: '/docs/types'
+        text: 'Typing',
+        link: '/docs/types'
       }
-
     ],
     locales: {
       '/ko/': {
-        selectText: '언어',
         sidebar: [
           {
-            title: '소개',
-            path: '/ko/docs/'
+            text: '소개',
+            link: '/ko/docs/'
           },
           {
-            title: '예시',
-            path: '/ko/docs/examples'
+            text: '예시',
+            link: '/ko/docs/examples'
           },
           {
-            title: '타입',
-            path: '/ko/docs/types'
+            text: '타입',
+            link: '/ko/docs/types'
           }
-  
         ]
       }
     }
-  },
-
+  }),
   locales: {
     '/': {
-      lang: '🇺🇸 English',
+      lang: 'en-US',
       nav: [
         {
           text: 'Home',
@@ -91,7 +75,9 @@ module.exports = {
       ]
     },
     '/ko/': {
-      lang: '🇰🇷 한국어',
+      lang: 'ko-KR',
+      label: '한국어',
+      selectText: '언어',
       nav: [
         {
           text: '홈',
@@ -101,30 +87,11 @@ module.exports = {
           text: '문서',
           link: '/ko/docs/'
         }
-      ],
-      sidebar: [
-        {
-          title: 'Introductidon',
-          path: '/docs/'
-        },
-        {
-          title: 'Examples',
-          path: '/docs/examples'
-        },
-        {
-          title: 'Typing',
-          path: '/docs/types'
-        }
-
       ]
     }
   },
-
-  /**
-   * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
-   */
   plugins: [
-    '@vuepress/plugin-back-to-top',
-    '@vuepress/plugin-medium-zoom',
+    backToTopPlugin(),
+    mediumZoomPlugin(),
   ]
-}
+});

@@ -2,8 +2,10 @@
 home: true
 heroImage: /logo.png
 tagline: Easy Discord bot debuging tool.
-actionText: Quick Start →
-actionLink: /docs/
+actions:
+  - text: Quick Start →
+    link: /docs/
+    type: primary
 features:
 - title: Easy to migrate.
   details: Just add some code to migrate from your original eval codes.

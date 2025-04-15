@@ -1,4 +1,11 @@
-# Typings
+---
+lang: ko-KR
+title: 타입
+---
+
+# 타입
+
+이 페이지는 Dokdo의 타입 정의와 옵션을 포함하고 있습니다.
 
 ## Dokdo
 
@@ -50,6 +57,16 @@ dokdo 명령어를 실행합니다.
 > Returns: <Docs type='void' link='https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined' />
 
 ## DokdoOptions
+
+```ts
+interface DokdoOptions {
+  prefix?: string
+  noPerm?: (message: Message) => void
+  secrets?: string[]
+  aliases?: string[]
+  globalVariable?: Record<string, any>
+}
+```
 
 ### Types
 
